@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Boutique CJ – Achetez des items cosmétiques avec vos CJ Universels." />
+  <meta name="theme-color" content="#0a0620" />
+  <meta property="og:title" content="Boutique CJ" />
+  <meta property="og:description" content="Dépensez vos CJ Universels dans la boutique de l'écosystème CJajlk." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml" />
+  <title>Boutique CJ - CJajlkGames</title>
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <style>
+    /* Fallback styles si le CSS principal ne charge pas */
+    html, body {
+      background-color: #0a0620;
+      color: #e6e3ff;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body class="page-shop">
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <!-- ======== BANNIÈRE ======== -->
+  <header class="shop-banner">
+    <div class="shop-overlay"></div>
+    <div class="shop-banner-content">
+      <h1>🔮 Boutique CJ</h1>
+      <p>Dépensez vos CJ Universels</p>
+    </div>
+  </header>
+
+  <!-- ======== PSEUDO UTILISATEUR ======== -->
+  <section class="shop-pseudo">
+    <div class="pseudo-wrapper">
+      <div class="profile-name" id="playerName">...</div>
+      <button id="editPseudoBtn" class="profile-edit-btn edit-btn" title="Modifier le pseudo">✏ Modifier</button>
+    </div>
+  </section>
+
+  <main id="main">
+
+    <!-- ======== SOLDE ======== -->
+    <section class="shop-balance">
+      <div class="balance-card">
+        <p class="balance-label">Votre solde CJ</p>
+        <p class="balance-amount" id="cjAmount">0</p>
+      </div>
+
+    </section>
+
+    <!-- ======== BOUTIQUE BADGES - PHASE 1 ======== -->
+    <section class="shop-catalog">
+
+  <!-- ===== COSMÉTIQUES ===== -->
+  <div class="badge-category">
+    <h2>🎨 Badges Cosmétiques</h2>
+    <p class="catalog-subtitle">
+      Badges visuels sans impact social.
+    </p>
+    <div id="cosmetic-badges" class="catalog-grid"></div>
+  </div>
+
+  <!-- ===== SOCIAUX ===== -->
+  <div class="badge-category">
+    <h2>🌟 Badges de Rang</h2>
+    <p class="catalog-subtitle">
+      Affichés dans le hub et visibles par tous.
+    </p>
+    <div id="social-badges" class="catalog-grid"></div>
+  </div>
+
+  <!-- ===== ÉVÉNEMENTIELS ===== -->
+  <div class="badge-category">
+    <h2>🔮 Badges Événementiels</h2>
+    <p class="catalog-subtitle">
+      Disponibles uniquement durant certains événements.
+    </p>
+
+    <div id="event-badges" class="catalog-grid"></div>
+  </div>
+
+  <!-- ======== SECTION IMAGES BREAKER ======== -->
+  <section class="shop-images-section">
+    <h2>🔥 Breaker : Images exclusives</h2>
+    <div id="breaker-images-section" class="catalog-grid"></div>
+  </section>
+
+  <!-- ======== SECTION IMAGES ATTRAPE-LES-TOUS ======== -->
+  <section class="shop-images-section">
+    <h2>🎯 Attrape-les-tous : Images exclusives</h2>
+    <div id="attrape-images-section" class="catalog-grid"></div>
+  </section>
+
+</section>
+
+    </main>
+
+  <!-- Modale édition pseudo -->
+  <div id="pseudoModal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Modifier ton pseudo</h3>
+      <input type="text" id="pseudoInput" placeholder="Nouveau pseudo..." />
+      <div class="modal-actions">
+        <button id="savePseudoBtn" class="btn-primary">Valider</button>
+        <button id="cancelPseudoBtn" class="btn-secondary">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- ======== PIED DE PAGE ======== -->
+    <footer class="shop-footer">
+      <a href="../index.html" class="btn-retour">← Retour à CJajlkGames</a>
+    <p class="footer-credit">© 2026 CJajlk • Tous droits réservés</p>
+  </footer>
+
+
+  <!-- Charger cjAccount.js SANS defer pour garantir l'ordre -->
+  <script src="../core/cjAccount.js"></script>
+  <!-- Puis charger script.js (affichage pseudo) -->
+  <script src="../assets/js/script.js"></script>
+  <!-- Puis charger cjShop.js -->
+  <script src="../assets/js/cjShop.js"></script>
+
+  <script>
+    // Ajouter la classe is-ready pour rendre la page visible
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('is-ready');
+      console.log("✅ Page shop ready!");
+    });
+  </script>
+</body>
+</html>

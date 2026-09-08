@@ -1,0 +1,10 @@
+{
+    "lyra": {
+        "idle": "assets/images/menu/lyra_idle.png",
+        "blink": "assets/images/menu/lyra_blink.png",
+        "breath": "assets/images/menu/lyra_breath.png",
+        "pulse": "assets/images/menu/lyra_pulse.png"
+    }
+    
+}
+

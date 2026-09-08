@@ -1,0 +1,57 @@
+{
+  "worlds": [
+    {
+      "id": "nuit_calme",
+      "name": "🌙 Nuit Calme",
+      "description": "Une nuit douce et paisible",
+      "theme": "blue",
+      "levels": [
+        { "id": 1, "name": "Niveau 1", "objective": 50, "rewards": { "cj": 10, "gems": 5 } },
+        { "id": 2, "name": "Niveau 2", "objective": 150, "rewards": { "cj": 15, "gems": 8 } },
+        { "id": 3, "name": "Niveau 3", "objective": 300, "rewards": { "cj": 20, "gems": 12 } },
+        { "id": 4, "name": "Niveau 4", "objective": 500, "rewards": { "cj": 25, "gems": 15 } },
+        { "id": 5, "name": "Niveau 5 - Boss", "objective": 750, "rewards": { "cj": 50, "gems": 30 } }
+      ]
+    },
+    {
+      "id": "foret_nocturne",
+      "name": "🌲 Forêt Nocturne",
+      "description": "Entre les arbres, des orbes brillent",
+      "theme": "green",
+      "levels": [
+        { "id": 1, "name": "Niveau 1", "objective": 100, "rewards": { "cj": 15, "gems": 8 } },
+        { "id": 2, "name": "Niveau 2", "objective": 250, "rewards": { "cj": 20, "gems": 12 } },
+        { "id": 3, "name": "Niveau 3", "objective": 450, "rewards": { "cj": 25, "gems": 15 } },
+        { "id": 4, "name": "Niveau 4", "objective": 700, "rewards": { "cj": 35, "gems": 20 } },
+        { "id": 5, "name": "Niveau 5 - Boss", "objective": 1200, "rewards": { "cj": 75, "gems": 40 } }
+      ]
+    },
+    {
+      "id": "cite_astrale",
+      "name": "✨ Cité Astrale",
+      "description": "La cité flottante des rêves",
+      "theme": "purple",
+      "levels": [
+        { "id": 1, "name": "Niveau 1", "objective": 150, "rewards": { "cj": 20, "gems": 12 } },
+        { "id": 2, "name": "Niveau 2", "objective": 350, "rewards": { "cj": 30, "gems": 18 } },
+        { "id": 3, "name": "Niveau 3", "objective": 600, "rewards": { "cj": 40, "gems": 25 } },
+        { "id": 4, "name": "Niveau 4", "objective": 1000, "rewards": { "cj": 50, "gems": 30 } },
+        { "id": 5, "name": "Niveau 5 - Boss", "objective": 1800, "rewards": { "cj": 100, "gems": 60 } }
+      ]
+    },
+    {
+      "id": "abysse_nocturne",
+      "name": "🕷️ Abysses Nocturnes",
+      "description": "Les profondeurs du monde nocturne",
+      "theme": "dark",
+      "locked": true,
+      "levels": [
+        { "id": 1, "name": "Niveau 1", "objective": 200, "rewards": { "cj": 30, "gems": 18 } },
+        { "id": 2, "name": "Niveau 2", "objective": 500, "rewards": { "cj": 45, "gems": 28 } },
+        { "id": 3, "name": "Niveau 3", "objective": 900, "rewards": { "cj": 60, "gems": 40 } },
+        { "id": 4, "name": "Niveau 4", "objective": 1500, "rewards": { "cj": 75, "gems": 50 } },
+        { "id": 5, "name": "Niveau 5 - Boss", "objective": 2500, "rewards": { "cj": 150, "gems": 100 } }
+      ]
+    }
+  ]
+}

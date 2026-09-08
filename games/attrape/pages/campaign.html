@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campagne - Attrape-les-tous</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a0033 0%, #2d0052 100%);
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .campaign-container {
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
+
+        .campaign-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .campaign-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            flex: 1;
+            margin: 0;
+        }
+
+        .spacer {
+            width: 100px;
+        }
+
+        .worlds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .world-card {
+            position: relative;
+            background: rgba(50, 20, 100, 0.3);
+            border: 1px solid rgba(180, 120, 255, 0.4);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .world-card:hover:not(.locked) {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(150, 100, 255, 0.4);
+            border-color: rgba(180, 120, 255, 0.8);
+        }
+
+        .world-card.locked {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .world-bg {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(100, 50, 200, 0.4), rgba(200, 100, 255, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .world-bg::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), transparent);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .world-info {
+            padding: 20px;
+        }
+
+        .world-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            color: #c9b7ff;
+        }
+
+        .world-description {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .world-progress {
+            margin-bottom: 15px;
+        }
+
+        .progress-text {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7c5cff, #b197ff);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .play-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #7c5cff, #b197ff);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .play-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(150, 100, 255, 0.5);
+        }
+
+        .play-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .lock-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+        }
+
+        .level-list {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(180, 120, 255, 0.2);
+        }
+
+        .level-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .level-item.completed {
+            color: #7cff7c;
+        }
+
+        .level-check {
+            color: #7cff7c;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 768px) {
+            html,
+            body {
+                min-height: 100%;
+                height: auto !important;
+                overflow-x: hidden !important;
+                overflow-y: auto !important;
+                touch-action: pan-y !important;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .campaign-container {
+                min-height: 100dvh;
+                height: auto;
+                padding-bottom: calc(28px + env(safe-area-inset-bottom));
+            }
+
+            .worlds-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .campaign-title {
+                font-size: 2rem;
+            }
+
+            .campaign-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .spacer {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="campaign-container">
+        <div class="campaign-header">
+            <button class="back-btn" onclick="backToCampaignMenu()">← Retour</button>
+            <h1 class="campaign-title">CAMPAGNE</h1>
+            <div class="spacer"></div>
+        </div>
+
+        <div class="worlds-grid" id="worldsGrid">
+            <!-- Générée par JS -->
+        </div>
+    </div>
+
+    <script>
+        // Charger les données de campagne
+        const campaignData = null; // chargé via fetch
+        let campaignProgress = {}; // progression du joueur
+
+        async function loadCampaign() {
+            try {
+                const response = await fetch('../data/campaignData.json');
+                const data = await response.json();
+                renderWorlds(data.worlds);
+            } catch (e) {
+                console.error('❌ Erreur chargement campagne:', e);
+            }
+        }
+
+        function loadProgress() {
+            const saved = localStorage.getItem('campaignProgress');
+            if (saved) {
+                campaignProgress = JSON.parse(saved);
+            } else {
+                // Initialiser la progression
+                campaignProgress = {
+                    'nuit_calme': {
+                        levels: [false, false, false, false, false],
+                        completed: false
+                    },
+                    'foret_nocturne': {
+                        levels: [false, false, false, false, false],
+                        completed: false,
+                        locked: false
+                    },
+                    'cite_astrale': {
+                        levels: [false, false, false, false, false],
+                        completed: false,
+                        locked: true
+                    },
+                    'abysse_nocturne': {
+                        levels: [false, false, false, false, false],
+                        completed: false,
+                        locked: true
+                    }
+                };
+                saveProgress();
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('campaignProgress', JSON.stringify(campaignProgress));
+        }
+
+        function renderWorlds(worlds) {
+            const grid = document.getElementById('worldsGrid');
+            grid.innerHTML = '';
+
+            worlds.forEach((world, idx) => {
+                const progress = campaignProgress[world.id] || { levels: [false, false, false, false, false], completed: false, locked: false };
+                const isLocked = world.locked || progress.locked;
+                const completedLevels = progress.levels.filter(l => l).length;
+                const totalLevels = world.levels.length;
+
+                const card = document.createElement('div');
+                card.className = `world-card ${isLocked ? 'locked' : ''}`;
+                card.innerHTML = `
+                    ${isLocked ? '<div class="lock-icon">🔒</div>' : ''}
+                    <div class="world-bg">
+                        ${world.name.substring(0, 1)}
+                    </div>
+                    <div class="world-info">
+                        <h3 class="world-name">${world.name}</h3>
+                        <p class="world-description">${world.description}</p>
+                        <div class="world-progress">
+                            <span class="progress-text">${completedLevels}/${totalLevels}</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${(completedLevels / totalLevels) * 100}%"></div>
+                            </div>
+                        </div>
+                        <button class="play-btn" onclick="playCampaignWorld('${world.id}')" ${isLocked ? 'disabled' : ''}>
+                            ${isLocked ? '🔒 Verrouillé' : 'JOUER'}
+                        </button>
+                        <div class="level-list">
+                            ${world.levels.map((level, i) => `
+                                <div class="level-item ${progress.levels[i] ? 'completed' : ''}">
+                                    <span>${level.name}</span>
+                                    ${progress.levels[i] ? '<span class="level-check">✓</span>' : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function playCampaignWorld(worldId) {
+            const progress = campaignProgress[worldId];
+            const levels = Array.isArray(progress?.levels) ? progress.levels : [];
+            const firstUncompletedIndex = levels.findIndex(done => !done);
+            const startLevel = firstUncompletedIndex >= 0 ? firstUncompletedIndex + 1 : 1;
+
+            sessionStorage.setItem('campaignWorld', worldId);
+            window.location.href = `../index.html?mode=campaign&world=${encodeURIComponent(worldId)}&level=${startLevel}`;
+        }
+
+        function backToCampaignMenu() {
+            window.location.href = '../index.html';
+        }
+
+        // Démarrage
+        loadProgress();
+        loadCampaign();
+    </script>
+</body>
+</html>

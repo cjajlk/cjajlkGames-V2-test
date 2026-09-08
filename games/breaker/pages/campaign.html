@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="titles.campaign">Campagne — Breaker</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/campaign.css">
+</head>
+
+<body class="campaign">
+
+  <div class="campaign-container">
+    
+    <!-- Header -->
+    <div class="campaign-header">
+      <button id="backBtn" class="back-btn">← Retour</button>
+      <h1 class="title">CAMPAGNE</h1>
+      <div class="spacer"></div>
+    </div>
+
+    <!-- Thèmes/Mondes -->
+    <div class="worlds-grid">
+      
+      <!-- Monde 1: Ville Renaissante -->
+      <div class="world-card" id="worldCard1" data-world="1" data-theme="theme1_city_reborn">
+        <div class="world-bg" id="worldBg1"></div>
+        <div class="world-overlay">
+          <h2 class="world-name">Ville Renaissante</h2>
+          <div class="world-progress">
+            <span id="world1Progress" class="progress-text">0/5</span>
+            <div class="progress-bar">
+              <div id="world1ProgressBar" class="progress-fill"></div>
+            </div>
+          </div>
+          <button class="play-btn world1Btn" data-world="1">JOUER</button>
+        </div>
+      </div>
+
+      <!-- Monde 2: Sanctuaire Astral -->
+      <div class="world-card locked" id="worldCard2" data-world="2" data-theme="theme Sanctuaire Astral">
+        <div class="world-bg" id="worldBg2"></div>
+        <div class="world-overlay">
+          <h2 class="world-name">Sanctuaire Astral</h2>
+          <div class="world-progress">
+            <span id="world2Progress" class="progress-text">0/5</span>
+            <div class="progress-bar">
+              <div id="world2ProgressBar" class="progress-fill"></div>
+            </div>
+          </div>
+          <button class="play-btn world2Btn" data-world="2" disabled>VERROUILLÉ 🔒</button>
+          <p class="unlock-hint" data-i18n="campaign.defeatBoss">Vaincre le Gardien de la Cité pour débloquer</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sélecteur de niveau -->
+    <div id="levelSelector" class="level-selector hidden">
+      <div class="selector-header">
+        <h3 id="selectorTitle" class="selector-title">Sélectionnez un niveau</h3>
+        <button id="closeLevelSelector" class="close-btn">✕</button>
+      </div>
+      <div id="levelList" class="level-list">
+        <!-- Rempli par JavaScript -->
+      </div>
+    </div>
+
+  </div>
+
+  <script src="../js/i18n.js" defer></script>
+  <script src="../js/popup.js" defer></script>
+  <script src="../js/profile.js" defer></script>
+  <script src="../js/campaign.js" defer></script>
+  <script src="../js/rankProgression.js" defer></script>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Orbe violette lumineuse">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#f3e9ff" stop-opacity="1" />
+      <stop offset="35%" stop-color="#caa5ff" stop-opacity="0.95" />
+      <stop offset="70%" stop-color="#8b4bff" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#4a1b8a" stop-opacity="0.95" />
+    </radialGradient>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="65%" stop-color="#b58cff" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#6a35c9" stop-opacity="0" />
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="128" height="128" fill="#0a0620" />
+  <circle cx="64" cy="64" r="50" fill="url(#halo)" />
+  <circle cx="64" cy="64" r="38" fill="url(#glow)" filter="url(#softGlow)" />
+  <circle cx="52" cy="48" r="10" fill="#ffffff" opacity="0.5" />
+</svg>

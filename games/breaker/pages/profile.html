@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-i18n="titles.profile">Profil — Breaker</title>
+    <link rel="preload" as="image" href="../assets/backgrounds/menu/ville.webp">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+
+<body class="profile-page">
+
+    <!-- Fond animé -->
+    <div class="bg-container">
+        <img src="../assets/backgrounds/menu/ville.webp" class="bg-img" alt="background">
+        <div class="bg-overlay"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="profile-header">
+        <button class="btn-back" id="goBack">
+            <span class="btn-icon">⬅️</span>
+            <span class="btn-text" data-i18n="common.menu">Menu</span>
+        </button>
+        <h1 class="profile-title" data-i18n="profile.title">👤 Profil</h1>
+        <p class="profile-subtitle" data-i18n="profile.subtitle">Tes statistiques et progression</p>
+    </header>
+
+    <main class="profile-container">
+
+        <!-- Carte Identité Premium -->
+        <section class="profile-card card-identity">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <div class="identity-header">
+                    <div class="pseudo-container">
+                        <div class="pseudo-content">
+                            <span class="pseudo-label" data-i18n="profile.pseudo">Pseudo</span>
+                            <h2 class="pseudo-value" id="playerPseudo">CJ</h2>
+                            <span class="edit-hint" data-i18n="profile.clickToEdit">✏️ Clique pour modifier</span>
+                        </div>
+                        <span class="pseudo-icon">🎮</span>
+                    </div>
+                    <div class="title-badge" id="titleBadge">
+                        <span class="badge-icon">🏆</span>
+                        <span class="badge-text" id="playerTitle">Titre : À débloquer</span>
+                    </div>
+                </div>
+                
+                <!-- Level & XP Section -->
+                <div class="level-section">
+                    <div class="level-info">
+                        <span class="level-label" data-i18n="common.level">Niveau</span>
+                        <span class="level-value" id="playerLevel">1</span>
+                    </div>
+                    <div class="xp-info">
+                        <span class="xp-label" data-i18n="common.xp">XP</span>
+                        <span class="xp-value" id="mascotXP">0</span>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar">
+                        <div class="progress-shine"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">0 / 1000</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Carte Mascotte/Compagnon -->
+        <section class="profile-card card-companion">
+            <div class="card-glow"></div>
+            <div class="card-content">
+                <div class="companion-header">
+                    <h3 data-i18n="profile.equippedCompanion">Compagnon Équipé</h3>
+                    <button class="btn-change-companion" id="btnChangeCompanion">
+                        <span>🐾</span>
+                        <span data-i18n="profile.change">Changer</span>
+                    </button>
+                </div>
+                
+                <div class="companion-showcase">
+                    <div class="companion-glow-bg"></div>
+                    <img id="companionImage" 
+                         class="companion-image" 
+                         src="../shop/categories/companions/aube/aube_idle.png" 
+                         alt="Compagnon équipé">
+                    <p class="companion-name" id="companionName">Aube</p>
+                    <p class="companion-element" id="companionElement">Lumière</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-content">
+                    <span class="stat-label" data-i18n="profile.playTime">Temps de Jeu</span>
+                    <span class="stat-value" id="statTime">0h 00m</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">💎</div>
+                <div class="stat-content">
+                    <span class="stat-label" data-i18n="profile.diamonds">Diamants</span>
+                    <span class="stat-value diamonds-count">0</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-content">
+                    <span class="stat-label" data-i18n="profile.collection">Collection</span>
+                    <span class="stat-value" id="statCollection">0%</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">✨</div>
+                <div class="stat-content">
+                    <span class="stat-label">CJ universels</span>
+                    <span class="stat-value" id="statCJ">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <section class="profile-actions">
+            <button class="btn-ecurie" id="btnEcurie">
+                <span>🐾</span>
+                <span data-i18n="profile.stableBtn">Écurie</span>
+            </button>
+        </section>
+
+    </main>
+  
+<script src="../../../core/cjAccount.js" defer></script>
+  <script src="../js/i18n.js" defer></script>
+    <script src="../js/popup.js" defer></script>
+    <script src="../js/profile.js" defer></script>
+
+</body>
+</html>

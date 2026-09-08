@@ -1,0 +1,221 @@
+body.library-page {
+    background: linear-gradient(135deg, #090516, #221147);
+    color: #f7f0ff;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.library-header {
+    padding: 24px 20px 10px;
+    text-align: center;
+}
+
+.library-header h1 {
+    margin: 0 0 10px;
+    font-size: 2rem;
+}
+
+.library-header p {
+    margin: 0;
+    color: #d7c8ff;
+}
+
+.library-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px 20px;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.library-topbar .badge {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(200, 180, 255, 0.18);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-weight: 600;
+}
+
+.library-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    padding: 0 20px 24px;
+}
+
+.library-card {
+    background: rgba(20, 10, 40, 0.9);
+    border: 1px solid rgba(130, 90, 200, 0.25);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.library-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(180, 130, 255, 0.45);
+}
+
+.library-card-image {
+    position: relative;
+    background: rgba(0, 0, 0, 0.16);
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.library-card-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.library-card-image.locked {
+    filter: grayscale(80%) brightness(0.7);
+}
+
+.library-card-label,
+.library-card-lock {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+}
+
+.library-card-body {
+    padding: 14px;
+}
+
+.library-card-body h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+}
+
+.library-card-body p {
+    margin: 0 10px 12px 0;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+}
+
+.library-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.library-badge.unlocked {
+    background: rgba(54, 111, 255, 0.16);
+    color: #b8d3ff;
+}
+
+.library-badge.next {
+    background: rgba(120, 86, 255, 0.16);
+    color: #dfd1ff;
+}
+
+.library-badge.locked {
+    background: rgba(80, 80, 90, 0.2);
+    color: #a29fc3;
+}
+
+.library-controls {
+    padding: 0 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.library-message {
+    color: #d7c8ff;
+}
+
+.library-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.library-actions button {
+    flex: 1;
+    min-width: 140px;
+    border: none;
+    border-radius: 14px;
+    padding: 14px 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(135deg, #6f4fff, #9e6eff);
+    color: white;
+}
+
+.library-actions button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.library-detail {
+    padding: 0 20px 24px;
+}
+
+.library-detail-pane {
+    background: rgba(26, 10, 50, 0.95);
+    border: 1px solid rgba(150, 110, 255, 0.18);
+    border-radius: 18px;
+    padding: 18px;
+}
+
+.library-detail-pane.hidden {
+    display: none;
+}
+
+.library-detail-pane h3 {
+    margin: 0 0 12px;
+}
+
+.library-detail-pane img {
+    width: 100%;
+    border-radius: 14px;
+    margin-bottom: 12px;
+}
+
+.library-detail-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.library-detail-close {
+    border: none;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+    .library-topbar,
+    .library-actions,
+    .library-detail-footer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .library-card-image {
+        min-height: 160px;
+    }
+}

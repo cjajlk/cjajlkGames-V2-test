@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "settings": {
+    "soundEnabled": true,
+    "musicEnabled": true,
+    "volume": 0.5
+  },
+  "physics": {
+    "gravity": 0.5,
+    "ballSpeedMultiplier": 0.006,
+    "levelSpeedIncrease": 0.3
+  },
+  "rewards": {
+    "xpPerBrick": 10,
+    "xpPerLevel": 100,
+    "diamondsPerLevel": 50,
+    "orbDropChance": 0.3
+  }
+}

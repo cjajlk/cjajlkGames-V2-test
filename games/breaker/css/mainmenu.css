@@ -1,0 +1,378 @@
+/* RESET doux */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body.menu {
+  overflow: hidden;
+  height: 100vh;
+  color: white;
+}
+
+
+/* 🌌 FOND VILLE */
+.bg-img {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  filter: brightness(0.8);
+}
+
+
+
+/* 🌙 CONTAINER PRINCIPAL */
+.menu-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* légèrement plus bas pour respirer */
+  justify-content: flex-start;
+  padding-top: 12vh;
+}
+
+
+/* 🌟 TITRE RESPIRATION */
+.title {
+  font-size: 3.2rem;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+
+  animation: breathe 4s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%,100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+
+/* ✨ EVENEMENT */
+.event {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 60px;
+}
+
+
+/* 🎮 BOUTONS */
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.btn {
+  width: 220px;
+  padding: 14px 0;
+
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: white;
+
+  font-size: 1rem;
+  border-radius: 12px;
+
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  background: rgba(120, 80, 255, 0.35);
+}
+
+.primary {
+  font-size: 1.2rem;
+}
+
+
+/* ⚙ OPTIONS */
+.options {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: white;
+
+  font-size: 1.4rem;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  opacity: 0.7;
+}
+
+.options:hover {
+  opacity: 1;
+}
+
+/* ⚙ OPTIONS PANEL */
+.options-panel {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 50;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+
+.options-panel.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.options-card {
+  width: min(460px, 90vw);
+  background: rgba(10, 10, 30, 0.8);
+  border: 1px solid rgba(143, 211, 255, 0.25);
+  border-radius: 18px;
+  padding: 22px 22px 18px;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+}
+
+.options-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.options-header h2 {
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.options-close {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.option-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 12px;
+}
+
+.option-item:first-of-type {
+  border-top: none;
+}
+
+.option-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.toggle-btn {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.toggle-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(120, 80, 255, 0.35);
+}
+
+.toggle-btn.active {
+  background: rgba(143, 211, 255, 0.35);
+  border-color: rgba(143, 211, 255, 0.8);
+}
+
+.option-item.danger {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.danger-btn {
+  border-color: rgba(255, 90, 90, 0.6);
+  background: rgba(255, 90, 90, 0.15);
+}
+
+.danger-btn:hover {
+  background: rgba(255, 90, 90, 0.3);
+}
+
+.option-warning {
+  color: rgba(255, 200, 200, 0.85);
+  font-size: 0.85rem;
+}
+/* 📱 MOBILE PORTRAIT (< 480px) */
+@media (max-width: 480px) {
+  .menu-container {
+    padding-top: 15vh;
+  }
+
+  .title {
+    font-size: 1.6rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+  }
+
+  .event {
+    font-size: 0.75rem;
+    margin-bottom: 35px;
+    padding: 0 20px;
+  }
+
+  .buttons {
+    gap: 16px;
+  }
+
+  .btn {
+    width: 200px;
+    padding: 12px 0;
+    font-size: 0.95rem;
+  }
+
+  .primary {
+    font-size: 1.1rem;
+  }
+
+  .options, .profile {
+    font-size: 1.2rem;
+    padding: 8px 12px;
+  }
+}
+
+/* 📱 MOBILE PAYSAGE (481px-768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  .menu-container {
+    padding-top: 18vh;
+  }
+
+  .title {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  .event {
+    font-size: 0.85rem;
+    margin-bottom: 45px;
+  }
+
+  .buttons {
+    gap: 18px;
+  }
+
+  .btn {
+    width: 220px;
+    padding: 13px 0;
+  }
+}
+
+/* 💻 TABLETTE (769px-1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .menu-container {
+    padding-top: 14vh;
+  }
+
+  .title {
+    font-size: 2.8rem;
+    letter-spacing: 3px;
+  }
+
+  .event {
+    font-size: 0.95rem;
+    margin-bottom: 55px;
+  }
+
+  .buttons {
+    gap: 20px;
+  }
+
+  .btn {
+    width: 240px;
+    padding: 15px 0;
+    font-size: 1.05rem;
+  }
+}
+
+/* 🖥 DESKTOP (> 1024px) */
+@media (min-width: 1025px) {
+  .menu-container {
+    padding-top: 12vh;
+  }
+
+  .title {
+    font-size: 3.5rem;
+    letter-spacing: 4px;
+  }
+
+  .event {
+    font-size: 1rem;
+    margin-bottom: 60px;
+  }
+
+  .btn:active {
+    transform: scale(0.98);
+  }
+}
+body {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+/* 👤 PROFIL */
+.profile {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+
+  background: rgba(0,0,0,0.4);
+  border: none;
+  color: white;
+
+  font-size: 1.3rem;
+  padding: 10px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  opacity: 0.7;
+  transition: 0.25s;
+}
+
+.profile:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+/* 🧾 CREDITS */
+.credits {
+  position: fixed;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+

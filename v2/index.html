@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101222">
+  <meta name="description" content="Ton espace CJAJLK Games : jeux, profil et univers nocturnes.">
+  <title>Accueil · CJAJLK Games</title>
+  <link rel="icon" href="../assets/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="collections.css">
+  <link rel="stylesheet" href="shop.css">
+  <script src="../core/cjAccount.js" data-readonly="true" defer></script>
+  <script src="cosmetics.js" defer></script>
+  <script src="collections-config.js" defer></script>
+  <script src="account-transactions.js" defer></script>
+  <script src="profile.js" defer></script>
+  <script src="dashboard.js" defer></script>
+  <script src="collections.js" defer></script>
+  <script src="shop-config.js" defer></script>
+  <script src="shop.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<aside class="sidebar">
+  <a class="brand" href="#accueil"><span class="brand-mark">CJ</span><span>CJAJLK<span class="brand-sub">GAMES</span></span></a>
+  <p class="eyebrow">TON ESPACE</p>
+  <nav aria-label="Navigation principale" class="side-nav">
+    <a href="#accueil"><span aria-hidden="true">⌂</span>Accueil</a>
+    <a href="#profil"><span aria-hidden="true">◉</span>Profil</a>
+    <a href="#jeux"><span aria-hidden="true">✦</span>Jeux</a>
+    <a href="#boutique"><span aria-hidden="true">◇</span>Boutique</a>
+    <a href="#collections"><span aria-hidden="true">▦</span>Collections</a>
+    <a href="#apropos"><span aria-hidden="true">◎</span>À propos</a>
+  </nav>
+  <div class="sidebar-footer"><span class="status-dot"></span> Un univers indépendant<p>Créer. Jouer. Rêver.</p><a href="../index.html">Accueil classique ↗</a></div>
+</aside>
+<div class="workspace">
+  <header class="topbar"><a class="mobile-brand" href="#accueil">CJAJLK <span>GAMES</span></a><span class="desktop-label">L’univers Nocturne / <strong id="breadcrumb">Accueil</strong></span><a class="wallet" href="#profil" aria-label="Consulter mon solde CJ"><span aria-hidden="true">◇</span> <span data-profile="balance">—</span> <small>CJ</small></a></header>
+  <main id="main" tabindex="-1">
+    <section data-page="accueil" aria-labelledby="home-title">
+      <div class="page-heading"><div><p class="eyebrow">BIENVENUE CHEZ TOI</p><h1 id="home-title">Un moment pour jouer.</h1><p>Retrouve tes jeux et laisse la nuit t’inspirer.</p></div><span class="pill">CJAJLK Games · V2</span></div>
+      <div class="home-grid">
+        <div class="hero"><span class="pill">L’UNIVERS NOCTURNE</span><h2>La nuit ouvre<br>de nouveaux horizons.</h2><p>Des jeux pour explorer, ressentir<br>et recommencer à ton rythme.</p><a class="button" href="#jeux">Explorer les jeux <span aria-hidden="true">↗</span></a></div>
+        <article class="panel player-card"><p class="eyebrow">TA CARTE JOUEUR</p><div class="avatar" aria-hidden="true">☾</div><h2 data-profile="pseudo">Profil joueur</h2><p class="subtle" data-profile="status">Lecture du compte…</p><div class="player-balance"><strong data-profile="balance">—</strong><span>CJ Universels</span></div><div class="mini-stats"><div><strong data-profile="time">—</strong><span>Temps de jeu</span></div><div><strong data-profile="badges">—</strong><span>Badges</span></div></div><a class="text-link" href="#profil">Voir mon profil →</a></article>
+      </div>
+      <nav class="mobile-tiles" aria-label="Accès rapides mobile">
+        <a href="#profil"><span aria-hidden="true">◉</span><strong>Profil</strong><small>Ton espace joueur</small><b aria-hidden="true">↗</b></a>
+        <a href="#jeux"><span aria-hidden="true">✦</span><strong>Jeux</strong><small>À toi de jouer</small><b aria-hidden="true">↗</b></a>
+        <a href="#boutique"><span aria-hidden="true">◇</span><strong>Boutique</strong><small>La boutique CJ</small><b aria-hidden="true">↗</b></a>
+        <a href="#collections"><span aria-hidden="true">▦</span><strong>Collections</strong><small>Révèle tes nouveaux fonds</small><b aria-hidden="true">↗</b></a>
+        <a href="#apropos"><span aria-hidden="true">◎</span><strong>À propos</strong><small>Les univers CJAJLK</small><b aria-hidden="true">↗</b></a>
+      </nav>
+      <div class="desktop-discover"><div class="section-heading"><h2>Choisis ton évasion</h2><a class="text-link" href="#jeux">Tous les jeux →</a></div><div class="game-grid">
+        <a class="game-card" href="../games/attrape/"><img src="../assets/images/carte_attrape_les_tous.png" alt="" loading="lazy"><div><small>EXPLORATION & COLLECTION</small><h3>Attrape-les-tous <span>↗</span></h3><p>Attrape. Collectionne. Progresse.</p></div></a>
+        <a class="game-card" href="../games/breaker/"><img src="../assets/images/banner-breaker.png" alt="" loading="lazy"><div><small>ARCADE NOCTURNE</small><h3>Breaker Nocturne <span>↗</span></h3><p>Casse. Maîtrise. Découvre.</p></div></a>
+      </div><div class="discovery-links"><a class="panel" href="#boutique">◇ <strong>Boutique CJ</strong><span>Personnalise ton univers →</span></a><a class="panel" href="#collections">▦ <strong>Collections</strong><span>Quatre morceaux, un nouveau fond →</span></a><a class="panel" href="#apropos">◎ <strong>À propos</strong><span>Explore les univers CJAJLK →</span></a></div></div>
+    </section>
+    <section data-page="profil" aria-labelledby="profile-title" hidden>
+      <p class="eyebrow">TON ESPACE JOUEUR</p><h1 id="profile-title">Ma carte joueur</h1><p class="intro">Ton identité, tes aventures et les trésors qui t’accompagnent.</p>
+      <article class="panel profile-detail">
+        <div class="identity"><div class="avatar" aria-hidden="true">☾</div><div class="identity-text"><p class="eyebrow">CJAJLK GAMES · UNIVERS NOCTURNE</p><h2 data-profile="pseudo">Profil joueur</h2><p class="equipped-title" data-profile="selected">Aucun titre équipé</p><p data-profile="status" class="subtle"></p></div><button class="button" id="personalize" type="button">✧ Personnaliser</button></div>
+        <div class="stat-grid"><div><strong data-profile="balance">—</strong><span>CJ Universels</span></div><div><strong data-profile="time">—</strong><span>Temps de jeu total</span></div><div><strong data-profile="played">—</strong><span>Jeux joués</span></div><div><strong data-profile="badges">—</strong><span>Badges débloqués</span></div></div>
+      </article>
+      <div class="section-heading"><h2>Mes aventures</h2><span class="subtle">Activité enregistrée</span></div><div id="game-stats" class="detail-grid"></div><h2>Mes badges</h2><div id="badge-list" class="badge-list"></div>
+      <dialog id="customizer" aria-labelledby="customizer-title" aria-describedby="customizer-help"><div class="picker-header"><h2 id="customizer-title">Personnaliser ma carte</h2><button type="button" class="close-picker" aria-label="Fermer la personnalisation">✕</button></div><p id="customizer-help">Choisis un élément pour l’équiper. Tes éléments débloqués restent à toi, même lorsque tu en changes.</p><div id="owned-choices"></div><p id="equipment-status" role="status" aria-live="polite"></p></dialog>
+    </section>
+    <section data-page="jeux" aria-labelledby="games-title" hidden><p class="eyebrow">À TOI DE JOUER</p><h1 id="games-title">Les jeux</h1><p class="intro">Choisis ton prochain voyage dans l’univers Nocturne.</p><div class="game-grid">
+      <a class="game-card" href="../games/attrape/"><img src="../assets/images/carte_attrape_les_tous.png" alt=""><div><h2>Attrape-les-tous ↗</h2><p>Attrape. Collectionne. Progresse.</p><span class="text-link">Jouer →</span></div></a>
+      <a class="game-card" href="../games/breaker/"><img src="../assets/images/banner-breaker.png" alt=""><div><h2>Breaker Nocturne ↗</h2><p>Casse. Maîtrise. Découvre.</p><span class="text-link">Jouer →</span></div></a>
+      <a class="game-card" href="https://cjajlk.github.io/nocturne-velocity/" target="_blank" rel="noopener noreferrer"><img src="../assets/images/intro.png" alt=""><div><h2>Nocturne Velocity ↗</h2><p>Ride. Explore. Conquer.</p><span class="text-link">Ouvrir le jeu · nouvel onglet →</span></div></a>
+    </div></section>
+    <section data-page="boutique" aria-labelledby="shop-title" hidden><div class="shop-heading"><div><p class="eyebrow">PERSONNALISE TON UNIVERS</p><h1 id="shop-title">Boutique CJ</h1><p class="subtle">Des objets à garder, un profil à ton image.</p></div><div class="shop-wallet"><small>CJ Universels disponibles</small><strong id="shop-balance">—</strong> CJ</div></div><nav class="shop-categories" aria-label="Catégories boutique"><button type="button" data-shop-category="avatar" aria-pressed="true">Avatars</button><button type="button" data-shop-category="badge" aria-pressed="false">Badges / Titres</button><button type="button" data-shop-category="background" aria-pressed="false">Fonds de profil</button><button type="button" data-shop-category="collections" aria-pressed="false">Collections</button></nav><p id="shop-notice" class="subtle"></p><p id="shop-status" class="shop-status" role="status" aria-live="polite"></p><div id="shop-grid" class="shop-grid"></div></section>
+    <section data-page="collections" aria-labelledby="collections-title" hidden>
+      <p class="eyebrow">DES FRAGMENTS À COLLECTIONNER</p><h1 id="collections-title">Collections</h1>
+      <p class="intro">Révèle chaque illustration, morceau après morceau, avec tes CJ Universels gagnés en jouant. À 4/4, elle devient un fond pour ta carte joueur.</p>
+      <div class="collections-summary"><span>◇ <strong data-profile="balance">—</strong> CJ disponibles</span><span>4 morceaux · Un fond à garder</span></div>
+      <p id="collections-notice" class="panel" hidden></p>
+      <p id="collections-status" role="status" aria-live="polite" aria-atomic="true"></p>
+      <div id="collections-grid" class="collections-grid"></div>
+      <p class="collections-footnote">Des récompenses visuelles, sans avantage en jeu. Chaque morceau acquis reste à toi.</p>
+      <a class="text-link" href="../pages/library.html">Retrouver ma bibliothèque à gemmes →</a>
+    </section>
+    <section data-page="apropos" aria-labelledby="about-title" hidden><p class="eyebrow">CRÉER. JOUER. RÊVER.</p><h1 id="about-title">Les univers CJAJLK</h1><p class="intro">Une aventure indépendante pour retrouver le calme à travers le jeu, l’art et la création.</p><div class="detail-grid universe-grid">
+      <a class="panel" href="https://cjajlk.github.io/CJ-Focus-Chronicles/" target="_blank" rel="noopener noreferrer"><h2>Focus Chronicles ↗</h2><p>Un espace pour se concentrer et gérer son temps.</p><small>Ouvrir dans un nouvel onglet</small></a>
+      <a class="panel" href="https://cjajlk.github.io/relaxation-app/" target="_blank" rel="noopener noreferrer"><h2>Relaxation App ↗</h2><p>Une pause au rythme des ambiances de la nature.</p><small>Ouvrir dans un nouvel onglet</small></a>
+      <a class="panel" href="https://cjajlk.github.io/cjajlkart/" target="_blank" rel="noopener noreferrer"><h2>CJajlkArt ↗</h2><p>Peintures et créations dans un univers sensible et nocturne.</p><small>Ouvrir dans un nouvel onglet</small></a>
+      <article class="panel"><span class="pill">En développement</span><h2>Animat_CJajlk</h2><p>L’outil d’animation de l’écosystème CJAJLK.</p></article>
+    </div></section>
+    <noscript><p class="panel">Active JavaScript pour naviguer dans la V2 et afficher ton profil. <a href="../index.html">L’accueil classique reste accessible.</a></p></noscript>
+    <footer>© 2026 CJAJLK <span>Des jeux pour rêver.</span></footer>
+  </main>
+</div>
+<nav class="bottom-nav" aria-label="Navigation mobile"><a href="#accueil"><span aria-hidden="true">⌂</span>Accueil</a><a href="#jeux"><span aria-hidden="true">✦</span>Jeux</a><a href="#boutique"><span aria-hidden="true">◇</span>Boutique</a><a href="#profil"><span aria-hidden="true">◉</span>Profil</a></nav>
+</body>
+</html>

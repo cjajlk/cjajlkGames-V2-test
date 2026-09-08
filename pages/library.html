@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bibliothèque nocturne</title>
+    <link rel="stylesheet" href="../css/library.css" />
+</head>
+<body class="library-page">
+    <div class="library-header">
+        <h1>Bibliothèque nocturne</h1>
+        <p>Collectionnez les illustrations de la boutique et suivez votre progression.</p>
+    </div>
+
+    <div class="library-topbar">
+        <div class="badge" id="libraryProgressText">0 / 0</div>
+        <div class="badge" id="libraryGemCount">💎 0</div>
+    </div>
+
+    <div class="library-controls">
+        <div class="library-message" id="libraryMessage">Chargement de la bibliothèque...</div>
+        <div class="library-actions">
+            <button id="libraryUnlockButton" type="button">Débloquer — 25 💎</button>
+            <button id="libraryBackButton" type="button">← Retour</button>
+        </div>
+    </div>
+
+    <div class="library-gallery" id="libraryGallery"></div>
+
+    <div class="library-detail library-detail-pane hidden" id="libraryDetailPane">
+        <h3 id="libraryDetailTitle">Détail</h3>
+        <img id="libraryDetailImage" src="" alt="" />
+        <p id="libraryDetailStatus"></p>
+        <p id="libraryDetailDescription"></p>
+        <div class="library-detail-footer">
+            <button id="libraryDetailClose" class="library-detail-close" type="button">Fermer</button>
+        </div>
+    </div>
+
+    <script type="module" src="../js/library/library.js"></script>
+</body>
+</html>

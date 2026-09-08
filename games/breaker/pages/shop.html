@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <!-- Import model-viewer for 3D companions -->
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+        <style>
+        model-viewer.shop-model {
+            width: 100%;
+            height: 220px;
+            display: block;
+            background: transparent;
+        }
+        </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="titles.shop">Shop - Breaker</title>
+    <link rel="stylesheet" href="../css/shop.css">
+    <!-- doublon supprimé -->
+    <script src="../js/i18n.js"></script>
+    <script src="../js/profile.js"></script>
+    <script src="../js/shop.js"></script>
+</head>
+<body>
+    <div id="shop-container">
+        <header>
+            <button id="back-btn" data-i18n="shop.backToMenu">Back to Menu</button>
+            <h1 data-i18n="shop.title">Shop</h1>
+            <div id="currency"><span data-i18n="shop.diamondsLabel">Diamonds</span>: <span id="diamond-count">0</span></div>
+        </header>
+        <nav id="categories">
+            <button class="category-btn" data-category="companions" data-i18n="shop.categoryCompanions">Mascots</button>
+        </nav>
+        <div id="items-grid">
+            <!-- Items will be populated by JS -->
+        </div>
+    </div>
+</body>
+</html>

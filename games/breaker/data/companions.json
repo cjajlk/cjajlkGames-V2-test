@@ -1,0 +1,44 @@
+{
+  "companions": [
+    {
+      "id": "aube",
+      "name": "Aube",
+      "element": "void",
+      "unlocked": true,
+      "price": 0,
+      "description": "Le compagnon de départ, maître du vide."
+    },
+    {
+      "id": "aqua",
+      "name": "Aqua",
+      "element": "water",
+      "unlocked": false,
+      "price": 500,
+      "description": "Maître de l'eau et des courants."
+    },
+    {
+      "id": "ignis",
+      "name": "Ignis",
+      "element": "fire",
+      "unlocked": false,
+      "price": 500,
+      "description": "Gardien des flammes éternelles."
+    },
+    {
+      "id": "astral",
+      "name": "Astral",
+      "element": "light",
+      "unlocked": false,
+      "price": 500,
+      "description": "Porteur de lumière céleste."
+    },
+    {
+      "id": "flora",
+      "name": "Flora",
+      "element": "nature",
+      "unlocked": false,
+      "price": 500,
+      "description": "Gardienne de la nature sauvage."
+    }
+  ]
+}

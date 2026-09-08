@@ -1,0 +1,126 @@
+{
+  "levels": [
+    {
+      "id": 1,
+      "name": "Ville Renaissance",
+      "theme": "theme1_city_reborn",
+      "rows": 5,
+      "cols": 8,
+      "brickDensity": 0.9,
+      "brickHp": 1
+    },
+    {
+      "id": 2,
+      "name": "Quartier Nocturne",
+      "theme": "theme1_city_reborn",
+      "rows": 5,
+      "cols": 8,
+      "brickDensity": 0.8,
+      "brickHp": 2
+    },
+    {
+      "id": 3,
+      "name": "Cœur de la Cité",
+      "theme": "theme1_city_reborn",
+      "rows": 6,
+      "cols": 8,
+      "brickDensity": 0.7,
+      "brickHp": 3
+    },
+    {
+      "id": 4,
+      "name": "Tour Céleste",
+      "theme": "theme1_city_reborn",
+      "rows": 6,
+      "cols": 9,
+      "brickDensity": 0.55,
+      "brickHp": 4
+    },
+    {
+      "id": 5,
+      "name": "Portail Astral",
+      "theme": "theme1_city_reborn",
+      "rows": 7,
+      "cols": 9,
+      "brickDensity": 0.45,
+      "brickHp": 5
+    },
+    {
+      "id": 6,
+      "name": "⚔️ BOSS: Gardien de la Cité",
+      "theme": "theme1_city_reborn",
+      "isBoss": true,
+      "bossType": "city_guardian",
+      "rows": 8,
+      "cols": 10,
+      "brickDensity": 0.8,
+      "brickHp": 5,
+      "bossPhases": 3,
+      "moveSpeed": 1.5
+    },
+    {
+      "id": 7,
+      "name": "Aurore Éthérée",
+      "theme": "theme Sanctuaire Astral",
+      "rows": 5,
+      "cols": 8,
+      "brickDensity": 0.85,
+      "brickHp": 1,
+      "requiredBoss": 6
+    },
+    {
+      "id": 8,
+      "name": "Cristaux Flottants",
+      "theme": "theme Sanctuaire Astral",
+      "rows": 5,
+      "cols": 8,
+      "brickDensity": 0.75,
+      "brickHp": 2,
+      "requiredBoss": 6
+    },
+    {
+      "id": 9,
+      "name": "Rêve Lumineux",
+      "theme": "theme Sanctuaire Astral",
+      "rows": 6,
+      "cols": 8,
+      "brickDensity": 0.7,
+      "brickHp": 2,
+      "requiredBoss": 6
+    },
+    {
+      "id": 10,
+      "name": "Voûte Cosmique",
+      "theme": "theme Sanctuaire Astral",
+      "rows": 6,
+      "cols": 9,
+      "brickDensity": 0.65,
+      "brickHp": 3,
+      "requiredBoss": 6
+    },
+    {
+      "id": 11,
+      "name": "Cœur Universel",
+      "theme": "theme Sanctuaire Astral",
+      "rows": 7,
+      "cols": 9,
+      "brickDensity": 0.55,
+      "brickHp": 3,
+      "requiredBoss": 6
+    },
+    {
+      "id": 12,
+      "name": "⚔️ BOSS: Gardien Astral",
+      "theme": "theme Sanctuaire Astral",
+      "isBoss": true,
+      "bossType": "astral_guardian",
+      "rows": 8,
+      "cols": 10,
+      "brickDensity": 0.7,
+      "brickHp": 6,
+      "bossPhases": 3,
+      "moveSpeed": 1.2,
+      "requiredBoss": 6
+    }
+  ]
+}

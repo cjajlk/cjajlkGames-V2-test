@@ -1,0 +1,10 @@
+{
+    "targetSkins": [
+        {
+            "id": "target_blue",
+            "name": "Cible Bleue",
+            "img": "assets/orbes/orb_blue.png",
+            "cost": 0
+        }
+    ]
+}

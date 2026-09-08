@@ -1,0 +1,30 @@
+.collections-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 0;margin:0 0 24px;color:var(--muted);font-size:.85rem}
+.collections-summary>span:first-child{color:var(--gold);font-size:1rem}
+.collections-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:stretch}
+.collection-card{padding:20px;min-width:0;display:flex;flex-direction:column}
+.collection-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:10px}
+.collection-heading h2{font-size:1.13rem;margin:0;overflow-wrap:anywhere}
+.collection-count{flex:none;letter-spacing:.03em;font-size:.8rem;color:var(--gold)}
+.collection-subtitle{min-height:2.6em;margin-bottom:16px}
+.collection-preview{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));aspect-ratio:4/3;overflow:hidden;border:1px solid #625172;border-radius:12px;background:#19172b;isolation:isolate}
+.collection-piece{position:relative;overflow:hidden;min-width:0;min-height:0}
+.collection-piece img{position:absolute;width:200%;height:200%;max-width:none;object-fit:fill;pointer-events:none}
+.collection-piece.masked{display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(ellipse at top,#3d304c,#221f36);box-shadow:inset 0 0 0 1px #65517555;color:#b9a0d6;gap:3px}
+.piece-symbol{font-size:clamp(1.5rem,2.5vw,2.5rem);line-height:1.2;opacity:.8}
+.piece-number{font-size:.6rem;letter-spacing:.04em}
+.collection-complete-image{display:block;width:100%;height:100%;object-fit:fill;grid-column:1/-1;grid-row:1/-1}
+.collection-card progress{display:block;width:100%;height:5px;margin:18px 0 12px;border:none;border-radius:10px;overflow:hidden;accent-color:var(--accent);background:#302b43}
+.collection-card progress::-webkit-progress-bar{background:#302b43}
+.collection-card progress::-webkit-progress-value{background:var(--accent)}
+.collection-card progress::-moz-progress-bar{background:var(--accent)}
+.collection-price{font-size:.75rem;text-align:center;margin:0 0 14px;color:var(--muted)}
+.collection-card .button{width:100%;gap:6px;padding:12px 8px;font-size:.78rem;text-align:center;line-height:1.5;margin-top:auto;min-height:48px}
+.collection-reward{color:var(--gold);font-size:.78rem;text-align:center;margin:0 0 14px}
+.collection-equip-link{background:#332c44;color:#e3d4fa;border-color:#6f5c83}
+.insufficient-cj{margin:10px 0 0;text-align:center;color:var(--gold)}
+#collections-status:empty{display:none}
+#collections-status{padding:16px 20px;background:#27223a;border-left:3px solid var(--accent);border-radius:8px;color:var(--text);margin:0 0 24px}
+#collections-status.reward-message{border-color:var(--gold);color:var(--gold)}
+.collections-footnote{margin:26px 0 4px;font-size:.82rem}
+@media(min-width:761px) and (max-width:1200px){.collections-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collection-card:last-child{grid-column:auto}}
+@media(max-width:760px){.collections-grid{grid-template-columns:minmax(0,1fr);gap:22px}.collections-summary{align-items:flex-start;flex-direction:column;gap:6px;font-size:.78rem}.collection-card{padding:18px}.collection-heading h2{font-size:1.15rem}.collection-subtitle{min-height:0}.collection-card .button{font-size:.85rem;min-height:50px}.piece-symbol{font-size:2rem}.collection-preview{aspect-ratio:4/3}}

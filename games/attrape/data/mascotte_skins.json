@@ -1,0 +1,251 @@
+{
+  "skins": [
+    {
+      "id": "girl1",
+      "name": "Eve",
+      "img": "assets/images/mascotte/girl1.png",
+
+      "img_idle": "assets/images/mascotte/girl1.png",
+      "img_blink": "assets/images/mascotte/girl1_blink.png",
+      "img_happy": "assets/images/mascotte/girl1_happy.png",
+      "img_sad": "assets/images/mascotte/girl1_sad.png",
+
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": false,
+      "category": "normal"
+    },
+    {
+      "id": "girl2",
+      "name": "luna",
+      "img": "assets/images/mascotte/girl2.png",
+
+      "img_idle": "assets/images/mascotte/girl2.png",
+      "img_blink": "assets/images/mascotte/girl2.png",
+      "img_happy": "assets/images/mascotte/girl2.png",
+      "img_sad": "assets/images/mascotte/girl2.png",
+
+      "costCoins": 50,
+      "costGems": 0,
+      "premium": false,
+      "category": "normal"
+    },
+    {
+      "id": "girl3",
+      "name": "Aria",
+      "img": "assets/images/mascotte/girl3.png",
+
+      "img_idle": "assets/images/mascotte/girl3.png",
+      "img_blink": "assets/images/mascotte/girl3.png",
+      "img_happy": "assets/images/mascotte/girl3.png",
+      "img_sad": "assets/images/mascotte/girl3.png",
+
+      "costCoins": 2500,
+      "costGems": 0,
+      "premium": false,
+      "category": "normal"
+    },
+    {
+      "id": "girl4",
+      "name": "Morgan",
+      "img": "assets/images/mascotte/girl4.png",
+
+      "img_idle": "assets/images/mascotte/girl4.png",
+      "img_blink": "assets/images/mascotte/girl4.png",
+      "img_happy": "assets/images/mascotte/girl4.png",
+      "img_sad": "assets/images/mascotte/girl4.png",
+
+      "costCoins": 3500,
+      "costGems": 0,
+      "premium": false,
+      "category": "normal"
+    },
+    {
+      "id": "girl5",
+      "name": "lola",
+      "img": "assets/images/mascotte/girl5.png",
+
+      "img_idle": "assets/images/mascotte/girl5.png",
+      "img_blink": "assets/images/mascotte/girl5.png",
+      "img_happy": "assets/images/mascotte/girl5.png",
+      "img_sad": "assets/images/mascotte/girl5.png",
+
+      "costCoins": 4500,
+      "costGems": 0,
+      "premium": false,
+      "category": "normal"
+    },
+
+    {
+      "id": "prem1",
+      "name": "Jane",
+      "img": "assets/images/mascotte/girl6.png",
+
+      "img_idle": "assets/images/mascotte/girl6.png",
+      "img_blink": "assets/images/mascotte/girl6.png",
+      "img_happy": "assets/images/mascotte/girl6.png",
+      "img_sad": "assets/images/mascotte/girl6.png",
+
+      "costCoins": 0,
+      "costGems": 2000,
+      "premium": true,
+      "category": "premium"
+    },
+    {
+      "id": "prem2",
+      "name": "Jane sportive",
+      "img": "assets/images/mascotte/girl7.png",
+
+      "img_idle": "assets/images/mascotte/girl7.png",
+      "img_blink": "assets/images/mascotte/girl7.png",
+      "img_happy": "assets/images/mascotte/girl7.png",
+      "img_sad": "assets/images/mascotte/girl7.png",
+
+      "costCoins": 0,
+      "costGems": 2000,
+      "premium": true,
+      "category": "premium"
+    },
+    {
+      "id": "prem3",
+      "name": "Kiara ",
+      "img": "assets/images/mascotte/girl8.png",
+
+      "img_idle": "assets/images/mascotte/girl8.png",
+      "img_blink": "assets/images/mascotte/girl8.png",
+      "img_happy": "assets/images/mascotte/girl8.png",
+      "img_sad": "assets/images/mascotte/girl8.png",
+
+      "costCoins": 0,
+      "costGems": 2000,
+      "premium": true,
+      "category": "premium"
+    },
+    {
+      "id": "Kiara-1futuriste",
+      "name": "Kiara-1futuriste",
+      "img": "assets/evenements/futuriste/kiara-1futuriste.png",
+      
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "premium",
+      "packOnly": "pack_futuriste"
+    },
+     {
+      "id": "Kiara-2futuriste",
+      "name": "Kiara-2futuriste",
+      "img": "assets/evenements/futuriste/kiara-2futuriste.png",
+      
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "premium",
+      "packOnly": "pack_futuriste"
+    },
+     {
+      "id": "micho",
+      "name": "Micho",
+      "img": "assets/evenements/paques/micho.png",
+      
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "premium",
+      "packOnly": "pack_paques"
+    },
+    {
+      "id": "prem5",
+      "name": "ALIA",
+      "img": "assets/images/mascotte/alia.png",
+
+      "img_idle": "assets/images/mascotte/alia.png",
+      "img_blink": "assets/images/mascotte/alia.png",
+      "img_happy": "assets/images/mascotte/alia.png",
+      "img_sad": "assets/images/mascotte/alia.png",
+
+      "costCoins": 0,
+      "costGems": 2000,
+      "premium": true,
+      "category": "premium"
+    },
+    {
+      "id": "prem6",
+      "name": "CJAJLK",
+      "img": "assets/images/mascotte/cjajlk.png",
+
+      "img_idle": "assets/images/mascotte/cjajlk.png",
+      "img_blink": "assets/images/mascotte/cjajlk.png",
+      "img_happy": "assets/images/mascotte/cjajlk.png",
+      "img_sad": "assets/images/mascotte/cjajlk.png",
+
+      "costCoins": 0,
+      "costGems": 2000,
+      "premium": true,
+      "category": "premium"
+    },
+
+    {
+      "id": "noel_fille",
+      "name": "Fille Noël",
+      "img": "assets/evenements/noel/girl.png",
+
+      "img_idle": "assets/evenements/noel/girl.png",
+      "img_blink": "assets/evenements/noel/girl.png",
+      "img_happy": "assets/evenements/noel/girl.png",
+      "img_sad": "assets/evenements/noel/girl.png",
+
+      "premium": true,
+      "category": "noel",
+      "disabled": true
+    },
+    {
+      "id": "noel_garcon",
+      "name": "Garçon Noël",
+      "img": "assets/evenements/noel/boy.png",
+
+      "img_idle": "assets/evenements/noel/boy.png",
+      "img_blink": "assets/evenements/noel/boy.png",
+      "img_happy": "assets/evenements/noel/boy.png",
+      "img_sad": "assets/evenements/noel/boy.png",
+
+      "premium": true,
+      "category": "noel",
+       "disabled": true
+    },
+    {
+      "id": "jane-stvalentin",
+      "name": "jane-stvalentin",
+      "img": "assets/evenements/st-valentin/jane-stvalentin.png",
+
+      
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "premium",
+      "packOnly": "pack_st_valentin"
+    },
+    {
+      "id": "eve-stvalentin",
+      "name": "eve-stvalentin",
+      "img": "assets/evenements/st-valentin/eve-stvalentin.png",
+      
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "premium",
+      "packOnly": "pack_st_valentin"
+    },
+     {
+      "id": "cjajlk-stvalentin",
+      "name": "cjajlk-stvalentin",
+      "img": "assets/evenements/st-valentin/cjajlk-stvalentin.png",
+
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "premium",
+      "packOnly": "pack_st_valentin"
+      }
+  ]
+}

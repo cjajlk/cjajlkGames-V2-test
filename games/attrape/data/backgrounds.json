@@ -1,0 +1,134 @@
+{
+  "backgrounds": [
+    {
+      "id": "normal1",
+      "name": "Fond Classique",
+      "img": "assets/fonds/normal1.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    
+    
+
+     {
+      "id": "manga1",
+      "name": "Fond Manga 1",
+      "img": "assets/fonds/fond-manga1.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    {
+      "id": "manga3",
+      "name": "Fond Manga 3",
+      "img": "assets/fonds/fond-manga3.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    {
+      "id": "manga4",
+      "name": "Fond Manga 4",
+      "img": "assets/fonds/fond-manga4.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    {
+      "id": "manga5",
+      "name": "Fond Manga 5",
+      "img": "assets/fonds/fond-manga5.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    {
+      "id": "manga6",
+      "name": "Fond Manga 6",
+      "img": "assets/fonds/fond-manga6.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    {
+      "id": "manga7",
+      "name": "Fond Manga 7",
+      "img": "assets/fonds/fond-manga7.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    {
+      "id": "fond-futuriste1",
+      "name": "Fond Futuriste 1",
+      "img": "assets/evenements/futuriste/fond-futuriste1.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "disabled": true
+    },
+    {
+      "id": "fond-futuriste2",
+      "name": "Fond Futuriste 2",
+      "img": "assets/evenements/futuriste/fond-futuriste2.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "disabled": true
+    },
+     {
+      "id": "fond-paque",
+      "name": "Fond paque",
+      "img": "assets/evenements/paques/fond-paque.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "disabled": true
+    },
+    {
+      "id": "manga9",
+      "name": "Fond Manga 9",
+      "img": "assets/fonds/fond-manga9.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+     {
+      "id": "manga10",
+      "name": "Fond Manga 10",
+      "img": "assets/fonds/fond-manga10.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+     {
+      "id": "manga11",
+      "name": "Fond Manga 11",
+      "img": "assets/fonds/fond-manga11.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    {
+      "id": "manga12",
+      "name": "Fond Manga 12",
+      "img": "assets/fonds/fond-manga12.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+     {
+      "id": "manga13",
+      "name": "Fond Manga 13",
+      "img": "assets/fonds/fond-manga13.png",
+      "costCoins": 0,
+      "costGems": 0
+    },
+    
+    {
+      "id": "noel1",
+      "name": "Fond Noël 1",
+      "img": "assets/evenements/noel/fond-noel1.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "category": "noel",
+      "disabled": true
+    },
+    {
+      "id": "noel2",
+      "name": "Fond Noël 2",
+      "img": "assets/evenements/noel/fond-noel2.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "category": "noel",
+      "disabled": true
+    }
+  ]
+}

@@ -1,0 +1,2828 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    background: #0e0a1b; /* ton fond violet/noir nocturne */
+}
+
+#gameCanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+
+/* ========== Boutique (ancienne version, z-index nettoyé) ========== */
+
+.shop-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    /* z-index unifié plus bas via #shopOverlay */
+}
+
+.shop-overlay.show {
+    display: flex;
+}
+
+.shop-panel {
+    background: #140020;
+    padding: 20px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 700px;
+    color: white;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.shop-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.tab-btn.active {
+    background: #4b0082;
+}
+
+.shop-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+}
+
+.skin-item {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+
+.skin-item img {
+    width: 100%;
+    max-height: 100px;
+    object-fit: contain;
+}
+
+#gameCanvas { 
+    background: #111;
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #444;
+}
+
+
+
+/* ============================
+   🌙 Boutique Nocturne
+   ============================ */
+
+.shop-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(12px);
+    background: rgba(10, 8, 20, 0.55);
+}
+
+.shop-overlay.visible {
+    display: flex;
+}
+
+.shop-panel {
+    background: rgba(40, 30, 80, 0.40);
+    border: 1px solid rgba(160, 140, 255, 0.4);
+    padding: 30px 40px;
+    border-radius: 25px;
+    width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 0 35px rgba(120, 90, 255, 0.25);
+    position: relative;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* === BOUTON FERMER FLOTTANT (BAS DROITE) === */
+.close-btn {
+    position: fixed;
+    bottom: 22px;                   /* distance du bas */
+    right: 22px;                    /* distance de la droite */
+    z-index: 6000 !important;
+
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;             /* rond */
+    background: linear-gradient(135deg, #6a4bff, #9d6dff);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 26px;
+    color: white;
+    cursor: pointer;
+
+    box-shadow: 0 0 18px rgba(140, 100, 255, 0.45);
+    backdrop-filter: blur(6px);
+    transition: 0.25s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 26px rgba(170, 120, 255, 0.65);
+}
+
+
+
+.shop-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 6px;
+    font-size: 18px;
+    background: rgba(120, 90, 255, 0.35);
+    border: none;
+    border-radius: 12px;
+    color: #eee;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #7b5cff, #5c4df0);
+}
+
+.shop-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 25px;
+    padding-bottom: 20px;
+}
+.shop-item {
+    background: rgba(25, 18, 45, 0.55);
+    border: 1px solid rgba(150, 120, 255, 0.25);
+    border-radius: 18px;
+    padding: 15px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+.shop-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+.shop-item h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #e6e1ff;
+}
+
+.shop-item p {
+    font-size: 15px;
+    margin: 4px 0 10px;
+    color: #c8b8ff;
+}
+.shop-buy-btn {
+    padding: 10px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6f4fff, #4f3be7);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.shop-buy-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px #8f6fff;
+}
+
+.shop-buy-btn:active {
+    transform: scale(0.95);
+}
+
+.shop-item::before {
+    content: "";
+    display: block;
+    width: 80%;
+    height: 1px;
+    margin: 0 auto 10px;
+    background: rgba(120, 90, 255, 0.15);
+}
+
+
+
+/* Texte du score */
+#hudScore {
+    color: #fff;
+    font-size: 28px;
+    font-family: "Poppins", sans-serif;
+    text-shadow: 0 0 10px #a085ff;
+}
+
+/* Texte des ratés */
+#hudmissed {
+    color: #f4ebff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-shadow: 0 0 4px rgba(160, 130, 255, 0.55);
+}
+
+/* Animation pop du score */
+@keyframes scorePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.30); text-shadow: 0 0 18px #d2b7ff; }
+    100% { transform: scale(1); }
+}
+
+.score-anim {
+    animation: scorePop 0.25s ease-out;
+}
+
+
+
+/* Boutons rapides en haut à droite */
+#quickButtons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+
+.options-gear {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    width: 54px;
+    height: 54px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(12, 20, 40, 0.82);
+    color: #ffffff;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 60;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(6px);
+    transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.options-gear:hover {
+    transform: translateY(-2px) rotate(8deg);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+    background: rgba(18, 30, 58, 0.9);
+}
+
+.options-gear:active {
+    transform: translateY(0) rotate(0deg) scale(0.98);
+}
+
+@media (max-width: 600px) {
+    .options-gear {
+        width: 48px;
+        height: 48px;
+        font-size: 22px;
+        bottom: 12px;
+        right: 12px;
+    }
+}
+.quick-btn {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+
+    background: rgba(40, 20, 70, 0.55);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 0 12px rgba(150, 120, 255, 0.45);
+
+    transition: transform 0.15s ease, box-shadow 0.2s;
+}
+
+.quick-btn:hover {
+    transform: scale(1.15);
+    box-shadow: 0 0 18px rgba(170, 130, 255, 0.75);
+}
+
+.quick-btn:active {
+    transform: scale(0.92);
+}
+
+.hud-buttons {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 12px;
+}
+
+
+
+.level-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,5,25,0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .35s ease;
+}
+
+.level-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.level-panel {
+    background: rgba(40,20,80,0.85);
+    border: 2px solid rgba(180,140,255,0.4);
+    padding: 40px;
+    border-radius: 15px;
+    width: 300px;
+    text-align: center;
+    color: white;
+
+    transform: scale(0.8);
+    opacity: 0;
+    animation: levelPop .35s forwards;
+}
+
+@keyframes levelPop {
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.level-panel button {
+    margin-top: 20px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #9f73ff;
+    color: white;
+    font-size: 18px;
+}
+
+/* Quand le menu est visible */
+#mainMenu.menu-visible {
+    display: flex;
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ============================
+   🌙 Toast Niveau (en haut)
+   ============================ */
+.level-toast {
+    position: fixed;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 28px;
+    font-size: 26px;
+    font-family: "Poppins", sans-serif;
+    color: #fff;
+    background: rgba(120, 80, 255, 0.45);
+    border: 2px solid rgba(190, 160, 255, 0.6);
+    border-radius: 12px;
+    text-shadow: 0 0 12px rgba(180, 150, 255, 1);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transition:
+        top 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.45s ease-out;
+}
+
+.level-toast.visible {
+    top: 30px;
+    opacity: 1;
+}
+
+.level-toast.hidden {
+    pointer-events: none;
+}
+
+/* Transition douce sur le canvas */
+#gameCanvas {
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.canvas-glow {
+    filter: brightness(1.2) blur(2px);
+    transition: filter 0.9s ease;
+}
+
+/* ================================================
+   🌌 TRANSITION CINÉMATIQUE DE FOND
+   ================================================ */
+
+/* Canvas fade + blur + glow */
+#gameCanvas {
+    transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.9s ease;
+}
+
+/* Glow doux */
+.canvas-glow {
+    filter: brightness(1.25) blur(2px);
+}
+
+/* Fondu radial */
+.canvas-radial {
+    mask-image: radial-gradient(circle at center, transparent 10%, black 80%);
+    transition: mask-image 0.9s ease;
+}
+
+/* Mascotte spéciale dialogues */
+
+#dialogMascotte {
+    position: fixed;
+    bottom: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+#dialogMascotte.visible {
+    opacity: 1;
+    display: flex;
+}
+
+#dialogMascotteImg {
+    width: 220px;
+    filter: drop-shadow(0 0 14px rgba(150,110,255,0.8));
+}
+
+#dialogBubble {
+    margin-top: 10px;
+    padding: 10px 25px;
+    background: rgba(25, 15, 55, 0.8);
+    color: white;
+    border-radius: 14px;
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    backdrop-filter: blur(6px);
+}
+
+/* HUD */
+#hudContainer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-size: 20px;
+    font-weight: 600;
+    text-shadow: 0 0 10px #000;
+    z-index: 999;
+}
+
+.hudBox {
+    background: rgba(0, 0, 0, 0.45);
+    padding: 6px 12px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    display: inline-block;
+    min-width: 80px;
+}
+
+#campaignHUD {
+    position: fixed;
+    top: 94px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(calc(100% - 24px), 420px);
+    background: rgba(18, 14, 44, 0.92);
+    border: 1px solid rgba(180, 130, 255, 0.4);
+    border-radius: 14px;
+    padding: 9px 12px;
+    color: #fff;
+    z-index: 18;
+    display: grid;
+    gap: 4px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    text-align: left;
+}
+
+#campaignHUD .campaign-hud-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+#campaignHUD .campaign-world {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+#campaignHUD .campaign-level-name {
+    margin-top: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f7f0ff;
+}
+
+#campaignHUD .campaign-level-badge {
+    background: rgba(142, 98, 255, 0.16);
+    color: #f1e8ff;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+#campaignHUD .campaign-objective {
+    font-size: 0.96rem;
+    color: #dccfff;
+    line-height: 1.35;
+}
+
+@media (max-width: 600px) {
+    #campaignHUD {
+        top: 100px;
+        width: min(calc(100% - 24px), 360px);
+        padding: 8px 10px;
+    }
+
+    #campaignHUD .campaign-hud-row {
+        gap: 6px;
+    }
+}
+
+.shop-gems {
+    text-align: right;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffd86b;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.8);
+}
+
+/* 💎 HUD des gemmes bien lisible */
+#hudGems {
+    color: #ffd86b;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+}
+
+.pack-img {
+    width: 240px;
+    height: auto;
+    object-fit: contain;
+}
+
+.shop-pack {
+    position: relative;
+}
+
+.pack-tag-inactive,
+.pack-tag-owned {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 10px;
+    letter-spacing: 0.2px;
+}
+
+.pack-tag-inactive {
+    background: rgba(80, 70, 110, 0.6);
+    color: #c9b6ff;
+    border: 1px solid rgba(160, 140, 255, 0.3);
+}
+
+.pack-tag-owned {
+    background: rgba(60, 50, 90, 0.65);
+    color: #d8c8ff;
+    border: 1px solid rgba(180, 160, 255, 0.4);
+    text-shadow: 0 0 6px rgba(160, 120, 255, 0.6);
+}
+
+/* Assure-toi que les informations sur les pièces et gemmes sont visibles */
+/* Style des informations sur les coins et gemmes */
+#coinsAndGemsDisplay {
+    position: absolute;
+    top: 10px; /* Ajuste la distance depuis le haut */
+    right: 20px; /* Ajuste la distance depuis la droite */
+    z-index: 2000; /* S'assurer qu'ils sont au-dessus de la croix et autres éléments */
+    background: rgba(0, 0, 0, 0.5); /* Un fond légèrement transparent pour mieux les voir */
+    color: #fff; /* Blanc pour la lisibilité */
+    padding: 5px 10px; /* Un peu de padding pour un meilleur espacement */
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#coinsAndGemsDisplay  {
+    margin-right: 10px; /* Espacement entre les coins et les gemmes */
+}
+
+#hudGems {
+    visibility: visible; /* S'assure que l'élément est visible */
+    opacity: 1;
+}
+
+#shopGems {
+    visibility: visible; /* S'assure que l'élément est visible dans la boutique */
+    opacity: 1;
+    z-index: 1000; /* S'assurer qu'ils sont au-dessus des autres éléments si nécessaire */
+}
+
+
+
+/* 🌙 PROFIL — Overlay */
+.profile-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    background: rgba(10, 8, 20, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 10001;
+}
+
+.options-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    background: rgba(10, 8, 20, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 10002;
+}
+
+.options-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.options-panel {
+    background: rgba(40, 30, 80, 0.35);
+    border: 1px solid rgba(160, 140, 255, 0.35);
+    backdrop-filter: blur(20px);
+    padding: 28px 32px;
+    width: 520px;
+    border-radius: 24px;
+    box-shadow: 0 0 40px rgba(120, 90, 255, 0.3);
+    animation: fadeInScale 0.4s ease forwards;
+    position: relative;
+}
+
+.options-section {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(160, 140, 255, 0.15);
+}
+
+.options-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.options-label {
+    color: #e6e1ff;
+    font-size: 16px;
+}
+
+.options-btn {
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(160, 140, 255, 0.35);
+    background: rgba(60, 45, 110, 0.7);
+    color: #efe9ff;
+    cursor: pointer;
+}
+
+.options-btn.secondary {
+    background: rgba(55, 45, 80, 0.75);
+}
+
+.options-btn.danger {
+    background: rgba(120, 70, 130, 0.75);
+    border: 1px solid rgba(200, 140, 255, 0.45);
+}
+
+.options-select {
+    background: rgba(30, 20, 60, 0.7);
+    color: #efe9ff;
+    border: 1px solid rgba(160, 140, 255, 0.35);
+    border-radius: 10px;
+    padding: 6px 10px;
+}
+
+.reset-card {
+    width: min(420px, 90vw);
+}
+
+.reset-warning {
+    font-size: 13px;
+    color: #d9cfff;
+    margin: 8px 0 6px;
+}
+
+.reset-hint {
+    font-size: 12px;
+    color: #c9b6ff;
+    margin-bottom: 10px;
+}
+
+.reset-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.profile-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* Panel */
+.profile-panel {
+    background: rgba(40, 30, 80, 0.35);
+    border: 1px solid rgba(160, 140, 255, 0.35);
+    backdrop-filter: blur(20px);
+    padding: 35px 45px;
+    width: 520px;
+    border-radius: 28px;
+    box-shadow: 0 0 40px rgba(120, 90, 255, 0.3);
+    animation: fadeInScale 0.4s ease forwards;
+}
+
+@keyframes fadeInScale {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.profile-close {
+    background: none;
+    border: none;
+    color: #ddd;
+    font-size: 22px;
+    float: right;
+    cursor: pointer;
+}
+
+/* Pseudo */
+.profile-pseudo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-pseudo {
+    font-size: 34px;
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 0 0 12px #a088ff;
+}
+
+.profile-edit-btn {
+    background: rgba(100, 80, 200, 0.4);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 10px;
+    color: #eae2ff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.profile-edit-btn:hover {
+    background: rgba(140, 110, 255, 0.6);
+}
+
+/* Stats */
+.profile-stats {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.profile-stat {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+    color: #e8e3ff;
+    font-size: 18px;
+}
+
+/* Titres */
+.profile-titles-list {
+    margin-top: 25px;
+}
+
+.titles-label {
+    color: #d6ccff;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.profile-title-badge {
+    background: rgba(150, 120, 255, 0.25);
+    padding: 10px 15px;
+    border-radius: 15px;
+    margin: 5px 0;
+    color: #fff;
+    font-size: 16px;
+    box-shadow: 0 0 12px rgba(150, 120, 255, 0.3);
+}
+
+/* 🌙 Badge Joueur dans le Menu Principal */
+.player-badge {
+    text-align: center;
+    font-size: 20px;
+    color: #e8e0ff;
+    text-shadow: 0 0 10px #9b7dff;
+    margin-bottom: 25px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.player-badge.visible {
+    opacity: 1;
+}
+
+/* 🌌 Overlay Sélecteur de titre */
+.selector-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(14px);
+    background: rgba(15, 10, 40, 0.60);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.selector-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* 🌙 Panel avec halo + animation */
+.selector-panel {
+    background: rgba(40, 30, 90, 0.42);
+    border: 1px solid rgba(170, 150, 255, 0.45);
+    padding: 30px 40px;
+    border-radius: 28px;
+    width: 420px;
+    position: relative;
+    backdrop-filter: blur(22px);
+    box-shadow:
+        0 0 25px rgba(140, 100, 255, 0.45),
+        0 0 80px rgba(110, 80, 255, 0.35),
+        inset 0 0 20px rgba(180, 160, 255, 0.25);
+    transform: translateY(15px);
+    opacity: 0;
+    animation: selectorFadeIn 0.45s ease forwards;
+}
+
+/* Animation popup */
+@keyframes selectorFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Bouton fermer */
+.close-selector {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    color: #eee4ff;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.close-selector:hover {
+    transform: scale(1.15);
+    color: #ffffff;
+}
+
+/* Liste des titres */
+.selector-list {
+    margin-top: 22px;
+}
+
+/* Élément de titre */
+.selector-item {
+    padding: 14px 18px;
+    background: rgba(110, 80, 200, 0.30);
+    border: 1px solid rgba(190, 160, 255, 0.40);
+    border-radius: 18px;
+    color: #f0eaff;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* Hover */
+.selector-item:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 18px rgba(180, 130, 255, 0.45);
+    background: rgba(130, 100, 230, 0.45);
+}
+
+/* Sélectionné */
+.selector-item.active {
+    background: rgba(180, 140, 255, 0.55);
+    border-color: #ffffff;
+    box-shadow:
+        0 0 18px rgba(200, 170, 255, 0.55),
+        inset 0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+.profile-title.hidden-text {
+    opacity: 0;
+}
+
+/* =============================
+   🌙 PERSONNAGES DU MENU
+   ============================= */
+#menuCharacters {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.menu-character {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-120%);
+    height: 340px;
+    pointer-events: none;
+}
+
+.menu-orb {
+    position: absolute;
+    bottom: 260px;
+    left: 50%;
+    transform: translateX(60%);
+    width: 140px;
+    pointer-events: none;
+}
+
+#menuBubble {
+    position: absolute;
+    bottom: 330px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(30,20,50,0.85);
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity .4s;
+}
+
+#menuBubble.visible {
+    opacity: 1;
+}
+
+/* --- Hiérarchie z-index propre --- */
+
+/* Base (jeu) */
+#gameCanvas {
+    z-index: 10 !important;
+}
+
+/* HUD */
+#hudContainer, #quickButtons, #timerBarContainer {
+    z-index: 20 !important;
+}
+
+
+
+/* Bulle de dialogue */
+#menuBubble {
+    z-index: 45 !important;
+}
+
+/* Boutique */
+#shopOverlay {
+    z-index: 100 !important;
+}
+
+/* Profil */
+#profileOverlay {
+    z-index: 150 !important;
+}
+
+/* Sélecteur de titre */
+#titleSelectorOverlay {
+    z-index: 200 !important;
+}
+
+/* Pause */
+#pauseOverlay {
+    z-index: 300 !important;
+}
+
+/* Overlays de niveau / toasts */
+.level-overlay {
+    z-index: 500 !important;
+}
+.level-toast {
+    z-index: 600 !important;
+}
+
+
+
+#mainMenu.hidden {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    display: none !important;
+}
+
+/* Suppression totale du voile dans le jeu */
+#mainMenu.hidden,
+#mainMenu.hidden * {
+    background: transparent !important;
+    backdrop-filter: none !important;
+}
+
+
+
+
+
+
+#hudXP {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    min-width: 140px;
+    font-size: 12px;
+}
+
+#hudXPBar {
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+#hudXPFill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #7b5cff, #20e3b2);
+    transition: width 0.25s ease-out;
+}
+
+#hudXPLabel {
+    color: #eee;
+    text-shadow: 0 0 3px rgba(0,0,0,0.7);
+}
+
+.title-choice-btn {
+    display: block;
+    width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.title-choice-btn:hover {
+    background-color: rgba(255,255,255,0.25);
+}
+/* HUD XP */
+.xp-hud {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    z-index: 9999;
+    color: white;
+    font-family: Poppins, sans-serif;
+    font-size: 14px;
+}
+
+.xp-text {
+    font-weight: 600;
+    text-shadow: 0 0 5px #8fd9ff;
+}
+
+.xp-bar-container {
+    margin-top: 5px;
+    width: 180px;
+    height: 10px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.xp-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #6ab7ff, #b78aff);
+    border-radius: 10px;
+    transition: width 0.6s ease-in-out;
+    box-shadow: 0 0 8px #75aaff;
+}
+
+
+    /* Réduction des boutons menu */
+    #mainMenu .menu-btn {
+        width: 90%;
+        font-size: 1.3rem;
+        padding: 14px 0;
+    }
+
+   
+
+    /* Réduction HUD */
+    #hudContainer {
+        transform: scale(0.85);
+        transform-origin: top left;
+    }
+
+
+@media (max-width: 600px) {
+
+    #mainMenu .menu-panel {
+        width: 90%;
+        margin: 0%;
+        transform: translateY(0);
+    }
+
+   
+
+    .menu-bubble {
+        font-size: 1rem;
+        width: 90%;
+    }
+}
+canvas {
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: contain;
+}
+
+
+
+
+.pause-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 5, 20, 0.55);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.pause-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.pause-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.pause-box {
+    width: min(420px, 90%);
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(30, 15, 60, 0.75);
+    border: 1px solid rgba(150, 120, 255, 0.25);
+    box-shadow: 0 0 40px rgba(120, 80, 255, 0.25);
+    text-align: center;
+    animation: pop 0.25s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(.85); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+.pause-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 12px;
+    border-radius: 12px;
+    background: #6a42ff;
+    color: #fff;
+    border: none;
+    font-size: 1.1rem;
+}
+
+.pause-btn.quit {
+    background: #ff4e6a;
+}
+
+
+
+
+/* Animation du popup pour une transition douce */
+.gem-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;  /* Masqué par défaut */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0; /* D'abord caché */
+    transition: opacity 0.4s ease-in-out; /* Animation pour adoucir l'apparition */
+}
+
+.gem-popup.visible {
+    opacity: 1;  /* Devenir visible lorsqu'on ajoute "visible" */
+    display: flex;  /* Afficher le popup */
+}
+
+
+
+
+
+/* Masquer le popup initialement */
+.hidden {
+    display: none !important;  /* Utiliser !important pour être sûr que ce style est appliqué */
+}
+/* Le fond du popup */
+.gem-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Fond sombre */
+    display: none;  /* Masqué par défaut */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;  /* Assurez-vous qu'il se trouve au-dessus des autres éléments */
+    opacity: 0;  /* Commencez caché */
+    transition: opacity 0.4s ease-in-out; /* Animation douce */
+}
+
+/* Le contenu du popup */
+.gem-popup-content {
+    background-color: rgba(20, 20, 40, 0.9); /* Fond bleu/noir légèrement transparent */
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6); /* Ombre douce */
+    z-index: 10000; /* Assurer que le contenu est devant */
+}
+
+/* Le texte du popup */
+.gem-popup-content h3 {
+    color: #bb86fc;  /* Violet clair pour le titre */
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.gem-popup-content p {
+    color: #fff;  /* Texte blanc pour une meilleure lisibilité */
+    margin: 15px 0;
+}
+
+/* Le bouton de fermeture */
+.gem-popup-content button {
+    padding: 10px;
+    background-color: #6200ea; /* Violet pour le bouton */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gem-popup-content button:hover {
+    background-color: #3700b3; /* Violet plus foncé au survol */
+}
+
+/* Ajouter la classe visible pour l'animation */
+.gem-popup.visible {
+    opacity: 1;  /* Rendre le popup visible */
+    display: flex;  /* Afficher le popup */
+}
+
+/* 🌙 MENU PRINCIPAL - Style Douce Nocturne */
+#mainMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background: rgba(15, 10, 30, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.4s ease;
+    z-index: 5;  /* Réduit le z-index du menu pour permettre à la mascotte d'être au-dessus */
+}
+
+
+
+/* 🌙 MASOCTTE DE FIN DE PARTIE - Positionner au-dessus de tout */
+#endGameMascotte {
+    position: fixed;  /* Fixe la mascotte en haut de l'écran */
+    bottom: 60px;  /* Ajuste la position de la mascotte */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100000; /* Assurer que la mascotte est au-dessus de tout */
+    opacity: 1;
+    animation: fadeInMascotte 1s ease-in-out;
+}
+
+/* Animation de la mascotte */
+@keyframes fadeInMascotte {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+#mainMenu.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.menu-panel {
+    background: rgba(40, 30, 80, 0.35);
+    border: 1px solid rgba(160, 140, 255, 0.35);
+    padding: 40px 60px;
+    border-radius: 30px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 40px rgba(120, 90, 255, 0.25);
+    text-align: center;
+    animation: menuFade 0.6s ease forwards;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Assure que les éléments soient espacés uniformément */
+}
+
+@keyframes menuFade {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+.menu-title {
+    font-size: 48px;
+    font-weight: 600;
+    color: #d8d2ff;
+    text-shadow: 0 0 20px #8b78ff;
+    margin-bottom: 40px;
+}
+
+.menu-btn {
+    width: 260px;
+    padding: 16px;
+    margin: 12px 0;
+    font-size: 20px;
+    border-radius: 20px;
+    border: none;
+    background: linear-gradient(135deg, #7b5cffcb, #5240d8d7);
+    color: white;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.menu-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px #8f6fff;
+}
+
+.menu-small-btn {
+    margin-top: 20px;
+    font-size: 16px;
+    padding: 10px 20px;
+    background: rgba(120, 100, 220, 0.35);
+    border-radius: 15px;
+    border: none;
+    color: #e8e5ff;
+    cursor: pointer;
+}
+
+
+/* 🔚 Bouton "end game" sous les autres, version responsive */
+#backToEndGame {
+    display: block;
+    margin: 18px auto 0;          /* centré, sous "Profil Joueur" */
+    width: 260px;                 /* même largeur que les autres boutons */
+    padding: 12px 0;
+    font-size: 18px;
+    border-radius: 20px;
+    border: none;
+    background: linear-gradient(135deg, #7b5cffcb, #5240d8d7);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 14px rgba(143, 111, 255, 0.7);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#backToEndGame:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 18px rgba(143, 111, 255, 1);
+}
+
+/* version mobile : un peu plus petite */
+@media (max-width: 600px) {
+    #backToEndGame {
+        width: 70%;
+        font-size: 16px;
+        padding: 10px 0;
+    }
+}
+
+
+/* 🌙 Bannière SAISON — Version 100% responsive */
+.season-banner {
+    width: 90%;
+    max-width: 900px; /* empêche la bannière de devenir trop large */
+    margin: 20px auto;
+    padding: 20px 10px;
+
+    background: linear-gradient(135deg, #6d2cff, #9f4dff);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    animation: seasonGlow 3s ease-in-out infinite;
+}
+
+/* Texte bannière */
+.season-label {
+    font-size: clamp(16px, 3vw, 32px); 
+    font-weight: 200;
+    color: white;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+/* Animation */
+@keyframes seasonGlow {
+    0% { box-shadow: 0 0 10px #9f4dff; }
+    50% { box-shadow: 0 0 20px #c19bff; }
+    100% { box-shadow: 0 0 10px #9f4dff; }
+}
+
+/* 📱 Mobile */
+@media (max-width: 600px) {
+    .season-banner {
+        width: 95%;
+        padding: 14px 8px;
+    }
+
+    .season-label {
+        font-size: clamp(14px, 4vw, 26px);
+    }
+}
+
+/* AJUSTEMENT MENU RESPONSIVE */
+@media (max-width: 900px) {
+
+    .menu-panel {
+        width: 90%;
+        padding: 20px 20px !important;
+    }
+
+    .menu-btn {
+        width: 100% !important;
+        font-size: 1.1rem !important;
+    }
+
+    .menu-title {
+        font-size: 2rem !important;
+    }
+
+   
+
+    .season-banner {
+        width: 95% !important;
+        max-width: 95% !important;
+        padding: 10px 5px !important;
+    }
+}
+
+#mainMenu:not(.hidden) ~ #hudContainer {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+#mainMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+/* ================================
+   🌙 OPTIMISATION MENU PRINCIPAL
+   Responsive + propre + stable
+================================ */
+
+/* Empêcher le HUD de polluer le menu */
+#mainMenu.menu-visible ~ #hudContainer {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Rendre le menu panel fluide */
+.menu-panel {
+    width: 75%;
+    max-width: 500px;
+    padding: 25px 20px !important;
+    box-sizing: border-box;
+}
+
+/* Titre adaptatif */
+.menu-title {
+    font-size: clamp(26px, 6vw, 42px);
+}
+
+/* Boutons du menu fluides */
+.menu-btn, #backToEndGame {
+    width: 100%;
+    max-width: 320px;
+    padding: 14px 0;
+    font-size: clamp(14px, 4vw, 20px);
+    margin: 10px auto;
+    display: block;
+}
+
+/* BANNIÈRE SAISON fluidifiée */
+#seasonBanner {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.season-label {
+    font-size: clamp(14px, 4vw, 22px);
+}
+
+
+
+
+
+/* Cache totalement le HUD lorsque le menu principal est visible */
+#mainMenu:not(.hidden) ~ #hudContainer {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 🖥️ Version PC : mascotte plus grande */
+@media (min-width: 601px) {
+    #mainMascotte {
+        width: 500px;   /* Taille augmentée */
+        height: auto;
+        bottom: 20px;   /* Position parfaite */
+    }
+
+    #mainMascotte .orb-effect {
+        transform: scale(1.4);
+        margin-left: 8px;
+    }
+}
+
+/* 📱 Optimisation mobile : mascotte plus grande et bien positionnée */
+@media (max-width: 600px) {
+
+    /* 🧍‍♀️ Mascotte */
+    #mainMascotte {
+        width: 200px;    /* Taille idéale : grande mais pas envahissante */
+        height: auto;
+        bottom: 25px;    /* Légèrement remontée */
+    }
+
+    /* 🔮 Orbe violette */
+    #mainMascotte .orb-effect {
+        transform: scale(1.35);   /* Effet plus visible */
+        margin-left: 6px;         /* Ajustement précis */
+    }
+
+    /* ✔ Empêche les bugs de recadrage */
+    #mainMascotte img {
+        object-fit: contain;
+    }
+}
+/* 🛠 Remet le HUD toujours au-dessus du gameplay */
+#hud, #currencyContainer, #progressBarContainer {
+    position: absolute;
+    z-index: 9999 !important;
+}
+/* 🛠 Empêche le menu d'écraser le HUD */
+#menu {
+    z-index: 50 !important;
+}
+
+.event-banner {
+    z-index: 20 !important;
+}
+/* ======== FIX HUD + GAMEPLAY ======== */
+
+/* Le HUD doit être au-dessus du canvas, mais sous les overlays */
+#hudContainer,
+#quickButtons,
+#timerBarContainer,
+#currencyContainer,
+#progressBarContainer {
+    position: absolute;
+    z-index: 999 !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* Empêche le menu de masquer le HUD en jeu */
+#mainMenu.hidden ~ #hudContainer,
+#mainMenu.hidden ~ #quickButtons,
+#mainMenu.hidden ~ #timerBarContainer {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* Désactive la règle qui masquait le HUD */
+#mainMenu:not(.hidden) ~ #hudContainer {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* S'assure que le canvas reste derrière */
+#gameCanvas {
+    z-index: 1 !important;
+}
+
+/* Les overlays seulement quand ils sont visibles */
+.pause-overlay,
+.level-overlay,
+.shop-overlay,
+.profile-overlay,
+.selector-overlay {
+    z-index: 5000 !important;
+}
+/* Boutique toujours au-dessus de la bannière */
+#shop {
+    z-index: 5000 !important;
+}
+.shop {
+    position: fixed !important;
+    z-index: 5000 !important;
+}
+
+/* Le HUD ne doit pas être visible quand le menu principal est visible */
+#mainMenu:not(.hidden) ~ #hudContainer,
+#mainMenu:not(.hidden) ~ #quickButtons,
+#mainMenu:not(.hidden) ~ #timerBarContainer,
+#mainMenu:not(.hidden) ~ #currencyContainer,
+#mainMenu:not(.hidden) ~ #progressBarContainer {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Assurez-vous que le HUD est visible uniquement pendant le gameplay */
+#mainMenu.hidden ~ #hudContainer,
+#mainMenu.hidden ~ #quickButtons,
+#mainMenu.hidden ~ #timerBarContainer,
+#mainMenu.hidden ~ #currencyContainer,
+#mainMenu.hidden ~ #progressBarContainer {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+#eventBanner {
+    position: fixed;
+    bottom: 489px;
+    left: 0;
+    
+    height: 10px;
+    background: rgba(10, 5, 25, 0.65);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+
+    padding: 10px 20px;
+    z-index: 10; /* Au-dessus du décor, sous la mascotte */
+}
+
+
+
+#eventBanner p {
+      
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    text-shadow: 0 0 10px rgba(200,160,255,0.8);
+}
+
+/* 📱 Version Mobile */
+@media (max-width: 600px) {
+    #eventBanner {
+        position: absolute;
+        top: 120px; /* Ajuste cette valeur pour positionner la bannière correctement */
+        left: 45%;
+        transform: translateX(-40%); /* Centre la bannière horizontalement */
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+        padding: 8px 10px;
+        z-index: 10; /* Assure que la bannière est au-dessus des autres éléments */
+        max-width: 100%; /* Réduit la largeur maximale sur mobile */
+    }
+
+     
+    #eventBanner p {
+        font-size: 10px; /* Réduit la taille du texte */
+    }
+
+    
+}
+
+/* Réduire les boutons dans le gameplay sur mobile */
+@media (max-width: 600px) {
+    #pauseBtn, #musicBtn, #quitBtn {
+        width: 10px; /* Réduit la largeur */
+        height: 10px; /* Réduit la hauteur */
+        font-size: 0.8rem; /* Réduit la taille du texte */
+    }
+}
+
+/* Ajuste le z-index pour la notification de niveau */
+#levelUpNotification {
+    z-index: 1001; /* Plus élevé que celui du bouton pause */
+}
+
+/* Ajuste aussi la position du bouton pause pour qu'il ne soit pas trop grand */
+#pauseBtn {
+    z-index: 1000; /* Assurez-vous que le bouton pause reste en dessous */
+}
+
+/* ============================
+   🌙 COMBO HUD — THEME NOCTURNE
+=============================== */
+
+#hudCombo {
+    transition: opacity 0.2s ease-out;
+    position: absolute;
+    top: 4px;
+    left: 250px;
+    padding: 4px 10px;
+    font-size: 14px;
+    color: #e6dcff;
+    background: linear-gradient(90deg, rgba(40,20,80,0.85), rgba(80,40,130,0.9));
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(150, 120, 255, 0.4);
+}
+
+.campaign-mode-active #hudCombo {
+    display: none !important;
+    opacity: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    pointer-events: none !important;
+}
+
+/* +1 gem en violet lumineux */
+#hudCombo .combo-gem {
+    margin-left: 6px;
+    color: #ffb7ff;
+    text-shadow: 0 0 6px rgba(255, 150, 255, 0.9);
+    font-weight: 600;
+}
+
+/* petite apparition fluide */
+#hudCombo.combo-anim {
+    animation: comboPulse 0.35s ease-out;
+}
+
+@keyframes comboPulse {
+    0%   { transform: scale(1);   opacity: 0.7; }
+    40%  { transform: scale(1.07); opacity: 1; }
+    100% { transform: scale(1);   opacity: 1; }
+}
+
+/* ======== COMBO EFFECT ======== */
+#comboEffect {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #c9a7ff; /* Violet doux */
+    font-size: 48px;
+    font-weight: 700;
+    text-shadow: 0 0 12px #a066ff, 0 0 25px #7a3ef0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+}
+
+.combo-flash {
+    animation: comboFlash 0.25s ease-out;
+}
+
+@keyframes comboFlash {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
+
+.screen-shake {
+    animation: screenShake 0.25s ease-out;
+}
+
+@keyframes screenShake {
+    0% { transform: translate(0px, 0px); }
+    20% { transform: translate(3px, -3px); }
+    40% { transform: translate(-3px, 3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(-3px, -3px); }
+    100% { transform: translate(0px, 0px); }
+}
+
+
+
+
+
+
+/* Réduire les boutons pause, musique et quitter */
+#quickButtons .quick-btn {
+    width: 36px;  /* Réduit la taille des boutons */
+    height: 36px;
+    font-size: 18px;  /* Taille de texte réduite */
+    padding: 8px;
+}
+
+
+
+/* Ajustement global du HUD */
+#hudContainer {
+    transform: scale(0.85);  /* Réduit l'échelle du HUD pour plus de compacité */
+}
+
+/* Version mobile - ajustement des boutons */
+@media (max-width: 600px) {
+    #quickButtons .quick-btn {
+        /* Encore plus petit sur mobile */
+        height: 30px;
+        font-size: 16px;
+    }
+
+    
+}
+
+/* Déplacer la barre de temps sur le côté */
+#timerBarContainer {
+  position: fixed;
+  top: 80px;
+  left: 10px;
+  width: 10px;
+  height: 200px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#timerBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0px; /* valeur neutre, contrôlée UNIQUEMENT par le JS */
+  background: linear-gradient(0deg, #c278ff, #9f50ff);
+  border-radius: 12px;
+  transition: height 0.2s linear;
+}
+
+
+
+
+#dialogMascotte {
+    position: fixed;
+    bottom: 60px;  /* Ajuster la position verticale */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000; /* S'assurer qu'elle est au-dessus des autres éléments */
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+#dialogMascotteImg {
+    width: 150px; /* Ajuste la taille */
+    height: auto;
+}
+
+/* 🧡 Mascotte responsive */
+#menuMascotteContainer {
+    position: absolute;
+    bottom: 5vh; /* Positionne la mascotte un peu au-dessus du bas de l'écran */
+    right: 5vw; /* Positionne la mascotte un peu à droite */
+    transform: translate(0, 0);
+    z-index: 10; /* Assure que la mascotte soit au-dessus des autres éléments */
+}
+
+/* Empêche que la mascotte sorte de l'écran */
+@media (max-width: 600px) {
+    #menuMascotteContainer {
+        bottom: 10vh; /* Un peu plus haut sur les petits écrans */
+        right: 5vw; /* Garde un peu d'espace à droite */
+    }
+
+    #menuMascotteContainer img {
+        width: clamp(70px, 25vw, 120px); /* Ajuste la taille pour les mobiles */
+        max-width: 120px; /* Empêche la mascotte de devenir trop grande */
+    }
+}
+
+/* Limite la mascotte sur les écrans larges */
+@media (min-width: 1024px) {
+    #menuMascotteContainer {
+        right: 10vw; /* Ajuste la position sur les grands écrans */
+    }
+
+    #menuMascotteContainer img {
+        width: clamp(80px, 20vw, 180px); /* Limite la taille entre 80px et 180px */
+    }
+}
+
+#menuMascotteContainer img {
+    width: clamp(80px, 20vw, 150px); /* Limite la taille entre 80px et 150px */
+    height: auto;
+}
+
+/* Animation d'apparition */
+@keyframes fadeInMenu {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Ajoute une animation d'inactivité de la mascotte sans déplacements latéraux */
+@keyframes mascotteIdle {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0px); }
+}
+
+
+/* Animation d'apparition */
+@keyframes fadeInMenu {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+
+@keyframes orbeFloat {
+    0% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-10px) scale(1.03); }
+    100% { transform: translateY(0px) scale(1); }
+}
+
+#mainMenu {
+    background-image: url('assets/fonds/fondmenu.png');
+    background-size: cover; /* Couvre toute la div */
+    background-position: center; /* Centrer l'image dans la div */
+    background-repeat: no-repeat; /* Ne pas répéter l'image */
+    height: 100vh; /* Assurer que le menu prend toute la hauteur de l'écran */
+    width: 100%; /* Assurer que le menu prend toute la largeur */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;  /* Pour centrer le contenu verticalement */
+    position: relative; /* Pour que l'image soit en arrière-plan */
+}
+
+body.event-valentin #mainMenu {
+    background-image: url('assets/fonds/stvalentin.png');
+}
+
+
+.menu-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.menu-btn.secondary {
+  background: rgba(255,255,255,0.15);
+}
+
+#gameModePanel {
+    position: fixed;
+   
+    z-index: 9999; /* AU-DESSUS DE TOUT */
+}
+
+.hud-behind {
+    z-index: 1 !important;
+    opacity: 0.2;
+    pointer-events: none;
+}
+.game-mode-panel {
+    width: 32%;
+    max-width: 420px;
+    min-width: 280px;
+
+    margin-left: 40px;
+    padding: 22px 18px;
+
+    background: rgba(20, 18, 35, 0.85);
+    backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+@media (max-width: 768px) {
+    .game-mode-panel {
+        width: 90%;
+        max-width: none;
+        margin: 0 auto;
+    }
+
+    #gameModePanel {
+        justify-content: center;
+    }
+}
+
+
+/* 🌙 Coffre nocturne — base */
+.coffre-nocturne {
+    position: fixed;                /* Desktop : flottant */
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+
+    text-align: center;
+    pointer-events: auto;
+}
+
+/* Bouton du coffre */
+.coffre-nocturne button {
+    background: linear-gradient(
+        135deg,
+        rgba(130, 100, 255, 0.35),
+        rgba(90, 60, 200, 0.25)
+    );
+    border: 1px solid rgba(190, 170, 255, 0.45);
+    border-radius: 16px;
+
+    padding: 10px 16px;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.25s ease,
+        opacity 0.2s ease;
+}
+
+/* Hover doux (desktop seulement) */
+@media (hover: hover) {
+    .coffre-nocturne button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 0 14px rgba(140, 110, 255, 0.6);
+    }
+}
+
+/* État désactivé / repos */
+.coffre-nocturne button:disabled,
+.coffre-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* 🌙 Mobile — coffre sous le menu */
+@media (max-width: 768px) {
+    .coffre-nocturne {
+        position: relative;          /* Rejoint le flux */
+        top: auto;
+        right: auto;
+
+        margin: 14px auto 0 auto;
+        width: fit-content;
+        z-index: 2;
+    }
+
+    .coffre-nocturne button {
+        font-size: 0.95rem;
+        padding: 12px 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .coffre-nocturne {
+        position: relative;
+        top: auto;
+        right: auto;
+
+        margin: 10px auto 0 auto;   /* 🔑 clé : marge réduite */
+        width: fit-content;
+        z-index: 3;
+    }
+}
+
+
+    /* le parent du menu doit être positionné */
+    #gameModePanel,
+    #mainMenu {
+        position: relative;
+    }
+
+
+/* Ajustement mascotte Saint-Valentin uniquement sur mobile */
+@media (max-width: 768px) {
+  img[src*="assets/evenements/st-valentin/"] {
+    transform: scale(1.0);
+    transform-origin: bottom center;
+  }
+}
+
+/* Ajustement mascotte pack futuriste uniquement sur mobile */
+@media (max-width: 700px) {
+  img[src*="assets/evenements/futuriste/"] {
+    transform: scale(1.0);
+    transform-origin: bottom center;
+  }
+}
+
+/* Ajustement mascotte pack paques uniquement sur mobile */
+@media (max-width: 700px) {
+  img[src*="assets/evenements/paques/"] {
+    transform: scale(1.0);
+    transform-origin: bottom center;
+  }
+}
+
+/* ===== Boutique Fonds ===== */
+
+.shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.shop-card {
+  width: 260px;
+  background: rgba(20, 15, 40, 0.85);
+  backdrop-filter: blur(8px);
+
+  border-radius: 16px;
+  padding: 14px;
+
+  box-shadow:
+    0 0 20px rgba(120, 90, 255, 0.25),
+    inset 0 0 10px rgba(255,255,255,0.05);
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shop-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 30px rgba(140, 110, 255, 0.45);
+}
+
+
+.shop-card img {
+  width: 100%;
+  height: 110px;
+
+  object-fit: cover;
+
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.shop-price {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+
+.shop-btn {
+  width: 100%;
+  padding: 8px;
+
+  background: linear-gradient(135deg, #6c63ff, #8b7dff);
+  border: none;
+  border-radius: 10px;
+
+  color: white;
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.shop-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* =========================================================
+   📖 LIVRE ENCHANTÉ
+   ========================================================= */
+
+.book-content{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    padding:12px;
+    gap:12px;
+}
+
+/* Barre progression */
+.book-progress{
+    text-align:center;
+    font-size:14px;
+    color:#d8c6ff;
+    opacity:0.9;
+}
+
+/* Conteneur double page */
+.book-pages{
+    flex:1;
+    display:flex;
+    gap:10px;
+}
+
+/* Pages */
+.book-page{
+    flex:1;
+    border-radius:14px;
+
+    /* 🌌 ambiance papier magique nocturne */
+    background:
+        linear-gradient(145deg, #1b1630, #241b3f);
+
+    box-shadow:
+        inset 0 0 25px rgba(140,100,255,0.25),
+        0 0 12px rgba(0,0,0,0.5);
+
+    padding:10px;
+
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:8px;
+
+    overflow-y:auto;
+}
+
+/* légère séparation centrale = reliure */
+.book-pages::before{
+    content:"";
+    width:6px;
+    background:linear-gradient(#00000055,#ffffff10,#00000055);
+    border-radius:4px;
+}
+
+/* Cartes images (cases futures) */
+.book-slot{
+    aspect-ratio:1;
+    border-radius:10px;
+
+    background:#2b2350;
+    box-shadow:inset 0 0 10px rgba(0,0,0,0.6);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:12px;
+    color:#ffffff55;
+}
+
+/* débloqué */
+.book-slot.unlocked{
+    background:#3a2f70;
+    box-shadow:
+        0 0 8px #8a6cff,
+        inset 0 0 8px rgba(255,255,255,0.2);
+}
+
+/* petit effet hover PC */
+.book-slot.unlocked:hover{
+    transform:scale(1.05);
+    transition:0.15s;
+}
+
+/* Overlay du livre */
+#bookOverlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;          /* ⭐ IMPORTANT */
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.75);
+    z-index: 9999;
+}
+
+/* Caché */
+.hidden {
+    display: none !important;
+}
+
+.book-slot {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.book-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+/* Style général pour le texte flottant */
+@keyframes floatingText {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-80px);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+}
+
+.floating-text {
+    position: absolute;
+    font-family: 'Poppins', sans-serif; /* Choisir une police agréable */
+    font-size: 24px; /* Taille de texte par défaut */
+    color: #ffffff; /* Couleur du texte */
+    text-align: center;
+    animation: floatingText 2s ease-out forwards;
+    z-index: 10;
+}
+
+/* Pour les écrans mobiles */
+@media (max-width: 767px) {
+    .floating-text {
+        font-size: 18px; /* Réduire la taille du texte sur mobile */
+        padding: 5px;
+        color: #f1c40f; /* Utiliser une couleur dorée pour un effet joli */
+        background: rgba(0, 0, 0, 0.5); /* Ajouter un fond léger pour améliorer la lisibilité */
+        border-radius: 5px; /* Coins arrondis pour un style plus doux */
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Ombre pour un meilleur contraste */
+    }
+}
+
+/* Pour les tablettes ou les écrans plus grands */
+@media (min-width: 768px) {
+    .floating-text {
+        font-size: 24px; /* Taille de texte par défaut */
+    }
+}
+
+#playerBadge {
+    padding: 10px;
+    background-color: #6A1DFF;  /* Violet pour le badge */
+    color: white;  /* Texte en blanc */
+    border-radius: 5px;
+    display: inline-block;  /* S'assurer qu'il soit à côté des autres éléments */
+    margin-top: 10px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid #FFD700;  /* Contour doré pour l'élégance */
+    
+    /* Effet lumineux avec un gradient animé */
+    background: linear-gradient(45deg, #6A1DFF, #FFD700, #6A1DFF); /* Gradient violet/doré */
+    background-size: 400% 400%;
+    animation: glowing 15s linear infinite; /* Animation du glow */
+    
+    /* Ombre lumineuse autour du badge */
+    box-shadow: 0 0 10px 5px rgba(255, 215, 0, 0.7), 0 0 15px rgba(106, 29, 255, 0.5);
+}
+
+/* Animation du gradient lumineux */
+@keyframes glowing {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+#playerBadge.hidden {
+    display: none;  /* Le badge est caché par défaut */
+}
+
+.overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+    z-index: 10003;
+}
+
+.modalCard{
+  background: rgba(30,30,60,0.95);
+  padding: 25px;
+  border-radius: 18px;
+  width: 260px;
+  text-align:center;
+  color:white;
+}
+
+.modalCard input{
+  width:100%;
+  padding:10px;
+  margin:15px 0;
+  border-radius:10px;
+  border:none;
+  text-align:center;
+}
+
+.modalCard button{
+  background:#6c7bff;
+  border:none;
+  color:white;
+  padding:10px 20px;
+  border-radius:12px;
+}
+
+.hidden{ display:none; }
+
+.cj-popup {
+    position: fixed;
+    bottom: 80px;
+    right: 30px;
+    font-size: 20px;
+    color: #b78cff;
+    text-shadow: 0 0 8px #a060ff;
+    animation: cjFade 1.2s ease-out forwards;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+@keyframes cjFade {
+    0% { opacity: 0; transform: translateY(20px); }
+    20% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+.feedback-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(40, 20, 70, 0.35);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px;
+    z-index: 9998;
+    animation: feedbackFadeIn 0.35s ease-out;
+}
+
+.feedback-card {
+    width: min(520px, 92vw);
+    background: rgba(30, 20, 60, 0.85);
+    border: 1px solid rgba(160, 140, 255, 0.35);
+    box-shadow: 0 0 24px rgba(120, 90, 255, 0.25);
+    border-radius: 16px;
+    padding: 16px 18px;
+    color: #efe9ff;
+}
+
+.feedback-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.feedback-orb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #a98cff;
+    box-shadow: 0 0 8px rgba(169, 140, 255, 0.8);
+}
+
+.feedback-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f3edff;
+}
+
+.feedback-text {
+    font-size: 14px;
+    line-height: 1.45;
+    color: #d9cfff;
+    white-space: pre-line;
+    margin: 0 0 12px;
+}
+
+.feedback-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.feedback-btn {
+    border: 1px solid rgba(160, 140, 255, 0.35);
+    background: rgba(60, 45, 110, 0.7);
+    color: #efe9ff;
+    padding: 6px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.feedback-btn.primary {
+    background: linear-gradient(135deg, #7b5cff, #5a46dd);
+    border: 1px solid rgba(190, 170, 255, 0.6);
+}
+
+.feedback-btn.secondary {
+    background: rgba(55, 45, 80, 0.75);
+}
+
+@keyframes feedbackFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.update-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 0, 40, 0.7);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10004;
+}
+
+.update-box {
+    background: linear-gradient(135deg, #2a0050, #3b0a70);
+    border: 1px solid rgba(180, 120, 255, 0.4);
+    border-radius: 14px;
+    padding: 25px;
+    max-width: 400px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 20px rgba(160, 100, 255, 0.4);
+}
+
+.update-box button {
+    margin-top: 15px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #7a4dff;
+    color: white;
+    cursor: pointer;
+}
+
+#gameVersionDisplay {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 6px;
+}
+
+#legalFooter {
+    position: fixed;
+    left: 50%;
+    bottom: 8px;
+    transform: translateX(-50%);
+    font-size: 11px;
+    line-height: 1.25;
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+    max-width: min(520px, 86vw);
+    width: 100%;
+    z-index: 60;
+    pointer-events: none;
+    padding: 6px 10px;
+    border-radius: 10px;
+    background: rgba(10, 8, 20, 0.35);
+    border: 1px solid rgba(160, 140, 255, 0.2);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
+
+#legalFooter a {
+    color: rgba(255, 255, 255, 0.55);
+    text-decoration: none;
+    pointer-events: auto;
+}
+
+#legalFooter a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+    #legalFooter {
+        font-size: 9px;
+        line-height: 1.2;
+        max-width: 92vw;
+        bottom: 6px;
+        padding: 5px 8px;
+    }
+
+    #gameVersionDisplay {
+        font-size: 9px;
+        margin-top: 4px;
+    }
+}
+
+#mainMenu.hidden ~ #legalFooter {
+    display: none;
+}
+
+/* =========================================================
+   HUD MOBILE CIBLE PAR MODE
+   ========================================================= */
+@media (max-width: 768px) {
+    #campaignHUD {
+        top: 88px;
+        width: auto;
+        max-width: calc(100vw - 80px);
+        padding: 8px 12px;
+        border-radius: 12px;
+        gap: 2px;
+        line-height: 1.2;
+    }
+
+    #campaignHUD .campaign-hud-row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        gap: 0;
+        min-width: 0;
+    }
+
+    #campaignHUD .campaign-world {
+        font-size: 14px;
+        margin-bottom: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 0;
+    }
+
+    #campaignHUD .campaign-level-name {
+        margin-top: 0;
+        font-size: 14px;
+        line-height: 1.2;
+        white-space: nowrap;
+        flex: 0 0 auto;
+    }
+
+    #campaignHUD .campaign-level-name::before {
+        content: " — ";
+        color: rgba(255, 255, 255, 0.75);
+    }
+
+    #campaignHUD .campaign-objective {
+        font-size: 13px;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+}

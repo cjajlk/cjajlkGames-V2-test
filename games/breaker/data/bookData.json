@@ -1,0 +1,50 @@
+{
+  "pages": [
+    {
+      "id": "companions",
+      "title": "Compagnons",
+      "sections": [
+        {
+          "name": "Aube",
+          "description": "Le gardien du vide, premier compagnon.",
+          "unlocked": true
+        },
+        {
+          "name": "Aqua",
+          "description": "Maître des eaux profondes.",
+          "unlocked": false
+        },
+        {
+          "name": "Ignis",
+          "description": "Porteur de flammes.",
+          "unlocked": false
+        },
+        {
+          "name": "Astral",
+          "description": "Gardien de la lumière.",
+          "unlocked": false
+        },
+        {
+          "name": "Flora",
+          "description": "Esprit de la nature.",
+          "unlocked": false
+        },
+        {
+          "name": "Dragon Mystique",
+          "description": "Dragon légendaire, gardien des secrets mystiques.",
+          "unlocked": false
+        }
+      ]
+    },
+    {
+      "id": "bricks",
+      "title": "Briques",
+      "sections": []
+    },
+    {
+      "id": "secrets",
+      "title": "Secrets",
+      "sections": []
+    }
+  ]
+}

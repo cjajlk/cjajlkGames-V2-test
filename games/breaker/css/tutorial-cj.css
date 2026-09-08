@@ -1,0 +1,247 @@
+.cj-tutorial-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #3a1c71 0%, #5e3bc6 50%, #2d2d7e 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.cj-tutorial-halo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166,177,255,0.25) 0%, rgba(166,177,255,0.10) 60%, rgba(166,177,255,0) 100%);
+  pointer-events: none;
+  z-index: 1;
+  animation: cj-halo-pulse 2.8s ease-in-out infinite;
+}
+/* Mascotte tutoriel */
+/* DEBUG mascotte visible même sans image */
+/* Carrousel mascottes pro */
+.cj-mascotte-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.cj-mascotte-arrow {
+  background: rgba(60,60,120,0.12);
+  border: none;
+  color: #a6b1ff;
+  font-size: 2.1rem;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px #0002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cj-mascotte-arrow:hover {
+  background: #a6b1ff33;
+  color: #fff;
+}
+.cj-mascotte-imgbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.cj-tutorial-mascotte {
+  display: block;
+  margin: 0 auto 6px auto;
+  width: 90px;
+  height: 90px;
+  background: #23234a;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 24px #a6b1ff88);
+  animation: cj-mascotte-float 2.2s ease-in-out infinite;
+  object-fit: contain;
+  border: 2px solid #a6b1ff44;
+  box-shadow: 0 2px 12px #23234a44;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+/* Carrousel mascottes pro avec mascottes latérales */
+.cj-mascotte-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.cj-mascotte-imgbox {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0 10px;
+  min-width: 260px;
+  position: relative;
+}
+.cj-tutorial-mascotte {
+  display: block;
+  pointer-events: none;
+  object-fit: contain;
+  background: #23234a;
+  border-radius: 50%;
+  border: 2px solid #a6b1ff44;
+  box-shadow: 0 2px 12px #23234a44;
+  transition: box-shadow 0.2s, border 0.2s, filter 0.2s, opacity 0.2s;
+}
+.cj-mascotte-center {
+  width: 90px;
+  height: 90px;
+  z-index: 2;
+  filter: drop-shadow(0 4px 24px #a6b1ff88);
+  animation: cj-mascotte-float 2.2s ease-in-out infinite;
+}
+.cj-mascotte-side {
+  width: 54px;
+  height: 54px;
+  opacity: 0.45;
+  filter: blur(1.5px) grayscale(0.3) brightness(0.8);
+  margin-bottom: 10px;
+  z-index: 1;
+  pointer-events: none;
+  transition: filter 0.2s, opacity 0.2s;
+}
+.cj-mascotte-side-left {
+  transform: translateX(-10px) scale(0.92) rotate(-8deg);
+}
+.cj-mascotte-side-right {
+  transform: translateX(10px) scale(0.92) rotate(8deg);
+}
+.cj-mascotte-nom {
+  color: #a6b1ff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 0px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  width: 100%;
+  text-shadow: 0 1px 4px #23234a88;
+  position: absolute;
+  left: 0; right: 0; bottom: -28px;
+}
+
+@keyframes cj-halo-pulse {
+  0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.cj-tutorial-content {
+  position: relative;
+  background: rgba(34, 34, 68, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.3);
+  padding: 32px 24px;
+  max-width: 90vw;
+  width: 400px;
+  text-align: center;
+  z-index: 2;
+}
+.cj-tutorial-content h2 {
+  margin-bottom: 18px;
+  font-size: 2rem;
+  color: #a6b1ff;
+}
+.cj-tutorial-text {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  color: #e0e6ff;
+}
+.cj-tutorial-next {
+  background: linear-gradient(90deg, #6a5cff 0%, #a6b1ff 100%);
+  color: #222244;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 32px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.cj-tutorial-next:hover {
+  background: linear-gradient(90deg, #a6b1ff 0%, #6a5cff 100%);
+}
+@media (max-width: 600px) {
+  .cj-tutorial-content {
+    width: 99vw;
+    padding: 7vw 3vw 7vw 3vw;
+    font-size: 1.13rem;
+    border-radius: 16px;
+    min-width: unset;
+    max-width: 99vw;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+  .cj-tutorial-content h2 {
+    font-size: 1.35rem;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .cj-tutorial-text {
+    font-size: 1.08rem;
+    margin-bottom: 28px;
+    line-height: 1.45;
+    letter-spacing: 0.01em;
+  }
+  .cj-tutorial-next {
+    padding: 14px 0;
+    width: 100%;
+    font-size: 1.13rem;
+    border-radius: 12px;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px #0002;
+  }
+  .cj-mascotte-carousel {
+    gap: 10px;
+    margin-bottom: 7vw;
+    margin-top: 2vw;
+  }
+  .cj-mascotte-imgbox {
+    min-width: 120px;
+    gap: 0 4vw;
+  }
+  .cj-mascotte-center {
+    width: 62px;
+    height: 62px;
+  }
+  .cj-mascotte-side {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 6px;
+  }
+  .cj-mascotte-nom {
+    font-size: 1.05rem;
+    bottom: -22px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .cj-mascotte-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 1.5rem;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 50%;
+    padding: 0;
+  }
+  .cj-tutorial-halo {
+    width: 120px;
+    height: 120px;
+  }
+}

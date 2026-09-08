@@ -1,0 +1,81 @@
+{
+  "orbeSkins": [
+    {
+      "id": "orb_blue",
+      "name": "Luméa",
+      "img": "assets/orbes/orb_blue.png",
+      "costCoins": 50,
+      "costGems": 0,
+      "bonus": "Aucun"
+    },
+    {
+      "id": "orb_black",
+      "name": "Noctis",
+      "img": "assets/orbes/orb_black.png",
+      "costCoins": 0,
+      "costGems": 100,
+      "bonus": "Aucun"
+    },
+    {
+      "id": "orb_green",
+      "name": "Sylva",
+      "img": "assets/orbes/orb_green.png",
+      "costCoins": 150,
+      "costGems": 0,
+      "bonus": "Aucun"
+    },
+    {
+      "id": "orb_yellow",
+      "name": "Auréa",
+      "img": "assets/orbes/orb_yellow.png",
+      "costCoins": 0,
+      "costGems": 125,
+      "bonus": "+1s parfois"
+    },
+    {
+      "id": "orb_violet",
+      "name": "Néria",
+      "img": "assets/orbes/orb_violet.png",
+      "costCoins": 0,
+      "costGems": 150,
+      "bonus": "Score x2 rare"
+    },
+     {
+      "id": "orb_pourpre",
+      "name": "Auralys",
+      "img": "assets/orbes/orb_pourpre.png",
+      "costCoins": 300,
+      "costGems": 0
+      
+    },
+    {
+      "id": "orb_red",
+      "name": "Pyra",
+      "img": "assets/orbes/orb_red.png",
+      "costCoins": 0,
+      "costGems": 200,
+      "bonus": "Spawn plus rapide"
+    },
+     {
+      "id": "orb_black_risk",
+      "name": "phoenix",
+      "img": "assets/orbes/orb_black_risk.png",
+      "costCoins": 0,
+      "costGems": 2000,
+      "bonus": "Orbe légendaire"
+    },
+    {
+      "id": "orb_noel",
+      "name": "Orbe de Noël",
+      "img": "assets/evenements/noel/orbe.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "bonus": "Orbe événementielle",
+      "category": "noel",
+       "disabled": true
+    }
+  ]
+}
+
+
+

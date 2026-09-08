@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Attrape-les-tous</title>
+    <link rel="stylesheet" href="style.css" />
+ </head>
+ <body> 
+
+   <script>
+    // 🔒 Blocage si le joueur n'a pas encore mis son pseudo
+    const name = localStorage.getItem("playerName");
+
+    if (!name || name.trim().length === 0) {
+        window.location.href = "./intro/intro.html";
+    }
+ </script>
+
+    <!-- 🌙 MENU PRINCIPAL -->
+    <div id="mainMenu" class="menu-visible">
+        <div class="menu-panel">
+            <h1 class="menu-title">Attrape-les-tous</h1>
+
+              <!-- ⭐ Bannière Saison -->
+        <div id="seasonBanner" class="season-banner">
+            <span class="season-label">🔥 Saison 1 • Nuit des Orbes 🔥</span>
+        </div>
+
+
+            <div id="playerBadge" class="player-badge hidden"></div>
+
+            <button class="menu-btn" onclick="openGameModes()" data-i18n="TEXT_GAME_MODES">Mode de jeu</button>
+            <button class="menu-btn" onclick="openShop()" data-i18n="TEXT_SHOP">Boutique</button>
+            <button class="menu-btn" onclick="openProfile()" data-i18n="TEXT_PROFILE">Profil Joueur</button>
+            <button class="menu-btn" onclick="window.location.href='pages/library.html'">📖 Bibliothèque nocturne</button>
+                        <button class="menu-btn" onclick="redirectToKoFi()" data-i18n="TEXT_SUPPORT">aide le créateur</button>
+
+                        <a href="https://cjajlk.github.io/cjajlkGames-V2-test/v2/" target="_blank" rel="noopener" class="hub-link" style="
+                            display: inline-block;
+                            margin: 18px auto 0 auto;
+                            padding: 7px 18px;
+                            border-radius: 8px;
+                            background: rgba(25,20,40,0.82);
+                            color: #b6aaff;
+                            font-size: 1rem;
+                            font-family: inherit;
+                            text-align: center;
+                            text-decoration: none;
+                            box-shadow: 0 2px 12px rgba(80,60,180,0.10);
+                            transition: background 0.2s, color 0.2s;
+                        "
+                        onmouseover="this.style.background='rgba(60,40,120,0.92)';this.style.color='#fff'"
+                        onmouseout="this.style.background='rgba(25,20,40,0.82)';this.style.color='#b6aaff'"
+                        >
+                            ← Retour au Hub CJajlkGames
+                        </a>
+            
+    </div>
+</div>
+
+ 
+
+<div id="gameModePanel" class="menu-panel hidden">
+
+  <h2 class="menu-title">Choisir un mode</h2>
+
+  <button class="menu-btn" onclick="startNormalMode()">
+    Mode Normal
+  </button>
+
+  <button class="menu-btn" onclick="startTimerMode()">
+    Mode Timer
+  </button>
+
+  <button class="menu-btn" onclick="campaignComingSoon()">
+    Mode Campagne 🌙
+  </button>
+
+  <button class="menu-btn secondary" onclick="closeGameModes()">
+    Retour
+  </button>
+
+</div>
+
+
+    <div id="menuBottomEffect"></div>
+
+   
+<!-- 🌙 Coffre nocturne -->
+<div id="coffreNocturne" class="coffre-nocturne">
+    <button id="coffreNocturneBtn" onclick="ouvrirCoffreNocturne()">
+        <span id="coffreNocturneText">🌙 Coffre nocturne – Ouvrir (+5 💎)</span>
+    </button>
+</div>
+
+    <!-- 🎄 BANNIÈRE ÉVÉNEMENT -->
+    <div id="eventBanner">
+       
+        <p>❤️ Événement de ST-Valentin —  disponible en boutique  !</p>
+    </div>
+
+    <!-- 🌙 Mascotte du menu -->
+    <div id="menuMascotteContainer">
+        <img id="menuMascotteImg" src="" alt="Mascotte du menu">
+    </div>
+
+    <!-- 💬 Bulle de dialogue -->
+    <div id="menuBubble" class="menu-bubble hidden"></div>
+
+    <!-- === HUD GLOBAL === -->
+<div id="hudContainer">
+
+    <!-- HUD Top-left -->
+    <div id="hudTopLeft">
+
+        <!-- Points -->
+        <div class="hudBox" id="hudPoints">Pts : 0</div>
+
+        <!-- Gemmes -->
+        <div class="hudBox" id="hudGems">💎 0</div>
+
+        <!-- Combo -->
+        <div id="hudCombo">Combo : 0/3</div>
+
+    </div>
+
+   <!-- HUD XP -->
+<div id="xpHud" class="xp-hud">
+    <span id="xpText" class="xp-text">Lvl 1 – 0 / 300 XP</span>
+</div>
+
+
+        <div class="xp-bar-container">
+            <div id="xpBarFill" class="xp-bar-fill"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Effet visuel pour COMBO -->
+<div id="comboEffect"></div>
+
+
+
+
+
+    <!-- Boutons rapides -->
+    <div id="quickButtons">
+        <button id="btnPause" class="quick-btn">⏸️</button>
+        <button id="btnMusic" class="quick-btn">🔊</button>
+        
+        
+    </div>
+
+    <!-- ⚙️ Options flottant -->
+    <button id="optionsGear" class="options-gear" onclick="openOptions()" aria-label="Options">
+        ⚙️
+    </button>
+
+    <!-- Timer -->
+    <div id="timerBarContainer">
+        <div id="timerBar"></div>
+    </div>
+
+    <!-- 🎮 Canvas -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- ===========================
+     🟣 OVERLAY PAUSE
+ =========================== -->
+      <div id="pauseOverlay" class="pause-overlay hidden">
+    <div class="pause-box">
+        <h2>⏸️ Pause</h2>
+
+        <button class="pause-btn" onclick="closePause()">
+            Continuer
+        </button>
+
+        <button class="pause-btn" onclick="pauseToMenu()">
+            Menu Principal
+        </button>
+
+
+        <button class="pause-btn quit" onclick="quitToMenu()">
+            Quitter
+        </button>
+    </div>
+ </div>
+
+
+     
+
+
+    <!-- Toast -->
+    <div id="levelToast" class="level-toast hidden"></div>
+
+    <!-- Swipe -->
+    <div id="bgSwipe"></div>
+
+     <!-- Mascotte dialogues -->
+    <div id="dialogMascotte" class="hidden">
+        <img id="dialogMascotteImg" src="" alt="">
+        <div id="dialogBubble"></div>
+    </div>
+
+
+    <!-- PROFIL -->
+     
+    <div id="profileOverlay" class="profile-overlay hidden">
+        <div class="profile-panel">
+            <button class="profile-close" onclick="closeProfile()">✕</button>
+            
+
+
+            <h2 class="profile-title">Profil du Joueur</h2>
+
+            
+
+
+            <div class="profile-header">
+                <div class="profile-pseudo-container">
+                    <div id="profilePseudo" class="profile-pseudo">Joueur</div>
+                    <button class="profile-edit-btn" onclick="editPseudo()">✏ Modifier</button>
+                </div>
+
+                <div class="profile-title-equipped">
+                    <span class="label">Titre :</span>
+                    <span id="profileEquippedTitle">Aucun</span>
+                    <button class="profile-edit-btn" onclick="openTitleSelector()">🎖 Choisir</button>
+                </div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="profile-stat"><span class="stat-label">High Score :</span><span id="profileHighScore">0</span></div>
+                <div class="profile-stat"><span class="stat-label">Points cumulés :</span><span id="profileTotalPoints">0</span></div>
+                <div class="profile-stat"><span class="stat-label">Coins :</span><span id="profileCoins">0</span></div>
+                <div class="profile-stat"><span class="stat-label">Gems :</span><span id="profileGems">0</span></div>
+                <div class="profile-stat"><span class="stat-label">CJ universels :</span><span id="profileCJ">0</span></div>
+                <div class="profile-stat"><span class="stat-label">Temps de jeu :</span><span id="profilePlayTime">0h 00m</span></div>
+            </div>
+
+            <div class="profile-titles-list">
+                <h3 class="titles-label">Titres débloqués :</h3>
+                <div id="profileTitlesContainer"></div>
+            </div>
+        </div>
+    </div>
+
+<!-- OPTIONS -->
+<div id="optionsOverlay" class="options-overlay hidden">
+    <div class="options-panel">
+        <button class="profile-close" onclick="closeOptions()">✕</button>
+
+        <h2 class="profile-title" data-i18n="TEXT_OPTIONS">Options</h2>
+
+        <div class="options-section">
+            <div class="options-row">
+                <div class="options-label" data-i18n="TEXT_FULLSCREEN">Plein ecran</div>
+                <button id="fullscreenToggle" class="options-btn"></button>
+            </div>
+        </div>
+
+        <div class="options-section">
+            <div class="options-row">
+                <div class="options-label" data-i18n="TEXT_LANGUAGE">Langue</div>
+                <select id="languageSelect" class="options-select">
+                    <option value="fr">FR</option>
+                    <option value="en">EN</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="options-section">
+            <div class="options-row">
+                <div class="options-label" data-i18n="TEXT_RESET_PROFILE">Reinitialiser mon profil</div>
+                <button id="resetProfileBtn" class="options-btn danger" data-i18n="TEXT_RESET">Reinitialiser</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CONFIRM RESET -->
+<div id="resetConfirmOverlay" class="overlay hidden">
+    <div class="modalCard reset-card">
+        <h3 data-i18n="TEXT_RESET_TITLE">Reinitialisation du profil</h3>
+        <p class="reset-warning" data-i18n="TEXT_RESET_WARNING">
+            ⚠️ Cette action supprimera definitivement vos gemmes, CJ, mascottes debloquees et packs achetes.
+        </p>
+        <p class="reset-hint" data-i18n="TEXT_RESET_TYPE">Tapez SUPPRIMER pour confirmer.</p>
+        <input id="resetConfirmInput" type="text" autocomplete="off" />
+        <div class="reset-actions">
+            <button id="resetCancelBtn" class="options-btn secondary" data-i18n="TEXT_CANCEL">Annuler</button>
+            <button id="resetConfirmBtn" class="options-btn danger" data-i18n="TEXT_CONFIRM">Confirmer</button>
+        </div>
+    </div>
+</div>
+
+    <!-- Sélecteur de titres -->
+<div id="titleSelectorOverlay" class="profile-overlay hidden">
+    <div class="profile-panel">
+
+        <button class="profile-close" onclick="closeTitleSelector()">✖</button>
+
+        <h2 class="profile-title">Choisir un Titre</h2>
+
+        <div id="titleSelectorList" class="profile-titles-list">
+            <!-- Titres générés via JS -->
+        </div>
+    </div>
+ </div>
+
+ <!-- Popup pour informer l'utilisateur qu'il n'a pas assez de gemmes -->
+<div id="gemNotEnoughPopup" class="gem-popup hidden">
+    <div class="gem-popup-content">
+        <h3>💎 Pas assez de gemmes</h3>
+        <p></p>
+        <button onclick="closeGemPopup()">Fermer</button>
+    </div>
+ </div>
+
+
+   
+    <!-- 🌙 Boutique -->
+<div id="shopOverlay" class="shop-overlay hidden">
+    <div id="shopPanel" class="shop-panel">
+        <!-- Section des gemmes et coins en haut de la boutique -->
+<div id="shopCoins" class="shop-coins">💰 0</div>
+
+  <div id="shopGems" class="shop-gems">💎 0</div>
+
+        <h2>Boutique Nocturne</h2>
+        <button id="closeShop" class="close-btn">✕</button>
+
+        <div class="shop-tabs">
+            <button data-tab="mascotte" class="tab-btn active">🎀 Mascotte</button>
+            <button data-tab="orbes" class="tab-btn">🟣 Orbes</button>
+            <button data-tab="packs" class="tab-btn">🎁 Packs</button>
+            <button data-tab="fonds" class="tab-btn">🖼 Fonds</button>
+
+        </div>
+
+        <div id="shopContent" class="shop-content"> 
+            <!-- Les skins s'affichent ici -->
+        </div>
+
+
+    </div>
+
+</div>
+
+      <div id="pseudoModal" class="overlay hidden">
+  <div class="modalCard">
+    <h2>Ton pseudo</h2>
+
+    <input id="pseudoInput" type="text" maxlength="20" />
+
+    <button id="pseudoConfirm">Valider</button>
+  </div>
+</div>
+
+<footer id="legalFooter">
+        <div>© 2026 CJajlk Games</div>
+        <div>Attrape-les-tous</div>
+        <div>Tous droits reserves.</div>
+        <div>Toute reproduction ou redistribution non autorisee est interdite.</div>
+        <div>Projet independant developpe par CJajlk</div>
+        <a href="https://cjajlk.github.io/cjajlkGames-V2-test/v2/" target="_blank" rel="noopener">https://cjajlk.github.io/cjajlkGames-V2-test/v2/</a>
+        <div id="gameVersionDisplay"></div>
+</footer>
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- SCRIPTS TOUJOURS À LA FIN -->
+<!-- ========================= -->
+
+<script src="js/loader.js"></script>
+<script src="js/engine/assetsmap.js"></script>
+<script src="../../core/cjAccount.js"></script>
+<script src="../../core/cjEngine.js"></script>
+<script src="js/eventManager.js"></script>
+<script src="js/feedbackPopup.js"></script>
+<script src="js/translations.js"></script>
+<script src="js/game.js"></script>
+<script src="js/campaign.js"></script>
+<script src="js/options.js"></script>
+<script src="js/menuCharacters.js"></script>
+<script src="js/shop.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    loadAllGameData().then(async () => {
+
+        initShop();
+
+        const menuExtras = [
+            { id: "menu_mascotte_idle",  src: "assets/images/menu/lyra_idle.png" },
+            { id: "menu_mascotte_blink", src: "assets/images/menu/lyra_blink.png" },
+            { id: "menu_mascotte_happy", src: "assets/images/menu/lyra_pulse.png" },
+            { id: "menu_mascotte_sad",   src: "assets/images/menu/lyra_breath.png" }
+        ];
+
+        await GameAssets.load(menuExtras);
+
+        showMainMenu();
+    });
+
+});
+
+function redirectToKoFi() {
+    window.open("https://ko-fi.com/cjajlk", "_blank");
+}
+</script>
+
+</body>
+</html>
+
+
+

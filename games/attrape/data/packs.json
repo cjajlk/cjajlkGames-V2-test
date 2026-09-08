@@ -1,0 +1,70 @@
+{
+  "packs": [
+    {
+      "id": "pack_noel",
+      "name": "Pack Noël",
+      "eventId": "noel",
+      "img": "assets/evenements/noel/pack-noel.png",
+      "description": "Deux mascottes, une orbe et deux fonds spéciaux pour Noël.",
+      "costCoins": 0,
+      "costGems": 0,
+      "limited": true,
+      "disabled": true,
+      "items": {
+        "mascotte": ["noel_fille", "noel_garcon"],
+        "orbes": ["orb_noel"],
+        "backgrounds": ["noel1", "noel2"]
+      }
+    },
+
+     {
+      "id": "pack_futuriste",
+      "name": "Pack Futuriste",
+      "img": "assets/evenements/futuriste/pack-futuriste.png",
+      "description": "Deux mascottes,  deux fonds spéciaux pour le futur.",
+      "costCoins": 0,
+      "costGems": 6000,
+      "limited": true,
+     "premium": true,
+      "items": {
+        "mascotte": ["Kiara-1futuriste", "Kiara-2futuriste"],
+        "backgrounds": ["fond-futuriste1.png", "fond-futuriste2.png"]
+      }
+    },
+     {
+      "id": "pack_paques",
+      "name": "Pack Pâques 🐰",
+      "eventId": "paques",
+      "img": "assets/evenements/paques/pack-paques.png",
+      "description": "un compagnon,  un fond spécial pour  Pâques.",
+      "costCoins": 0,
+      "costGems": 6000,
+      "limited": true,
+     "premium": true,
+     "disabled": true,
+      "items": {
+        "mascotte": ["micho"],
+        "backgrounds": ["fond-paque.png"]
+      }
+    },
+
+    {
+      "id": "pack_st_valentin",
+      "name": "Pack Saint-Valentin 💖",
+      "eventId": "valentin",
+      "img": "assets/evenements/st-valentin/pack-st-valentin.png",
+      "description": "Trois mascottes exclusives pour la Saint-Valentin 💕",
+      "costCoins": 0,
+      "costGems": 6000,
+      "limited": true,
+      "premium": true,
+      "items": {
+        "mascotte": [
+          "jane-stvalentin",
+          "eve-stvalentin",
+          "cjajlk-stvalentin"
+        ]
+      }
+    }
+  ]
+}

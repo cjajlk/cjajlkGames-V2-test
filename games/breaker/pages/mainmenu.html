@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="titles.mainmenu">Breaker Nocturne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/mainmenu.css" />
+</head>
+
+<body class="menu">
+
+  <!-- IMAGE FOND -->
+  <img src="../assets/backgrounds/menu/ville.png" class="bg-img" alt="background">
+
+  <div class="menu-container">
+
+    <h1 class="title">BREAKER NOCTURNE</h1>
+
+    <div class="event" id="eventText" data-i18n="mainmenu.eventSoon">
+      ✨ Événement bientôt disponible
+    </div>
+
+    <div class="buttons">
+      <button id="playBtn" class="btn primary" data-i18n="mainmenu.play">▶ JOUER</button>
+      <button id="tutorialBtn" class="btn" data-i18n="mainmenu.tutorial">📚 Tutoriel</button>
+      <button id="shopBtn" class="btn" data-i18n="mainmenu.shop">🛍 Boutique</button>
+      <button id="stableBtn" class="btn" data-i18n="mainmenu.stable">🌿 Écurie</button>
+      <button id="collectionBtn" class="btn" data-i18n="mainmenu.collection">📚 Collection</button>
+      <a href="https://cjajlk.github.io/cjajlkGames-V2-test/v2/" target="_blank" rel="noopener" class="hub-link" style="
+        display: inline-block;
+        margin: 18px auto 0 auto;
+        padding: 7px 18px;
+        border-radius: 8px;
+        background: rgba(25,20,40,0.82);
+        color: #b6aaff;
+        font-size: 1rem;
+        font-family: inherit;
+        text-align: center;
+        text-decoration: none;
+        box-shadow: 0 2px 12px rgba(80,60,180,0.10);
+        transition: background 0.2s, color 0.2s;"
+        onmouseover="this.style.background='rgba(60,40,120,0.92)';this.style.color='#fff'"
+        onmouseout="this.style.background='rgba(25,20,40,0.82)';this.style.color='#b6aaff'"
+      >
+        ← Retour au Hub CJajlkGames
+      </a>
+    </div>
+
+    <button id="optionsBtn" class="options">⚙</button>
+    <button id="profileBtn" class="profile">👤</button>
+
+  </div>
+
+  <div id="optionsPanel" class="options-panel hidden" aria-hidden="true">
+    <div class="options-card" role="dialog" aria-modal="true" aria-labelledby="optionsTitle">
+      <div class="options-header">
+        <h2 id="optionsTitle" data-i18n="options.title">Options</h2>
+        <button id="closeOptions" class="options-close" aria-label="Close">✕</button>
+      </div>
+
+      <div class="option-item">
+        <span id="languageLabel" data-i18n="options.language">Langue</span>
+        <div class="option-actions">
+          <button class="toggle-btn" data-lang="fr">FR</button>
+          <button class="toggle-btn" data-lang="en">EN</button>
+        </div>
+      </div>
+
+      <div class="option-item">
+        <span id="fullscreenLabel" data-i18n="options.fullscreen">Mode plein écran</span>
+        <button id="fullscreenBtn" class="toggle-btn">Activer</button>
+      </div>
+
+      <div class="option-item danger">
+        <span id="resetLabel" data-i18n="options.resetProfile">Réinitialiser le profil</span>
+        <button id="resetProfileBtn" class="toggle-btn danger-btn" data-i18n="options.resetButton">Réinitialiser</button>
+        <small id="resetWarn" class="option-warning" data-i18n="options.resetWarn">Vous perdrez toutes vos mascottes achetées.</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="credits" id="rightsText" data-i18n="rights.text">Tous droits réservés — créé par CJajlk</div>
+
+
+  <script src="../js/i18n.js" defer></script>
+  <script src="../js/popup.js" defer></script>
+  <script src="../js/profile.js" defer></script>
+  <script src="../js/mainmenu.js" defer></script>
+
+  
+
+</body>
+</html>

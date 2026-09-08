@@ -1,0 +1,119 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0b0f1a;
+}
+
+.screen {
+  position: fixed;
+  inset: 0;
+}
+
+.bg {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+.bg-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  
+  /* Optimisations vidéo */
+  background: #0b0f1a;
+  will-change: transform;
+}
+
+.bg-fallback {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+/* Afficher l'image de fallback si vidéo ne joue pas */
+.screen:has(.bg-video:not([src])) .bg-fallback,
+.screen .bg-video:not([data-playing="true"]) ~ .bg-fallback {
+  display: block;
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+
+  /* avant : center */
+  justify-content:flex-start;   /* ← on colle en haut */
+
+  align-items:center;
+  text-align:center;
+
+  padding-top:8vh;  /* ← espace doux depuis le haut */
+  
+  /* Permettre les interactions */
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+
+/* TITRE */
+.title{
+  font-weight:900;
+  letter-spacing:3px;
+  color:white;
+  text-shadow:0 0 20px rgba(0,0,0,.8);
+}
+
+/* TEXTE */
+.hint{
+  margin-top:auto;
+  color:#dfe7ff;
+  opacity:.9;
+  font-weight:600;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.3s, text-shadow 0.3s;
+}
+
+.hint:hover{
+  opacity: 1;
+  text-shadow: 0 0 15px rgba(223, 231, 255, 0.6);
+}
+
+
+/* 📱 MOBILE (Portrait) */
+@media (max-width:480px){
+  .title{ font-size:7vw; letter-spacing:2px; }
+  .hint{ font-size:3.5vw; padding:0 20px; }
+  .overlay{ padding-top:15vh; }
+}
+
+/* 📱 MOBILE (Paysage) */
+@media (min-width:481px) and (max-width:768px){
+  .title{ font-size:6vw; letter-spacing:2.5px; }
+  .hint{ font-size:3vw; }
+  .overlay{ padding-top:12vh; }
+}
+
+/* 💻 TABLETTE */
+@media (min-width:769px) and (max-width:1024px){
+  .title{ font-size:4.5vw; letter-spacing:3px; }
+  .hint{ font-size:2vw; }
+  .overlay{ padding-top:10vh; }
+}
+
+/* 🖥 DESKTOP */
+@media (min-width:1025px){
+  .title{ font-size:64px; letter-spacing:4px; }
+  .hint{ font-size:20px; }
+  .overlay{ padding-top:12vh; }
+}

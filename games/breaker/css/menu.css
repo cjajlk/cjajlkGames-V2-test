@@ -1,0 +1,144 @@
+.screen{
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: url("../assets/backgrounds/menu/menu_mobile.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  z-index: -1;  /* Pour qu'il soit derrière les autres éléments */
+}
+
+
+
+/* fond */
+.bg img {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* canvas derrière tout */
+
+.game-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ===== Mascottes (base desktop) ===== */
+.mascotte{
+  position: fixed;
+  z-index: 10;
+
+  width: 400px;   /* desktop */
+  height: auto;
+
+  animation: float 4s ease-in-out infinite;
+}
+
+/* positions */
+.tl{ top:20px; left:20px; }
+.tr{ top:20px; right:20px; }
+.bl{ bottom:20px; left:20px; }
+.br{ bottom:20px; right:20px; }
+
+
+/* ===== MOBILE ===== */
+@media (max-width: 768px){
+
+ .mascotte {
+  width: 22vw;   /* Ajustement pour mobile */
+}
+
+.tl { top: 12px; left: 12px; }
+.tr { top: 12px; right: 12px; }
+.bl { bottom: 12px; left: 12px; }
+.br { bottom: 12px; right: 12px; }
+}
+
+
+@keyframes float{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-6px); }
+}
+
+.enterBtn {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #2196F3;
+  color: white;
+  font-size: 24px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  z-index: 9999; /* S'assurer que le bouton soit au-dessus de tout */
+}
+
+
+.enterBtn:hover{
+  transform:translate(-50%, -50%) scale(1.05);
+  box-shadow:
+    0 0 35px rgba(80,160,255,1),
+    0 0 90px rgba(80,160,255,0.6);
+}
+.introVideo{
+  position: fixed;   /* important */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 9999;     /* au-dessus de tout */
+}
+
+@media (max-width: 768px) {
+  .enterBtn {
+    padding: 12px 45px;
+    font-size: 18px;
+    top: 80%; /* Ajuster sa position */
+  }
+}
+
+.enterBtn,
+.dialogue{
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 1s ease;
+}
+
+.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+body {
+  transition: opacity 0.6s ease;
+}
+
+body.fade-out {
+  opacity: 0;
+}
+

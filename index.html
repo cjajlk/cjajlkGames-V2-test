@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr"> 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CJajlkGames, des jeux pour rêver : un univers nocturne calme et poétique." />
+  <meta name="theme-color" content="#0a0620" />
+  <meta property="og:title" content="CJajlkGames" />
+  <meta property="og:description" content="Des jeux pour rêver, sous la lueur Nocturne." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/images/banner_nocturne.png" />
+  <meta property="og:locale" content="fr_FR" />
+  <link rel="canonical" href="https://cjajlk.github.io/cjajlkGames/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
+  <title>CJajlkGames - Des jeux pour rêver</title>
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head> 
+
+<script data-goatcounter="https://cjajlk.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+<body>
+  <a class="skip-link" href="#main">Aller au contenu</a> 
+  
+  <!-- ==== HEADER SIMPLE ==== -->
+  <header class="simple-header">
+    <div class="header-content">
+      <h1>CJajlkGames</h1>
+      <div class="cj-info">
+        <span id="cj-display-header" class="cj-display cj-display-tooltip" title="Les CJ sont gagnés en jouant">💎 CJ : 0</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+  <!-- ==== HERO SECTION IMMERSIVE ==== -->
+  <section class="hero-section">
+    <div class="hero-background">
+      <div class="hero-glow"></div>
+      <div class="hero-particles"></div>
+      <div class="nocturne-lights"></div>
+    </div>
+
+    <div class="hero-content fadein-section">
+      <h2 class="hero-title">🎮 CJajlkGames</h2>
+      <div class="hero-description">
+        <p>Le hub nocturne de tes jeux connectés.</p>
+      </div>
+      <div class="hero-profile">
+        <div class="profile-avatar">
+          <img id="playerBadgeImg" src="" alt="Badge" style="display:none;" />
+        </div>
+        <div class="profile-info">
+          <div class="profile-label">Profil Joueur</div>
+          <div class="profile-name" id="playerPseudo">CJ</div>
+          <div class="hero-badge" id="heroBadge"></div>
+        </div>
+      </div>
+      <a href="#jeux" class="btn-hero hero-cta-glow">Explorer l'univers</a>
+    </div>
+  </section> 
+
+  <!-- ==== SECTION : NOS JEUX (ID ANCHOR) ==== -->
+  <section id="jeux" class="games-showcase">
+    <div class="section-header fadein-section">
+      <h2>Nos jeux</h2>
+      <p class="section-subtitle">Joue et gagne des CJ</p>
+    </div>
+
+    <div class="games-grid">
+      <!-- Attrape-les-tous -->
+      <a href="games/attrape/" class="game-card-large fadein-section attrape-card">
+        <div class="game-card-content">
+          <img src="assets/images/carte_attrape_les_tous.png" alt="Attrape-les-tous" />
+          <div class="game-card-info">
+            <h3>🎯 Attrape-les-tous</h3>
+            <p>Attrape. Collectionne. Progresse.</p>
+            <span class="game-cta-large">[ Jouer ]</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Breaker Nocturne -->
+      <a href="games/breaker/" class="game-card-large fadein-section breaker-card">
+        <div class="game-card-content">
+          <img src="assets/images/banner-breaker.png" alt="Breaker Nocturne" />
+          <div class="game-card-info">
+            <h3>🔥 Breaker Nocturne</h3>
+            <p>Casse. Maîtrise. Découvre.</p>
+            <span class="game-cta-large">[ Jouer ]</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Velocity -->
+      <a href="https://cjajlk.github.io/nocturne-velocity/" class="game-card-large fadein-section velocity-card">
+        <div class="game-card-content">
+          <img src="assets/images/intro.png" alt="Velocity" />
+          <div class="game-card-info">
+            <h3>⚡ Velocity</h3>
+            <p>Ride. Explore. Conquer.</p>
+            <span class="game-cta-large">[ Jouer ]</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==== SECTION : APPLICATIONS ==== -->
+  <section id="applications" class="games-showcase">
+    <div class="section-header fadein-section">
+      <h2>Applications</h2>
+      <p class="section-subtitle">Outils pour rester focus et progresser</p>
+    </div>
+
+    <div class="games-grid applications-grid">
+      <!-- Focus Chronicles (Nouveau Outil) -->
+      <a href="https://cjajlk.github.io/CJ-Focus-Chronicles/" class="game-card-large fadein-section focus-chronicles-card" target="_blank" rel="noopener">
+        <div class="game-card-content">
+          <div class="focus-chronicles-img-wrap">
+            <img src="assets/focus_chronicles/focus.jpg" alt="Focus Chronicles" class="focus-chronicles-img" />
+            <span class="focus-badge">NOUVEAU</span>
+          </div>
+          <div class="game-card-info">
+            <h3><span class="focus-pickaxe">⛏️</span> Focus Chronicles</h3>
+            <p>Outil de concentration et gestion du temps.</p>
+            <span class="game-cta-large">[ Découvrir ]</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://cjajlk.github.io/relaxation-app/" class="game-card-large fadein-section focus-chronicles-card" target="_blank" rel="noopener">
+        <div class="game-card-content">
+          <div class="focus-chronicles-img-wrap">
+            <img src="assets/images/gallery/foret.png" alt="Relaxation Application" class="focus-chronicles-img" />
+            <span class="focus-badge">NOUVEAU</span>
+          </div>
+          <div class="game-card-info">
+            <h3><span class="focus-pickaxe">🌿</span> Relaxation App</h3>
+            <p>Application de relaxation et ambiance nature.</p>
+            <span class="game-cta-large">[ Découvrir ]</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ==== TEASER BETA ANDROID ==== -->
+  <section class="beta-teaser-card fadein-section">
+    <div class="beta-teaser-content" style="max-width:340px;margin:0 auto;text-align:center;">
+      <h2 style="font-size:1.25em;font-weight:700;color:#bca7ff;margin-bottom:10px;letter-spacing:0.01em;">Bêta Android ouverte</h2>
+      <p style="color:#e6e3ff;font-size:1em;line-height:1.6;margin:0;">Des versions Android de mes jeux sont actuellement en test.<br>Si tu souhaites participer, consulte la section dédiée plus bas pour obtenir les informations et me contacter.</p>
+    </div>
+  </section>
+
+  <!-- ==== SECTION : COMMENT CA MARCHE ==== -->
+  <section class="how-it-works">
+    <h2>Le flux en 3 étapes</h2>
+    
+    <div class="steps-modern">
+      <div class="step-modern" data-aos="fade-up">
+        <div class="step-icon">1️⃣</div>
+        <h3>Joue</h3>
+        <p>Explore un monde nocturne et progresse.</p>
+      </div>
+      
+      <div class="step-modern" data-aos="fade-up" data-aos-delay="100">
+        <div class="step-icon">2️⃣</div>
+        <h3>Gagne des CJ</h3>
+        <p>+1 CJ toutes les 10 minutes actives.<br><span class="small-text">Ta progression te suit partout.</span></p>
+      </div>
+      
+      <div class="step-modern" data-aos="fade-up" data-aos-delay="200">
+        <div class="step-icon">3️⃣</div>
+        <h3>Débloque</h3>
+        <p>Utilise-les dans la Boutique CJ<br><span class="small-text">pour personnaliser ton univers.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==== SECTION : BOUTIQUE CJ ==== -->
+  <section class="shop-cta">
+    <a class="shop-cta-btn" href="shop/">🛍 Boutique CJ</a>
+  </section>
+
+  <!-- ==== SECTION 2 : ACTUALITÉS NOCTURNES ==== -->
+  <section id="news" class="games-section">
+
+    <section class="news-section" aria-labelledby="news-title">
+      <h3 id="news-title">Actualités nocturnes</h3>
+
+      <div class="news-card">
+        <h4>🎮 Lancement de la bêta</h4>
+        <p>La bêta gratuite de <strong>Attrape-les-tous</strong> est ouverte.</p>
+
+        <div class="itch-embed">
+          <a href="games/attrape/" class="btn-play-now">▶ Jouer maintenant</a>
+        </div>
+
+        <span class="news-date">Ouverture vendredi 17h00 • Février 2026</span>
+        <hr class="news-separator" />
+        <p class="coming-event">
+          🐣 Événement Pâques — Avril 2026<br />
+          <em>En préparation...</em>
+        </p>
+      </div>
+
+      <div class="news-card">
+        <h4>💖 Événement Saint-Valentin</h4>
+        <p>
+          L'événement Saint-Valentin est disponible dans <strong>Attrape-les-tous</strong> 🌙
+          Trois mascottes exclusives, une ambiance douce et limitée dans le temps.
+        </p>
+        <span class="news-date">Février 2026</span>
+      </div>
+
+      <div class="news-card">
+        <h4>🚧 Projets en cours</h4>
+        <p>
+          Deux nouveaux mondes prennent forme dans l'univers Nocturne :
+          <strong>Breaker</strong> et <strong>Nocturne World</strong>.<br />
+          CJajlk Games deviendra bientôt le refuge pour suivre leur naissance et leur évolution.
+        </p>
+      </div>
+    </section>
+
+
+    <!-- doublon supprimé : balise beta-signature -->
+    <div class="beta-signature" id="beta-section">
+      <p>✨ Si tu veux suivre le projet, laisse ton pseudo :</p>
+      <label for="betaName" class="sr-only">Ton pseudo</label>
+      <input id="betaName" type="text" placeholder="Ton pseudo" autocomplete="nickname" />
+      <button type="button" onclick="addBetaName()">Signer</button>
+      <div id="betaList" aria-live="polite"></div>
+    </div>
+  </section>
+
+
+  <!-- ==== SECTION : CJ UNIVERSELS ==== -->
+  <section id="cj-section" class="cj-section">
+    <div class="cj-orb"></div>
+    <h2>🌙 Les CJ Universels</h2>
+    <div class="cj-content fadein-section">
+      <p class="cj-intro">Gagne des CJ en jouant. Utilise-les dans tout l'univers.</p>
+      <div class="cj-points">
+        <h3>🎯 Points clés</h3>
+        <ul class="cj-list">
+          <li style="font-size:1.3em;">✨ Gagnés en jouant</li>
+          <li style="font-size:1.3em;">⏸️ Pas en pause</li>
+          <li style="font-size:1.3em;">🚫 Pas de farming</li>
+          <li style="font-size:1.3em;">⚖️ Équitable</li>
+          <li style="font-size:1.3em;">🌙 Connectés à tout</li>
+        </ul>
+      </div>
+      <div class="cj-ecosystem">
+        <div class="cj-node cj-node-game" style="font-size:1.2em;">Attrape-les-tous</div>
+        <div class="cj-center">
+          <span class="cj-center-text" style="font-size:1.4em;">CJ Universels</span>
+        </div>
+        <div class="cj-node cj-node-game" style="font-size:1.2em;">Breaker</div>
+        <div class="cj-node cj-node-future" style="font-size:1.2em;">Projets futurs</div>
+      </div>
+      <div class="cj-future"></div>
+    </div>
+  </section>
+
+
+  <!-- ==== SECTION : ANIMAT_CJAJLK ==== -->
+  <section id="animat-section" class="animat-section">
+    <h2>Animat_CJajlk</h2>
+    <p>Outil d'animation de l'écosystème CJajlk.</p>
+    <p class="animat-status">Module en développement.</p>
+  </section>
+
+
+  <!-- ==== SECTION 4 : LESPRIT CJajlkGames ==== -->
+  <section class="spirit-section">
+    <h2> L'esprit CJajlkGames</h2>
+   <p>
+  CJajlk Games, ce n’est pas qu’un nom.  
+  C’est une idée simple et sincère : <em>retrouver le calme à travers le jeu.</em><br><br>
+
+  Chaque projet naît dans la nuit, là où les bruits du monde s’effacent  
+  et où les pensées deviennent plus claires.  
+  Ici, on ne cherche ni la compétition ni la perfection, mais le ressenti.<br><br>
+
+  Nos jeux s’adressent à celles et ceux qui aiment observer avant d’agir,  
+  à ceux qui rêvent en silence,  
+  à ceux qui n’ont jamais vraiment quitté leur monde intérieur.<br><br>
+
+  Créer sans forcer. Jouer sans stress. Explorer, ressentir, recommencer.  
+  Derrière chaque ligne de code, il y a cette envie profonde :  
+  reconnecter le joueur à quelque chose de doux, d’humain, de simple.<br><br>
+
+  Le bleu, le violet, l’or —  
+  des couleurs qui racontent la nuit, mais une nuit pleine de lumière.  
+  C’est cette lueur discrète qui relie tous nos jeux,  
+  du clic rapide d’<strong>Attrape-les-tous</strong>  
+  à la respiration lente de <strong>Nocturne Farm</strong>.<br><br>
+
+  CJajlk Games avance sans bruit, un pas après l’autre.  
+  Ce n’est pas une entreprise, c’est une aventure personnelle,  
+  partagée avec celles et ceux qui comprennent  
+  qu’on peut aimer créer sans vouloir dominer.<br><br>
+
+  Ici, chaque joueur compte.  
+  Chaque idée est une graine.  
+  Et chaque nuit ouvre un nouvel horizon.
+</p>
+
+
+    <div class="signature-quote">
+      <p> Créer, c'est couper la lumière dans le noir. </p>
+      <span> CJajlk</span>
+    </div>
+  </section>
+
+   <!-- ==== SECTION 3 : AIDE AU DEVELOPPEUR ==== -->
+  <section class="support-section">
+    <h2> Soutenir le projet</h2>
+    <p>
+  CJajlk Games est un projet indépendant, né d’une passion et construit pas à pas.  
+  Si tu souhaites soutenir le développement ou simplement encourager la création,  
+  chaque geste compte, même le plus simple.
+</p>
+
+
+    <button class="support-toggle" aria-controls="support-options">Aider le développeur</button>
+
+    <div id="support-options" class="support-options">
+      <p>Tu peux soutenir le projet de plusieurs façons :</p>
+      <ul>
+        <li>⭐ Parler du site à tes amis</li>
+        <li>💬 Partager des retours ou idées d'amélioration</li>
+        <li>☕ Offrir un café via Ko-fi</li>
+      </ul>
+      
+      <div class="support-links">
+  <p>Retrouve l’univers Nocturne ailleurs :</p>
+
+
+  <a href="https://ko-fi.com/cjajlk" target="_blank" rel="noopener noreferrer">☕ Ko-fi</a>
+  <a href="https://youtube.com/@cjajlk7065" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+  <a href="https://tiktok.com/@cjajlk94" target="_blank" rel="noopener noreferrer">🎵 TikTok</a>
+  <a href="https://pinterest.com/cjajlk77" target="_blank" rel="noopener noreferrer">📌 Pinterest</a>
+  <a href="https://discord.gg/DVMAtj4r" target="_blank" rel="noopener noreferrer">💬 Discord (bêta testeurs)</a>
+
+  <p class="support-mail">
+    📧 Contact : <a href="mailto:test1attrape@gmail.com">test1attrape@gmail.com</a>
+  </p>
+</div>
+      
+    </div>
+  </section>
+
+  <!-- 🎨 SECTION 5 — CJajlkArt -->
+<section id="cjajlk-art" class="section art-section">
+  <h2 class="section-title">🎨 CJajlkArt — bientôt</h2>
+
+  <p class="section-text">
+    Besoin d'une pause dans le jeu ?<br>
+    Rejoins-moi dans le mode silencieux de <strong>CJajlkArt</strong> 🌙<br>
+    Un espace calme, nocturne et sensible, dédié aux peintures et créations artistiques.
+  </p>
+
+  <div class="art-cta">
+    <a
+      href="https://cjajlk.github.io/cjajlkart/"
+      class="art-button"
+      aria-label="Découvrir CJajlkArt"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      🌙 Entrer dans le mode silencieux
+    </a>
+  </div>
+</section>
+
+
+<!-- ==== TEST : COMPTE CJAJLK ==== -->
+<section id="cjajlk-account-test" class="account-test-section debug-only">
+  <h2>🧪 Compte CJajlk (Test local)</h2>
+  <div id="account-display" class="account-display">
+    <p>Chargement du compte...</p>
+  </div>
+  <p class="account-test-info">
+    Mode test uniquement • localStorage • 
+    <code>CJajlkAccount.debug()</code> pour plus d'infos
+  </p>
+  <div class="account-actions">
+    <a href="shop/" class="shop-link">🛍️ Utiliser mes CJ →</a>
+  </div>
+</section> 
+
+
+  <!-- ==== SECTION BÊTA-TEST ANDROID ==== -->
+  <section id="beta-section" class="beta-testeur-section fadein-section">
+    <div class="beta-testeur-card">
+      <h2 class="beta-testeur-title">Recherche Bêta-Testeurs Android</h2>
+      <p class="beta-testeur-desc">
+        Je recherche des joueurs motivés pour tester les versions Android de mes jeux en cours de développement.<br><br>
+        <span class="beta-testeur-jeu">🎮 Breaker</span><br>
+        – Mode boss<br>
+        – Progression<br>
+        – Système de récompenses<br><br>
+        <span class="beta-testeur-jeu">🌙 Attrape-les-tous</span><br>
+        – Mode campagne<br>
+        – Timer<br>
+        – Équilibrage général<br><br>
+        Objectif : recueillir des retours sur la stabilité, le gameplay et la progression.
+      </p>
+      <p class="beta-testeur-contact">Si vous souhaitez participer, contactez-moi via le formulaire du site ou directement par mail pour recevoir le lien privé Android.</p>
+      <a href="mailto:test1attrape@gmail.com?subject=Demande%20B%C3%AAta-Test%20Android" class="btn-beta-testeur">👉 Devenir Bêta-Testeur</a>
+      <span class="beta-testeur-mention">Version en développement active – les retours sont intégrés régulièrement.</span>
+    </div>
+  </section> 
+ 
+
+
+
+  <!-- ==== PIED DE PAGE ==== -->
+  </main>
+
+ <footer class="site-footer">
+  <p>© 2026 CJajlk</p>
+  <p class="rights">Tous droits réservés</p>
+ </footer>
+
+  <script src="core/cjAccount.js" defer></script>
+  <script src="assets/js/script.js" defer></script>
+  <script src="assets/js/visual-hub-animations.js" defer></script>
+</body>
+<!-- Désactivation automatique du service worker (sécurité dev mobile) -->
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    for (let registration of registrations) {
+      registration.unregister();
+    }
+  });
+} 
+
+  
+
+</script>
+</html>
+

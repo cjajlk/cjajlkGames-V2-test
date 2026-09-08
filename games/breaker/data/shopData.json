@@ -1,0 +1,99 @@
+{
+  "categories": [
+    {
+      "id": "companions",
+      "name": {
+        "fr": "Mascottes",
+        "en": "Companions"
+      },
+      "items": [
+        {
+          "id": "aube",
+          "name": {
+            "fr": "Aube",
+            "en": "Aube"
+          },
+          "price": 0,
+          "rarity": "common",
+          "image": "assets/companions/aube/aube_idle.png",
+          "description": {
+            "fr": "Compagnon de départ. Fidèle et lumineux.",
+            "en": "Starter companion. Loyal and radiant."
+          },
+          "unlocked": true
+        },
+        {
+          "id": "aqua",
+          "name": {
+            "fr": "Aqua",
+            "en": "Aqua"
+          },
+          "price": 150,
+          "rarity": "rare",
+          "image": "assets/companions/aqua/aqua_idle.png",
+          "description": {
+            "fr": "Esprit des eaux. Apporte calme et sérénité.",
+            "en": "Spirit of water. Brings calm and serenity."
+          }
+        },
+        {
+          "id": "ignis",
+          "name": {
+            "fr": "Ignis",
+            "en": "Ignis"
+          },
+          "price": 250,
+          "rarity": "epic",
+          "image": "assets/companions/ignis/ignis_idle.png",
+          "description": {
+            "fr": "Gardien des flammes. Son courage est légendaire.",
+            "en": "Guardian of flames. Legendary courage."
+          }
+        },
+        {
+          "id": "astral",
+          "name": {
+            "fr": "Astral",
+            "en": "Astral"
+          },
+          "price": 200,
+          "rarity": "rare",
+          "image": "shop/categories/companions/light/astral_idle.png",
+          "description": {
+            "fr": "Luciole céleste. Illumine les ténèbres.",
+            "en": "Celestial wisp. Lights up the darkness."
+          }
+        },
+        {
+          "id": "flora",
+          "name": {
+            "fr": "Flora",
+            "en": "Flora"
+          },
+          "price": 100,
+          "rarity": "common",
+          "image": "assets/companions/flora/flora_idle.png",
+          "description": {
+            "fr": "Esprit de la forêt. Protège la nature.",
+            "en": "Forest spirit. Protects nature."
+          }
+        }
+        ,
+        {
+          "id": "dragonMystique",
+          "name": {
+            "fr": "Dragon Mystique",
+            "en": "Mystic Dragon"
+          },
+          "price": 400,
+          "rarity": "legendary",
+          "glb": "assets/3d/dragon_mystique.glb",
+          "description": {
+            "fr": "Un dragon 3D coloré.",
+            "en": "A colorful 3D dragon."
+          }
+        }
+      ]
+    }
+  ]
+}

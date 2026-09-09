@@ -200,16 +200,7 @@ function loadPlayerProfile() {
             coffreDerniereUtilisation = profile.coffreDerniereUtilisation;
         }
 
-       // Vérifie si le titre est correctement récupéré et affiché
-const playerBadge = document.getElementById("playerBadge");
-if (equippedTitle) {
-    playerBadge.textContent = equippedTitle;  // Mettre le titre dans le badge
-    playerBadge.classList.remove("hidden");  // Assurer que la classe 'hidden' est retirée
-    playerBadge.style.display = "block";  // S'assurer que le badge est visible
-} else {
-    playerBadge.classList.add("hidden");  // Si pas de titre, garder le badge caché
-    playerBadge.style.display = "none";  // Masquer explicitement
-}
+        updatePlayerBadge();
 
         const corrections = validateProfileState();
         if (corrections.length) {
@@ -1751,6 +1742,7 @@ function syncHudVisibility() {
     const timerBarContainer = document.getElementById("timerBarContainer");
 
     const mainMenu = document.getElementById("mainMenu");
+    if (mainMenu && !mainMenu.classList.contains('hidden') && mainMenu.style.display !== 'none') updatePlayerBadge();
     const gameModePanel = document.getElementById("gameModePanel");
     const shopOverlay = document.getElementById("shopOverlay");
     const profileOverlay = document.getElementById("profileOverlay");
@@ -3031,7 +3023,10 @@ function updatePlayerBadge() {
         : "Aucun titre";
 
     badge.textContent = `${playerName} - ${titleText}`;
+    badge.style.removeProperty('display');
     badge.classList.remove("hidden");
     setTimeout(() => badge.classList.add("visible"), 10);
 }
 
+
+window.addEventListener('pageshow', () => updatePlayerBadge());

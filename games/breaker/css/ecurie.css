@@ -1145,3 +1145,18 @@ model-viewer.shop-model {
 }
 
 
+
+/* Small screens: keep the header, details, companion and slots in normal flow. */
+@media (max-width: 480px) {
+    html, body { height: auto; min-height: 100svh; }
+    .ecurie-header { position: relative; }
+    .companion-showcase { padding: 10px 10px 12px; }
+    .mobile-info-toggle { margin-top: 8px; min-height: 48px; }
+    .companion-info-panel { max-height: none; overflow: visible; }
+    .mobile-info-content { display: none; }
+    .companion-info-panel.is-open .mobile-info-content { display: block; }
+    #main-companion-display { flex-shrink: 0; margin-top: 12px; }
+    .info-actions .btn-action { min-height: 48px; }
+    .companion-slots { position: relative; bottom: auto; }
+    .slots-container { justify-content: flex-start; width: max-content; }
+}

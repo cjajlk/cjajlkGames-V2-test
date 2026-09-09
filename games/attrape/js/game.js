@@ -1349,6 +1349,56 @@ function checkTitlesUnlock() {
 // ---------------------------------------------------------
 //  Panel Profil (overlay Profil Joueur)
 // ---------------------------------------------------------
+function openTitleSelector() {
+    const overlay = document.getElementById("titleSelectorOverlay");
+    const list = document.getElementById("titleSelectorList");
+    if (!overlay || !list) return;
+    list.replaceChildren();
+    PlayerTitles.forEach(title => {
+        const owned = Array.isArray(unlockedTitles) && unlockedTitles.includes(title.id);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "profile-edit-btn";
+        button.dataset.titleId = title.id;
+        button.disabled = !owned;
+        button.textContent = title.name + (owned ? (equippedTitle === title.id ? " — Équipé" : " — Choisir") : " — Verrouillé");
+        button.setAttribute("aria-pressed", String(equippedTitle === title.id));
+        button.addEventListener("click", () => {
+            if (equipPlayerTitle(title.id)) closeTitleSelector();
+        });
+        list.appendChild(button);
+    });
+    overlay.classList.remove("hidden");
+    overlay.classList.add("visible");
+    (list.querySelector("button:not(:disabled)") || overlay.querySelector("button"))?.focus();
+}
+
+function closeTitleSelector() {
+    const overlay = document.getElementById("titleSelectorOverlay");
+    if (!overlay) return;
+    overlay.classList.remove("visible");
+    overlay.classList.add("hidden");
+    document.querySelector('#profileOverlay [onclick="openTitleSelector()"]')?.focus();
+}
+
+function equipPlayerTitle(id) {
+    if (!PlayerTitles.some(title => title.id === id) || !Array.isArray(unlockedTitles) || !unlockedTitles.includes(id)) return false;
+    try {
+        // Equipment only: keep every other saved field and every acquisition intact.
+        const profile = JSON.parse(localStorage.getItem("nocturnePlayerProfileV3"));
+        if (!profile || !Array.isArray(profile.unlockedTitles) || !profile.unlockedTitles.includes(id)) return false;
+        profile.equippedTitle = id;
+        localStorage.setItem("nocturnePlayerProfileV3", JSON.stringify(profile));
+        equippedTitle = id;
+        updateProfilePanel();
+        return true;
+    } catch (error) {
+        console.warn("Impossible de sauvegarder le titre équipé :", error);
+        return false;
+    }
+}
+
+
 function openProfile() {
     const o = document.getElementById("profileOverlay");
     if (!o) return;

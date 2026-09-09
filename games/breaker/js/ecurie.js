@@ -137,7 +137,7 @@ function loadCompanions() {
                     unlocked: unlocked.includes(item.id),
                     level: profile.companions?.[item.id]?.level || (item.id === "aube" ? 1 : 0),
                     xp: profile.companions?.[item.id]?.xp || 0,
-                    orbType: item.orbType || "void",
+                    orbType: ({ aqua: "water", ignis: "fire", astral: "light", flora: "nature" })[item.id] || item.orbType || "void",
                     glb: item.glb || item.gbl || null, // injection directe depuis shopData.json
                     image: item.image || null
                 };

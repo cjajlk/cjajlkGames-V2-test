@@ -214,11 +214,11 @@ const I18N_STRINGS = {
       levelUpTitle: "🎉 Niveau supérieur ! 🎉\n\nVous avez atteint le niveau {level} !",
       bossPhase2: "⚡ BOSS PHASE 2 ⚡",
       bossPhase3: "🔥 BOSS PHASE 3 - RAGE ! 🔥",
-      bossDefeated: "🎉 BOSS VAINCU ! 🎉\n\nVous avez battu le Gardien de la Cité !\n+{xp} XP",
+      bossDefeated: "🎉 BOSS VAINCU ! 🎉\n\nVous avez battu le Gardien de la Cité !\n+{xp} XP\n💎 +10 diamants",
       astralPhase1: "🌀 L'Épreuve de l'Alignement 🌀",
       astralPhase2: "🌠 Inversion des Flux 🌠",
       astralPhase3: "💫 Cœur Cosmique 💫",
-      astralDefeat: "✨ VICTOIRE COSMIQUE ! ✨\n\nVous avez libéré le Gardien Astral !\n+{xp} XP"
+      astralDefeat: "✨ VICTOIRE COSMIQUE ! ✨\n\nVous avez libéré le Gardien Astral !\n+{xp} XP\n💎 +10 diamants"
     },
     encouragements: {
       orb: ["Excellent ! ✨", "Bien joué ! 🌟", "Continue ! 💫", "Magnifique ! ⭐", "Super ! 🎆"],
@@ -444,11 +444,11 @@ const I18N_STRINGS = {
       levelUpTitle: "🎉 Level Up! 🎉\n\nYou reached Level {level}!",
       bossPhase2: "⚡ BOSS PHASE 2 ⚡",
       bossPhase3: "🔥 BOSS PHASE 3 - RAGE! 🔥",
-      bossDefeated: "🎉 BOSS DEFEATED! 🎉\n\nYou defeated the City Guardian!\n+{xp} XP",
+      bossDefeated: "🎉 BOSS DEFEATED! 🎉\n\nYou defeated the City Guardian!\n+{xp} XP\n💎 +10 diamonds",
       astralPhase1: "🌀 The Trial of Alignment 🌀",
       astralPhase2: "🌠 Inversion of Flows 🌠",
       astralPhase3: "💫 Cosmic Heart 💫",
-      astralDefeat: "✨ COSMIC VICTORY! ✨\n\nYou freed the Astral Guardian!\n+{xp} XP"
+      astralDefeat: "✨ COSMIC VICTORY! ✨\n\nYou freed the Astral Guardian!\n+{xp} XP\n💎 +10 diamonds"
     },
     encouragements: {
       orb: ["Excellent! ✨", "Well done! 🌟", "Keep going! 💫", "Magnificent! ⭐", "Great! 🎆"],

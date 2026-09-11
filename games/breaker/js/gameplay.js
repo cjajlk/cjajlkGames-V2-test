@@ -167,6 +167,19 @@ const DPR = window.devicePixelRatio || 1;
 
 // ⏱️ CJ System - Time tracking for deltaMs calculation
 let lastFrameTime = 0;
+let gameplayFrameId = null;
+let gameplayWasBlocked = false;
+const landscapeQuery = window.matchMedia('(orientation: landscape) and (max-width: 1024px)');
+function gameplayBlocked() {
+    return landscapeQuery.matches || document.hidden || !!document.querySelector('.popup-overlay');
+}
+function resetGameplayClock() {
+    lastFrameTime = 0;
+    lastCJFrameTime = performance.now();
+    gameplayWasBlocked = true;
+}
+landscapeQuery.addEventListener('change', resetGameplayClock);
+document.addEventListener('visibilitychange', resetGameplayClock);
 
 let viewW = 0;
 let viewH = 0;
@@ -229,8 +242,8 @@ bestCombo = parseInt(localStorage.getItem("breaker_bestCombo")) || 0;
  */
 window.getGameState = function () {
     return {
-        running: state.running && ball.launched && !document.querySelector(".popup-overlay"),
-        paused: !!document.querySelector(".popup-overlay")
+        running: state.running && ball.launched && !gameplayBlocked(),
+        paused: gameplayBlocked()
     };
 };
 
@@ -333,6 +346,11 @@ const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
 function resizeCanvas() {
+    resetGameplayClock();
+    if (landscapeQuery.matches) return;
+    if (canvas.width && viewW === innerWidth && viewH === innerHeight) return;
+    const oldX = playfieldX, oldW = playfieldW, oldH = viewH;
+    const existingBricks = bricks.length > 0;
     viewW = window.innerWidth;
     viewH = window.innerHeight;
     updatePlayfieldBounds();
@@ -373,7 +391,16 @@ function resizeCanvas() {
     brickH = brickW * 0.5;
     gap = brickW * 0.05;
 
-    createBricks();
+    if (existingBricks) {
+        // Reflow the same bricks; resize must never respawn rewards or reset HP.
+        const scaleX = playfieldW / oldW, scaleY = viewH / oldH;
+        for (const b of bricks) {
+            b.x = playfieldX + (b.x - oldX) * scaleX;
+            b.y *= scaleY;
+            b.w *= scaleX;
+            b.h *= scaleY;
+        }
+    } else createBricks();
     resetBall();
     justResized = true; // Active la protection pour la prochaine frame
 }
@@ -1086,7 +1113,7 @@ function resetBall() {
 }
 
 function launchBall() {
-    if (ball.launched) return;  // La balle ne doit être lancée qu'une seule fois
+    if (gameplayBlocked() || ball.launched) return;  // La balle ne doit être lancée qu'une seule fois
 
     ball.launched = true;  // Marque la balle comme lancée
 
@@ -1220,9 +1247,9 @@ function spawnOrb(x, y) {
 ============================= */
 
 function updateBrickCollision() {
-    if (justResized) return; // Bloque toute collision/spawn d'orbe cette frame
+    if (gameplayBlocked() || !ball.launched || justResized) return; // Bloque toute collision/spawn d'orbe cette frame
     for (const b of bricks) {
-        if (b.destroyed) continue;
+        if (b.destroyed || b.destroying) continue;
 
         // 🌙 collision balle / brique
         if (
@@ -2116,12 +2143,26 @@ function draw() {
 ============================= */
 
 function gameLoop() {
+    gameplayFrameId = null;
+    const frameNow = performance.now();
+    if (gameplayBlocked()) {
+        resetGameplayClock();
+        gameplayFrameId = requestAnimationFrame(gameLoop);
+        return;
+    }
+    if (gameplayWasBlocked || (lastFrameTime && frameNow - lastFrameTime > 200)) {
+        gameplayWasBlocked = false;
+        lastFrameTime = frameNow;
+        lastCJFrameTime = frameNow;
+        gameplayFrameId = requestAnimationFrame(gameLoop);
+        return;
+    }
     // Calcul du deltaTime et du facteur de normalisation
     const targetFPS = 60;
     const now = performance.now();
     // Timer physique balle
     const deltaTime = lastFrameTime ? (now - lastFrameTime) / 1000 : 1 / targetFPS;
-    const deltaFactor = deltaTime * targetFPS;
+    const deltaFactor = Math.min(deltaTime, 0.05) * targetFPS;
     lastFrameTime = now;
     updateBall(deltaFactor);
     updatePaddle();
@@ -2143,7 +2184,7 @@ function gameLoop() {
         sessionAcceptedMs += window.CJEngine.tick(deltaMs, "breaker") || 0;
     }
     // Boucle de rendu continue
-    requestAnimationFrame(gameLoop);
+    gameplayFrameId = requestAnimationFrame(gameLoop);
 }
 
 /* =============================
@@ -2200,7 +2241,7 @@ function initializeGame() {
     console.log('[DEBUG initializeGame] ball:', JSON.stringify(ball));
     console.log('[DEBUG initializeGame] bricks[0]:', bricks[0] ? JSON.stringify(bricks[0]) : 'Aucune brique');
     console.log('HighScore after init:', state.highScore);
-    gameLoop();
+    if (gameplayFrameId === null) gameLoop();
 
     // 💎 Synchroniser l'affichage des diamants au démarrage
     updateDiamondsUI();
@@ -2246,6 +2287,7 @@ if (hubBtn) {
 canvas.addEventListener("touchmove", e => {
     e.preventDefault();
 
+    if (gameplayBlocked()) return;
     const touch = e.touches[0];
     paddle.x = Math.max(playfieldX, Math.min(touch.clientX - paddle.width / 2, playfieldX + playfieldW - paddle.width));
 

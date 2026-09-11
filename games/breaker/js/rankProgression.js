@@ -5,6 +5,7 @@
 
     // Ordre des rangs (doit matcher gameplay.js)
     const rankOrder = ["bronze", "argent", "or", "diamant", "platine", "nocturne"];
+const rankBossTargets = Object.freeze({ bronze: 3, argent: 4, or: 5, diamant: 6, platine: 8 });
     const rankLabels = {
         bronze: 'Bronze',
         argent: 'Argent',
@@ -30,7 +31,7 @@
         const isUnlocked = rankOrder.indexOf(maxUnlocked) >= idx;
         let status = '';
         if (isUnlocked && idx < rankOrder.length-1) {
-            status = (wins >= 2) ? '<span class="rank-status completed">Terminé</span>' : `<span class="rank-status">${wins}/2 boss</span>`;
+            status = (wins >= rankBossTargets[rank]) ? '<span class="rank-status completed">Terminé</span>' : `<span class="rank-status">${wins}/${rankBossTargets[rank]} boss</span>`;
         } else if (isUnlocked) {
             status = '<span class="rank-status completed">Terminé</span>';
         } else {

@@ -54,6 +54,7 @@ const RANKS = {
 
 // DÉPLACÉ ICI : ordre des rangs doit être défini avant toute fonction qui l'utilise
 const rankOrder = ["bronze", "argent", "or", "diamant", "platine", "nocturne"];
+const rankBossTargets = Object.freeze({ bronze: 3, argent: 4, or: 5, diamant: 6, platine: 8 });
 
 function getCurrentRank() {
     // Toujours relire dynamiquement le rang depuis le localStorage
@@ -1494,7 +1495,7 @@ function updateBricks() {
             // Déblocage du rang suivant si 2 boss vaincus dans le rang courant
             profile.rankBossWins = profile.rankBossWins || {};
             profile.rankBossWins[currentRank] = (profile.rankBossWins[currentRank] || 0) + 1;
-            if (profile.rankBossWins[currentRank] >= 2) {
+            if (profile.rankBossWins[currentRank] >= rankBossTargets[currentRank]) {
                 const nextRank = getNextRank(currentRank);
                 if (nextRank) {
                     localStorage.setItem("breaker_rank", nextRank);

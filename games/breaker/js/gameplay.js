@@ -269,6 +269,11 @@ function savePlayTime() {
     }
 }
 
+// Preserve accepted session time on reload/navigation and mobile backgrounding.
+window.addEventListener('pagehide', savePlayTime);
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden) savePlayTime();
+});
 // Function to show level up popup
 function showLevelUpPopup(newLevel) {
     Popup.confirm(i18nT("gameplay.levelUpTitle", { level: newLevel }));

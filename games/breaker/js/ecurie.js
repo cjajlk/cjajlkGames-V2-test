@@ -7,7 +7,7 @@ function updateInfoPanel() {
     const levelEl = document.getElementById('companionLevel');
     const mobileNameEl = document.getElementById('mobileCompanionName');
     const mobileLevelEl = document.getElementById('mobileCompanionLevel');
-    const xpEl = document.getElementById('companionXpBar');
+    const xpEl = document.getElementById('companionXP');
     const bonusEl = document.getElementById('companionBonus');
     const mobileToggle = document.getElementById('mobileInfoToggle');
     const mobilePanel = document.querySelector('.companion-info-panel');
@@ -409,7 +409,7 @@ function feedCompanion() {
     const orbCount = profile.orbs?.[orbType] || 0;
     
     if (orbCount <= 0) {
-        showToast(`${i18nT("ecurie.feedNoOrbs")} ${orbType} !`, 'error');
+        showToast(`${i18nT("ecurie.feedNoOrbs", { icon: ORB_ICONS[orbType] || "" })} ${ORB_LABELS[orbType] || orbType} !`, 'error');
         return;
     }
     

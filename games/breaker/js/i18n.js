@@ -143,7 +143,7 @@ const I18N_STRINGS = {
       max: "MAX",
       lockedToast: "🔒 Ce compagnon doit être acheté en boutique !",
       equipLockedToast: "🔒 Achetez d'abord ce compagnon en boutique !",
-      feedNoOrbs: "💧 Pas assez d'orbes",
+      feedNoOrbs: "{icon} Pas assez d'orbes",
       levelUp: "🎉 {name} est maintenant Niv. {level} !",
       feedXp: "✨ {name} a reçu +10 XP !",
       maxLevel: "🏆 {name} est déjà au niveau MAX ({max}) !"
@@ -373,7 +373,7 @@ const I18N_STRINGS = {
       max: "MAX",
       lockedToast: "🔒 This companion must be purchased in the shop!",
       equipLockedToast: "🔒 Buy this companion in the shop first!",
-      feedNoOrbs: "💧 Not enough orbs",
+      feedNoOrbs: "{icon} Not enough orbs",
       levelUp: "🎉 {name} is now Lvl. {level}!",
       feedXp: "✨ {name} gained +10 XP!",
       maxLevel: "🏆 {name} is already MAX level ({max})!"

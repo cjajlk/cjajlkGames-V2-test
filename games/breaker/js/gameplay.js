@@ -192,6 +192,9 @@ const rows = 5;
 const cols = 8;
 
 let brickW, brickH, gap;
+const desktopBrickQuery = window.matchMedia('(min-width: 1025px) and (pointer: fine) and (hover: hover)');
+let brickGridColumns = cols;
+let desktopBrickLayout = false;
 
 function updatePlayfieldBounds() {
     playfieldW = Math.min(window.innerWidth, GAMEPLAY_MAX_WIDTH);
@@ -354,8 +357,13 @@ const ctx = canvas.getContext("2d");
 function resizeCanvas() {
     resetGameplayClock();
     if (landscapeQuery.matches) return;
-    if (canvas.width && viewW === innerWidth && viewH === innerHeight) return;
+    const desktopBricks = desktopBrickQuery.matches;
+    if (canvas.width && viewW === innerWidth && viewH === innerHeight && desktopBrickLayout === desktopBricks) return;
     const oldX = playfieldX, oldW = playfieldW, oldH = viewH;
+    const oldBrickW = bricks[0]?.w || brickW;
+    const oldGap = gap;
+    const oldGridWidth = brickGridColumns * oldBrickW + (brickGridColumns - (desktopBrickLayout ? 1 : 0)) * oldGap;
+    const oldGridX = oldX + (oldW - oldGridWidth) / 2;
     const existingBricks = bricks.length > 0;
     viewW = window.innerWidth;
     viewH = window.innerHeight;
@@ -394,13 +402,26 @@ function resizeCanvas() {
 
     /* responsive bricks */
     brickW = playfieldW * 0.095;
+    if (desktopBricks) brickW = Math.min(brickW, 100);
     brickH = brickW * 0.5;
     gap = brickW * 0.05;
+    desktopBrickLayout = desktopBricks;
 
     if (existingBricks) {
         // Reflow the same bricks; resize must never respawn rewards or reset HP.
         const scaleX = playfieldW / oldW, scaleY = viewH / oldH;
         for (const b of bricks) {
+            if (desktopBricks) {
+                const gridWidth = brickGridColumns * brickW + (brickGridColumns - 1) * gap;
+                const gridX = playfieldX + (playfieldW - gridWidth) / 2;
+                const stepScale = (brickW + gap) / (oldBrickW + oldGap);
+                b.x = gridX + (b.x - oldGridX) * stepScale;
+                b.initialX = gridX + (b.initialX - oldGridX) * stepScale;
+                b.y = viewH * 0.12 + b.row * (brickH + gap);
+                b.w = brickW;
+                b.h = brickH;
+                continue;
+            }
             b.x = playfieldX + (b.x - oldX) * scaleX;
             b.y *= scaleY;
             b.w *= scaleX;
@@ -1019,7 +1040,11 @@ function createBricks() {
         if (state.stage >= 5) currentRows = 7;
     }
 
-    const offsetX = playfieldX + ((playfieldW - currentCols * (brickW + gap)) / 2);
+    brickGridColumns = currentCols;
+    const gridWidth = desktopBrickLayout
+        ? currentCols * brickW + (currentCols - 1) * gap
+        : currentCols * (brickW + gap);
+    const offsetX = playfieldX + ((playfieldW - gridWidth) / 2);
     const offsetY = viewH * 0.12;
 
     for (let r = 0; r < currentRows; r++) {
@@ -2254,7 +2279,19 @@ function initializeGame() {
 }
 
 window.addEventListener("resize", resizeCanvas);
+desktopBrickQuery.addEventListener('change', resizeCanvas);
 canvas.addEventListener("click", launchBall);
+
+canvas.addEventListener("pointermove", event => {
+    if (!state.running || gameplayBlocked() || !document.hasFocus() ||
+        !desktopBrickQuery.matches || event.pointerType !== 'mouse') return;
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width <= 0 || viewW <= 0 || playfieldW <= 0) return;
+    const xJeu = (event.clientX - rect.left) * viewW / rect.width;
+    if (!Number.isFinite(xJeu) || xJeu < playfieldX || xJeu > playfieldX + playfieldW) return;
+    paddle.x = Math.max(playfieldX, Math.min(xJeu - paddle.width / 2,
+        playfieldX + playfieldW - paddle.width));
+});
 
 const menuBtn = document.getElementById("menuBtn");
 const hubBtn = document.getElementById("hubBtn");

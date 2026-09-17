@@ -316,7 +316,7 @@
 
             worlds.forEach((world, idx) => {
                 const progress = campaignProgress[world.id] || { levels: [false, false, false, false, false], completed: false, locked: false };
-                const isLocked = world.locked || progress.locked;
+                const isLocked = typeof campaignProgress[world.id]?.locked === 'boolean' ? progress.locked : !!world.locked;
                 const completedLevels = progress.levels.filter(l => l).length;
                 const totalLevels = world.levels.length;
 

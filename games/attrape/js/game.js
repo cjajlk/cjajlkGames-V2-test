@@ -1645,6 +1645,7 @@ function showGameUI() {
 }
 
 function showMainMenu() {
+    if (typeof resetCampaignContext === 'function') resetCampaignContext();
     playerName = localStorage.getItem("playerName") || "Invité";
     console.log("🏠 Retour propre au menu principal");
 
@@ -1825,6 +1826,7 @@ function closeAllMenus() {
 }
 
 function startNormalMode() {
+    if (typeof resetCampaignContext === 'function') resetCampaignContext();
     setMascotteState("idle");
 
     resetGameValues();
@@ -1876,6 +1878,7 @@ function startNormalMode() {
 }
 
 function startTimerMode() {
+    if (typeof resetCampaignContext === 'function') resetCampaignContext();
     setMascotteState("idle");
 
     resetGameValues();
@@ -2059,7 +2062,8 @@ function pauseToMenu() {
     if (canvas) canvas.classList.add("hidden");
 
     // Mode campagne: retourner à campaign.html
-    if (campaignMode && campaignMode.active) {
+    if (currentMode === 'campaign' && campaignMode && campaignMode.active) {
+        resetCampaignContext();
         setTimeout(() => {
             window.location.href = 'pages/campaign.html';
         }, 500);
@@ -2092,7 +2096,8 @@ function confirmReturnToHub() {
         overlay.classList.add("hidden");
     }
 
-    if (campaignMode && campaignMode.active) {
+    if (currentMode === 'campaign' && campaignMode && campaignMode.active) {
+        resetCampaignContext();
         window.location.href = "pages/campaign.html";
     } else {
         window.location.href = "https://cjajlk.github.io/cjajlkGames-V2-test/v2/";
@@ -2487,7 +2492,7 @@ if (hudCombo) {
     }
 }
 
-if (campaignMode && campaignMode.active) {
+if (currentMode === 'campaign' && campaignMode && campaignMode.active) {
     const campaignObjective = getCampaignObjective();
     if (!campaignTransitionInProgress && score >= campaignObjective) {
         endCampaignLevel();
@@ -2505,6 +2510,7 @@ if (typeof window.syncHudVisibility === "function") {
    🖱️ CLICK SUR LE JEU — VERSION FIXÉE
    ========================================================= */
 function onGameClick(e) {
+    if (campaignMode.active && campaignTransitionInProgress) return;
     if ((!gameStarted && !timerRunning) || inLevelTransition) return;
     if (isGamePaused) return;
 
@@ -2588,6 +2594,7 @@ function onGameClick(e) {
 
             targets.splice(i, 1);
             touched = true;
+            if (campaignMode.active && campaignTransitionInProgress) break;
         }
     }
 
@@ -2681,6 +2688,7 @@ function initRender() {
 }
 
 function render() {
+    if (campaignMode.active && campaignTransitionInProgress) return;
     if (!Game.running) return;
 
     const now = performance.now();
@@ -2763,6 +2771,7 @@ function render() {
                 if (!timerRunning) {
                     misses++;
                     updateHUD();
+                    if (campaignMode.active && campaignTransitionInProgress) return;
                     if (misses >= missesMax) {
                         endgame();
                         return;
@@ -2795,7 +2804,7 @@ function checkProgressAfterHit() {
         return;
     }
 
-    if (campaignMode && campaignMode.active) {
+    if (currentMode === 'campaign' && campaignMode && campaignMode.active) {
         updateHUD();
         const campaignObjective = getCampaignObjective();
         if (!campaignTransitionInProgress && score >= campaignObjective) {
@@ -2904,6 +2913,7 @@ function resetGameValues() {
 }
 
 function returnToMainMenu() {
+    if (typeof resetCampaignContext === 'function') resetCampaignContext();
     commitSessionPlayTime();
     savePlayerProfile();
     isGameRunning = false;
@@ -2920,6 +2930,8 @@ function returnToMainMenu() {
 }
 
 function endgame() {
+    if (campaignMode.active && campaignTransitionInProgress) return;
+    resetCampaignContext();
     showMascotteDialog(mascotLoseLines[Math.floor(Math.random() * mascotLoseLines.length)], "sad");
 
     Game.running = false;
@@ -2932,7 +2944,6 @@ function endgame() {
     const elapsedSeconds = commitSessionPlayTime();
 
     if (score > 0) {
-        playerTotalPoints += score;
         if (score > highScore) highScore = score;
         addXP(score);
         checkTitlesUnlock();
@@ -2958,7 +2969,6 @@ function endTimerMode() {
     const elapsedSeconds = commitSessionPlayTime();
 
     if (score > 0) {
-        playerTotalPoints += score;
         if (score > highScore) highScore = score;
         checkTitlesUnlock();
         addXP(score);
@@ -2975,6 +2985,7 @@ function endTimerMode() {
 }
 
 function quitToMenu() {
+    if (typeof resetCampaignContext === 'function') resetCampaignContext();
     commitSessionPlayTime();
     savePlayerProfile();
     isGamePaused = false;
@@ -2994,6 +3005,21 @@ function quitToMenu() {
 /* =========================================================
    📈 NIVEAUX / XP
    ========================================================= */
+let levelToastTimeout = null;
+
+function showLevelToast(level) {
+    const toast = document.getElementById("levelToast");
+    if (!toast) return;
+    clearTimeout(levelToastTimeout);
+    toast.textContent = `Niveau ${level} atteint !`;
+    toast.classList.remove("hidden");
+    toast.classList.add("visible");
+    levelToastTimeout = setTimeout(() => {
+        toast.classList.remove("visible");
+        toast.classList.add("hidden");
+    }, 3000);
+}
+
 function getPointsForLevel(level) {
     if (level <= 1) return 0;
     const base = 300;

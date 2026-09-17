@@ -11,6 +11,19 @@ let campaignMode = {
 };
 
 let campaignTransitionInProgress = false;
+let campaignTransitionTimeout = null;
+
+// A real exit clears session context, never the saved campaign progress.
+function resetCampaignContext() {
+    clearTimeout(campaignTransitionTimeout);
+    campaignTransitionTimeout = null;
+    campaignMode.active = false;
+    campaignMode.worldId = null;
+    campaignMode.currentLevel = 1;
+    campaignTransitionInProgress = false;
+    document.body.classList.remove('campaign-mode-active');
+    document.getElementById('campaignHUD')?.remove();
+}
 
 // Charger les données de campagne
 async function loadCampaignData() {
@@ -68,25 +81,31 @@ function getCampaignObjective() {
 }
 
 // Démarrer mode campagne
-function startCampaignMode(worldId, requestedLevel = null) {
+async function startCampaignMode(worldId, requestedLevel = null) {
     const keepLevel = campaignMode.active && campaignMode.worldId === worldId;
+    const world = campaignMode.campaignData?.worlds.find(w => w.id === worldId);
+    const progress = campaignMode.campaignProgress[worldId];
+    const rawLevel = String(keepLevel ? campaignMode.currentLevel : (requestedLevel ?? 1));
+    const nextLevel = /^[1-9]\d*$/.test(rawLevel) ? Number(rawLevel) : NaN;
+    const locked = typeof progress?.locked === 'boolean' ? progress.locked : !!world?.locked;
+    const firstUncompleted = world?.levels.findIndex((_, i) => progress?.levels?.[i] !== true);
+    if (!world || locked || !Array.isArray(progress?.levels) ||
+        !Number.isInteger(nextLevel) || nextLevel < 1 || nextLevel > world.levels.length ||
+        !(progress.levels[nextLevel - 1] === true || nextLevel === firstUncompleted + 1)) {
+        resetCampaignContext();
+        window.location.replace('pages/campaign.html');
+        return;
+    }
     campaignMode.active = true;
     campaignMode.worldId = worldId;
-    if (!keepLevel) {
-        const parsedLevel = Number.parseInt(requestedLevel, 10);
-        campaignMode.currentLevel = Number.isFinite(parsedLevel) && parsedLevel > 0 ? parsedLevel : 1;
-    }
-
-    const world = getCurrentWorld();
-    if (world) {
-        campaignMode.currentLevel = Math.max(1, Math.min(campaignMode.currentLevel, world.levels.length));
-    }
-
-    campaignTransitionInProgress = false;
+    campaignMode.currentLevel = nextLevel;
+    campaignTransitionInProgress = true;
 
     console.log(`🌙 Mode Campagne: Monde "${worldId}", Niveau ${campaignMode.currentLevel}`);
 
     // Réinitialiser le jeu
+    clearOrbs();
+    spawnTimerMs = 0;
     resetGameValues();
 
     // Masquer les menus
@@ -132,7 +151,13 @@ function startCampaignMode(worldId, requestedLevel = null) {
 
     refreshComboHUDVisibility();
     updateHUD();
-    startGame(GameData);
+    await startGame(GameData);
+    const campaignUrl = new URL(window.location.href);
+    campaignUrl.searchParams.set('mode', 'campaign');
+    campaignUrl.searchParams.set('world', campaignMode.worldId);
+    campaignUrl.searchParams.set('level', String(campaignMode.currentLevel));
+    window.history.replaceState(window.history.state, '', campaignUrl);
+    campaignTransitionInProgress = false;
 
     // Afficher objectif en haut
     showCampaignHUD();
@@ -173,7 +198,7 @@ function updateCampaignHUD() {
 
 // Fin niveau campagne
 function endCampaignLevel() {
-    if (!campaignMode.active) return;
+    if (!campaignMode.active || currentMode !== 'campaign') return;
     if (campaignTransitionInProgress) return;
 
     const world = getCurrentWorld();
@@ -183,9 +208,15 @@ function endCampaignLevel() {
 
     if (score >= levelData.objective) {
         campaignTransitionInProgress = true;
+        Game.running = false;
+        isGameRunning = false;
+        gameStarted = false;
+        if (gameLoopId) cancelAnimationFrame(gameLoopId);
+        gameLoopId = null;
 
         // ✅ Niveau complété
         const progress = campaignMode.campaignProgress[campaignMode.worldId];
+        const wasCompleted = progress.levels[campaignMode.currentLevel - 1] === true;
         progress.levels[campaignMode.currentLevel - 1] = true;
 
         const completedLevel = campaignMode.currentLevel;
@@ -206,7 +237,7 @@ function endCampaignLevel() {
 
         // Récompenses
         const rewards = levelData.rewards;
-        if (rewards.gems) {
+        if (!wasCompleted && rewards.gems) {
             addGems(rewards.gems);
             showMascotteDialog(`Niveau réussi ! +${rewards.gems} 💎`, "happy");
         }
@@ -214,7 +245,9 @@ function endCampaignLevel() {
         saveCampaignProgress();
 
         // Aller au niveau suivant ou fin monde
-        setTimeout(() => {
+        campaignTransitionTimeout = setTimeout(() => {
+            campaignTransitionTimeout = null;
+            if (!campaignMode.active || currentMode !== 'campaign') return;
             if (campaignMode.currentLevel < world.levels.length) {
                 campaignMode.currentLevel++;
                 startCampaignMode(campaignMode.worldId);
@@ -264,6 +297,7 @@ function showCampaignCompletePopup(world) {
             <p style="font-size: 1.2rem; margin: 0 0 30px 0;">${world.name}</p>
             <button onclick="
                 document.body.removeChild(this.closest('div').parentElement);
+                resetCampaignContext();
                 window.location.href = 'pages/campaign.html';
             " style="
                 background: linear-gradient(135deg, #7c5cff, #b197ff);
@@ -289,14 +323,7 @@ function showCampaignCompletePopup(world) {
 
 // Quitter mode campagne
 function quitCampaignMode() {
-    campaignMode.active = false;
-    campaignMode.worldId = null;
-    campaignMode.currentLevel = 1;
-
-    document.body.classList.remove('campaign-mode-active');
-
-    const campaignHud = document.getElementById('campaignHUD');
-    if (campaignHud) campaignHud.remove();
+    resetCampaignContext();
 
     window.location.href = 'pages/campaign.html';
 }

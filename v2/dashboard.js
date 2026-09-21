@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const labels = { accueil: 'Accueil', profil: 'Profil', jeux: 'Jeux', boutique: 'Boutique', collections: 'Collections', apropos: 'À propos' };
-  const names = { attrape: 'Attrape-les-tous', breaker: 'Breaker Nocturne' };
+  const names = { attrape: 'Attrape-les-tous', breaker: 'Breaker Nocturne', shift: 'Nocturne Shift' };
   const formatNumber = value => value == null ? '—' : new Intl.NumberFormat('fr-FR').format(value);
   const formatTime = seconds => seconds == null ? '—' : `${Math.floor(seconds / 3600)} h ${Math.floor(seconds % 3600 / 60)} min`;
   function renderProfile() {

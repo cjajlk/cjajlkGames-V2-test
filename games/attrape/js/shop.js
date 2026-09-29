@@ -322,6 +322,7 @@ function renderMascotteShop(root) {
     const secNormal  = createSection("Skins classiques");
     const secPremium = createSection("Skins premium");
     const secNoel    = createSection("Édition Noël");
+    const secHalloween = createSection("Édition Halloween");
 
     skins.forEach(skin => {
 
@@ -340,9 +341,10 @@ if (skin.packOnly && !ownedPacks.includes(skin.packOnly)) {
         if (cat === "normal") secNormal.appendChild(card);
         else if (cat === "premium") secPremium.appendChild(card);
         else if (cat === "noel") secNoel.appendChild(card);
+        else if (cat === "halloween") secHalloween.appendChild(card);
     });
 
-    [secNormal, secPremium, secNoel].forEach(sec => {
+    [secNormal, secPremium, secNoel, secHalloween].forEach(sec => {
         if (sec.children.length > 1) root.appendChild(sec);
     });
 }

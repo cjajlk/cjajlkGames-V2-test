@@ -2114,8 +2114,33 @@ canvas {
     position: relative; /* Pour que l'image soit en arrière-plan */
 }
 
+body.event-noel #mainMenu {
+    background-image: url('assets/evenements/noel/fond-noel1.png');
+}
+
 body.event-valentin #mainMenu {
     background-image: url('assets/fonds/stvalentin.png');
+}
+
+body.event-paques #mainMenu {
+    background-image: url('assets/evenements/paques/fond-paque.png');
+}
+
+body.event-halloween #mainMenu {
+    background-image: url('assets/fonds/fond-menu-halloween.png');
+    background-size: cover;
+    background-position: 70% center;
+    background-repeat: no-repeat;
+    background-color: #17081f;
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+    body.event-halloween #mainMenu {
+        background-size: auto 100%;
+        background-position: 90% center;
+        background-repeat: no-repeat;
+        background-color: #17081f;
+    }
 }
 
 

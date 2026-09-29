@@ -2876,19 +2876,44 @@ function updateTimerBar() {
 /* =========================================================
    🎄 BANNIERE EVENEMENT
    ========================================================= */
+const MENU_EVENT_IDS = ["halloween", "noel", "valentin", "paques"];
+const MENU_EVENT_CLASSES = MENU_EVENT_IDS.map(eventId => `event-${eventId}`);
+
+function getActiveMenuEventId() {
+    if (!window.EventManager) return null;
+
+    for (const eventId of MENU_EVENT_IDS) {
+        if (EventManager.isEventActive(eventId)) {
+            return eventId;
+        }
+    }
+
+    return null;
+}
+
+function applyMenuEventClass(eventId) {
+    document.body.classList.remove(...MENU_EVENT_CLASSES);
+
+    if (eventId) {
+        document.body.classList.add(`event-${eventId}`);
+    }
+}
+
 function showEventBanner() {
     const bottom = document.getElementById("menuBottomEffect");
     const banner = document.getElementById("eventBanner");
-    const isActive = window.EventManager && EventManager.isEventActive("valentin");
+    const activeEventId = getActiveMenuEventId();
 
-    if (!isActive) {
-        hideEventBanner();
+    applyMenuEventClass(activeEventId);
+
+    if (!activeEventId) {
+        if (bottom) bottom.style.opacity = "0.6";
+        if (banner) banner.style.display = "none";
         return;
     }
 
-    if (bottom) bottom.style.opacity = "0";
-    if (banner) banner.style.display = "flex";
-    document.body.classList.add("event-valentin");
+    if (bottom) bottom.style.opacity = activeEventId === "valentin" ? "0" : "0.6";
+    if (banner) banner.style.display = activeEventId === "valentin" ? "flex" : "none";
 }
 
 function hideEventBanner() {
@@ -2897,7 +2922,7 @@ function hideEventBanner() {
 
     if (bottom) bottom.style.opacity = "0.6";
     if (banner) banner.style.display = "none";
-    document.body.classList.remove("event-valentin");
+    applyMenuEventClass(null);
 }
 
 /* =========================================================

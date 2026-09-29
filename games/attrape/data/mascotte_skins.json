@@ -247,5 +247,45 @@
       "category": "premium",
       "packOnly": "pack_st_valentin"
       }
+    ,{
+      "id": "jane-sorciere",
+      "name": "Jane sorcière",
+      "img": "assets/evenements/halloween/jane-sorciere.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "halloween",
+      "packOnly": "pack_halloween"
+    },
+    {
+      "id": "eve-violette",
+      "name": "Eve violette",
+      "img": "assets/evenements/halloween/eve-violette.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "halloween",
+      "packOnly": "pack_halloween"
+    },
+    {
+      "id": "cjajlk-vampire",
+      "name": "CJAjlk vampire",
+      "img": "assets/evenements/halloween/cjajlk-vampire.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "halloween",
+      "packOnly": "pack_halloween"
+    },
+    {
+      "id": "halloween-fantome",
+      "name": "Fantôme Halloween",
+      "img": "assets/evenements/halloween/halloween-fantome.png",
+      "costCoins": 0,
+      "costGems": 0,
+      "premium": true,
+      "category": "halloween",
+      "packOnly": "pack_halloween"
+    }
   ]
 }

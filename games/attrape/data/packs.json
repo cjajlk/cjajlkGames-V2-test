@@ -18,12 +18,32 @@
     },
 
      {
+      "id": "pack_halloween",
+      "name": "Pack Halloween 🎃",
+      "eventId": "halloween",
+      "img": "assets/evenements/halloween/pack_halloween.png",
+      "description": "Quatre mascottes exclusives pour Halloween.",
+      "costCoins": 0,
+      "costGems": 2000,
+      "limited": true,
+      "premium": true,
+      "items": {
+        "mascotte": [
+          "jane-sorciere",
+          "eve-violette",
+          "cjajlk-vampire",
+          "halloween-fantome"
+        ]
+      }
+    },
+
+    {
       "id": "pack_futuriste",
       "name": "Pack Futuriste",
       "img": "assets/evenements/futuriste/pack-futuriste.png",
       "description": "Deux mascottes,  deux fonds spéciaux pour le futur.",
       "costCoins": 0,
-      "costGems": 6000,
+      "costGems": 2000,
       "limited": true,
      "premium": true,
       "items": {
@@ -38,7 +58,7 @@
       "img": "assets/evenements/paques/pack-paques.png",
       "description": "un compagnon,  un fond spécial pour  Pâques.",
       "costCoins": 0,
-      "costGems": 6000,
+      "costGems": 2000,
       "limited": true,
      "premium": true,
      "disabled": true,
@@ -55,7 +75,7 @@
       "img": "assets/evenements/st-valentin/pack-st-valentin.png",
       "description": "Trois mascottes exclusives pour la Saint-Valentin 💕",
       "costCoins": 0,
-      "costGems": 6000,
+      "costGems": 2000,
       "limited": true,
       "premium": true,
       "items": {

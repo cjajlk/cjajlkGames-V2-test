@@ -4,7 +4,8 @@
     const EVENTS = {
         noel: { startMonth: 12, startDay: 1, endMonth: 1, endDay: 5 },
         valentin: { startMonth: 2, startDay: 1, endMonth: 2, endDay: 20 },
-        paques: { startMonth: 3, startDay: 15, endMonth: 4, endDay: 20 }
+        paques: { startMonth: 3, startDay: 15, endMonth: 4, endDay: 20 },
+        halloween: { startMonth: 10, startDay: 15, endMonth: 11, endDay: 5 }
     };
 
     function isDateInRange(now, startMonth, startDay, endMonth, endDay) {

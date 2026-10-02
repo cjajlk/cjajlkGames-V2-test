@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Nocturne Farm">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#090b16"/>
+      <stop offset="55%" stop-color="#12182c"/>
+      <stop offset="100%" stop-color="#1b243f"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1d2d2f"/>
+      <stop offset="100%" stop-color="#0d1318"/>
+    </linearGradient>
+    <radialGradient id="moonGlow" cx="72%" cy="18%" r="26%">
+      <stop offset="0%" stop-color="#d8e5ff" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#d8e5ff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#d8e5ff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#sky)"/>
+  <rect width="1200" height="675" fill="url(#moonGlow)"/>
+  <circle cx="870" cy="120" r="54" fill="#eef4ff"/>
+  <circle cx="885" cy="112" r="54" fill="#12182c"/>
+  <g fill="#d9e7ff" opacity="0.7">
+    <circle cx="110" cy="110" r="2.5"/>
+    <circle cx="170" cy="170" r="1.8"/>
+    <circle cx="250" cy="78" r="2.2"/>
+    <circle cx="360" cy="150" r="1.6"/>
+    <circle cx="520" cy="92" r="2.1"/>
+    <circle cx="640" cy="184" r="1.7"/>
+    <circle cx="980" cy="68" r="2.4"/>
+    <circle cx="1060" cy="152" r="1.9"/>
+  </g>
+  <path d="M0 455 C120 420, 220 480, 340 445 C470 406, 560 470, 690 434 C820 398, 900 460, 1200 410 L1200 675 L0 675 Z" fill="url(#ground)"/>
+  <path d="M120 445 C210 410, 290 470, 390 438 C500 402, 610 462, 730 432 C855 400, 970 456, 1120 424" fill="none" stroke="#2d4a45" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
+  <g transform="translate(250 250)">
+    <path d="M0 120 L80 40 L160 120 Z" fill="#3c2f28"/>
+    <rect x="32" y="120" width="96" height="86" rx="8" fill="#5f4a3d"/>
+    <rect x="66" y="150" width="28" height="56" rx="4" fill="#1a1820"/>
+    <path d="M160 120 L220 80 L220 206 L160 206 Z" fill="#2b2427"/>
+    <rect x="188" y="146" width="18" height="60" rx="3" fill="#11151d"/>
+  </g>
+  <g fill="#7aa36d" opacity="0.9">
+    <path d="M90 560 C120 525, 132 505, 144 475 C150 505, 164 528, 188 560 Z"/>
+    <path d="M165 565 C192 532, 205 507, 218 475 C224 505, 239 531, 260 565 Z"/>
+    <path d="M990 566 C1018 531, 1030 507, 1043 475 C1049 505, 1064 531, 1086 566 Z"/>
+  </g>
+  <text x="60" y="625" fill="#eef4ff" font-family="Verdana, Arial, sans-serif" font-size="36" font-weight="700" letter-spacing="1.2">FERME NOCTURNE</text>
+  <text x="60" y="659" fill="#eef4ff" font-family="Verdana, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="0.8">SOUS LA PLEINE LUNE</text>
+  <text x="62" y="681" fill="#a9bbd9" font-family="Verdana, Arial, sans-serif" font-size="18" letter-spacing="1">Cultive. Récolte. Protège.</text>
+</svg>

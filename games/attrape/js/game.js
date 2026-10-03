@@ -868,6 +868,38 @@ function startSessionTimeTracking() {
     sessionTimeCommitted = false;
 }
 
+function resetModeGemProgress(mode) {
+    if (mode && Object.prototype.hasOwnProperty.call(modeGemProgress, mode)) {
+        modeGemProgress[mode] = 0;
+        return;
+    }
+
+    modeGemProgress.normal = 0;
+    modeGemProgress.timer = 0;
+}
+
+function awardModeGems(pointsEarned) {
+    if (!Number.isFinite(pointsEarned) || pointsEarned <= 0) return;
+
+    const mode = currentMode === "timer" ? "timer" : currentMode === "normal" ? "normal" : null;
+    if (!mode) return;
+
+    const threshold = MODE_GEM_REWARD_POINTS[mode];
+    if (!threshold) return;
+
+    modeGemProgress[mode] += pointsEarned;
+
+    let gemsEarned = 0;
+    while (modeGemProgress[mode] >= threshold) {
+        modeGemProgress[mode] -= threshold;
+        gemsEarned++;
+    }
+
+    if (gemsEarned > 0) {
+        addGems(gemsEarned);
+    }
+}
+
 function commitSessionPlayTime() {
     if (sessionTimeCommitted) return 0;
 
@@ -899,6 +931,15 @@ let comboTarget = 10;         // nombre de clics pour valider un combo
 let totalComboSuccess = 0;   // total de combos validés (pour gemmes)
 let comboGemBonus = false; // indique si on doit afficher “+1 💎”
 let menuBlinkTimer = null;
+
+const MODE_GEM_REWARD_POINTS = {
+    normal: 15,
+    timer: 10
+};
+let modeGemProgress = {
+    normal: 0,
+    timer: 0
+};
 
 // 🌙 Coffre nocturne — session uniquement
 let coffreUtiliseSession = 0;
@@ -1830,6 +1871,7 @@ function startNormalMode() {
     setMascotteState("idle");
 
     resetGameValues();
+    resetModeGemProgress("normal");
     const canvas = document.getElementById("gameCanvas");
     if (canvas) canvas.style.display = "block";
 
@@ -1882,6 +1924,7 @@ function startTimerMode() {
     setMascotteState("idle");
 
     resetGameValues();
+    resetModeGemProgress("timer");
     const canvas = document.getElementById("gameCanvas");
     if (canvas) canvas.style.display = "block";
 
@@ -2573,6 +2616,7 @@ function onGameClick(e) {
             if (score > highScore) highScore = score;
 
             addXP(gain);
+            awardModeGems(gain);
 
             if (timerRunning) {
                 onHitSuccess(t.x + t.size / 2, t.y + t.size / 2, gain);

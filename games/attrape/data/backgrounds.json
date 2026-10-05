@@ -10,13 +10,6 @@
     
     
 
-     {
-      "id": "manga1",
-      "name": "Fond Manga 1",
-      "img": "assets/fonds/fond-manga1.png",
-      "costCoins": 0,
-      "costGems": 0
-    },
     {
       "id": "manga3",
       "name": "Fond Manga 3",
@@ -75,13 +68,6 @@
       "costCoins": 0,
       "costGems": 0,
       "disabled": true
-    },
-    {
-      "id": "manga9",
-      "name": "Fond Manga 9",
-      "img": "assets/fonds/fond-manga9.png",
-      "costCoins": 0,
-      "costGems": 0
     },
      {
       "id": "manga10",

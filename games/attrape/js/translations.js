@@ -15,7 +15,7 @@
             TEXT_RESET_PROFILE: "Reinitialiser mon profil",
             TEXT_RESET: "Reinitialiser",
             TEXT_RESET_TITLE: "Reinitialisation du profil",
-            TEXT_RESET_WARNING: "⚠️ Cette action supprimera definitivement vos gemmes, CJ, mascottes debloquees et packs achetes.",
+            TEXT_RESET_WARNING: "⚠️ Cette action supprimera definitivement vos gemmes, mascottes debloquees et packs achetes.",
             TEXT_RESET_TYPE: "Tapez SUPPRIMER pour confirmer.",
             TEXT_CANCEL: "Annuler",
             TEXT_CONFIRM: "Confirmer"
@@ -33,7 +33,7 @@
             TEXT_RESET_PROFILE: "Reset my profile",
             TEXT_RESET: "Reset",
             TEXT_RESET_TITLE: "Profile reset",
-            TEXT_RESET_WARNING: "⚠️ This will permanently remove your gems, CJ, unlocked mascots, and purchased packs.",
+            TEXT_RESET_WARNING: "⚠️ This will permanently remove your gems, unlocked mascots, and purchased packs.",
             TEXT_RESET_TYPE: "Type DELETE to confirm.",
             TEXT_CANCEL: "Cancel",
             TEXT_CONFIRM: "Confirm"

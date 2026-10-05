@@ -317,6 +317,7 @@ window.setCurrentLanguage = function (lang) {
 
 window.resetPlayerProfile = function () {
     localStorage.removeItem("nocturnePlayerProfileV3");
+    localStorage.removeItem("campaignProgress");
 
     if (typeof ownedMascotte !== "undefined") ownedMascotte = ["girl1"];
     if (typeof ownedOrbs !== "undefined") ownedOrbs = ["orb_blue"];
@@ -342,6 +343,10 @@ window.resetPlayerProfile = function () {
     if (comboGemBonusTimer) {
         clearTimeout(comboGemBonusTimer);
         comboGemBonusTimer = null;
+    }
+
+    if (typeof loadCampaignProgress === "function") {
+        loadCampaignProgress();
     }
 
     createDefaultProfile();
@@ -2015,6 +2020,7 @@ function startTimerMode() {
 
     timerValue = 100;
     timerPressure = 1;
+    timerBackgroundElapsed = 0;
     spawnRate = 55;
     comboCount = 0;
     totalComboSuccess = 0;
@@ -2842,8 +2848,9 @@ function render() {
     }
 
     if (timerRunning) {
-        timerValue -= timerSpeed * timerPressure;
-        timerBackgroundElapsed += timerSpeed;
+        const timerFrameFactor = deltaMs > 0 ? deltaMs / (1000 / 60) : 0;
+        timerValue -= timerSpeed * timerPressure * timerFrameFactor;
+        timerBackgroundElapsed += timerSpeed * timerFrameFactor;
 
         if (currentMode === "timer" && timerBackgroundElapsed >= TIMER_BG_INTERVAL) {
             timerBackgroundElapsed = 0;

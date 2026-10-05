@@ -62,7 +62,7 @@
       "img": "assets/orbes/orb_black_risk.png",
       "costCoins": 0,
       "costGems": 2000,
-      "bonus": "Orbe légendaire"
+       "bonus": "Chance de +1 gemme"
     },
     {
       "id": "orb_noel",
@@ -76,6 +76,5 @@
     }
   ]
 }
-
 
 

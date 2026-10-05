@@ -317,10 +317,42 @@ window.setCurrentLanguage = function (lang) {
 
 window.resetPlayerProfile = function () {
     localStorage.removeItem("nocturnePlayerProfileV3");
+
+    if (typeof ownedMascotte !== "undefined") ownedMascotte = ["girl1"];
+    if (typeof ownedOrbs !== "undefined") ownedOrbs = ["orb_blue"];
+    if (typeof ownedBackgrounds !== "undefined") ownedBackgrounds = ["normal1"];
+    if (typeof ownedPacks !== "undefined") ownedPacks = [];
+
+    if (typeof equippedMascotte !== "undefined") {
+        equippedMascotte = "girl1";
+        window.equippedMascotte = equippedMascotte;
+    }
+    if (typeof equippedOrb !== "undefined") {
+        equippedOrb = "orb_blue";
+        window.equippedOrb = equippedOrb;
+    }
+    if (typeof equippedBackground !== "undefined") {
+        equippedBackground = "normal1";
+        window.equippedBackground = equippedBackground;
+    }
+    if (typeof equippedTheme !== "undefined") {
+        equippedTheme = "normal1";
+    }
+
+    if (comboGemBonusTimer) {
+        clearTimeout(comboGemBonusTimer);
+        comboGemBonusTimer = null;
+    }
+
     createDefaultProfile();
+    resetGameValues();
+
     if (typeof updateProfilePanel === "function") updateProfilePanel();
+    if (typeof updateHUD === "function") updateHUD();
     if (typeof window.updateCurrenciesHUD === "function") window.updateCurrenciesHUD();
     if (typeof window.updateShop === "function") window.updateShop();
+    updatePlayerBadge();
+    if (typeof window.syncHudVisibility === "function") window.syncHudVisibility();
 };
 
 /* =========================================================
@@ -881,7 +913,7 @@ function resetModeGemProgress(mode) {
 function awardModeGems(pointsEarned) {
     if (!Number.isFinite(pointsEarned) || pointsEarned <= 0) return;
 
-    const mode = currentMode === "timer" ? "timer" : currentMode === "normal" ? "normal" : null;
+    const mode = currentMode === "normal" ? "normal" : null;
     if (!mode) return;
 
     const threshold = MODE_GEM_REWARD_POINTS[mode];
@@ -898,6 +930,34 @@ function awardModeGems(pointsEarned) {
     if (gemsEarned > 0) {
         addGems(gemsEarned);
     }
+}
+
+function getEquippedOrbSpawnMultiplier() {
+    if (equippedOrb === "orb_red") return 0.85;
+    return 1;
+}
+
+function applyEquippedOrbBonus(targetOrbId, gain) {
+    let finalGain = gain;
+    let timerBonus = 0;
+
+    if (targetOrbId !== equippedOrb) {
+        return { finalGain, timerBonus };
+    }
+
+    if (equippedOrb === "orb_yellow" && timerRunning) {
+        if (Math.random() < 0.2) {
+            timerBonus = 5;
+        }
+    }
+
+    if (equippedOrb === "orb_violet") {
+        if (Math.random() < 0.1) {
+            finalGain *= 2;
+        }
+    }
+
+    return { finalGain, timerBonus };
 }
 
 function commitSessionPlayTime() {
@@ -928,13 +988,13 @@ let currentMode = "normal";
 // --- MODE COMBO ---
 let comboCount = 0;          // clics consécutifs réussis
 let comboTarget = 10;         // nombre de clics pour valider un combo
-let totalComboSuccess = 0;   // total de combos validés (pour gemmes)
+let totalComboSuccess = 0;   // total de combos validés (récompense timer)
 let comboGemBonus = false; // indique si on doit afficher “+1 💎”
+let comboGemBonusTimer = null;
 let menuBlinkTimer = null;
 
 const MODE_GEM_REWARD_POINTS = {
-    normal: 15,
-    timer: 10
+    normal: 15
 };
 let modeGemProgress = {
     normal: 0,
@@ -1958,6 +2018,7 @@ function startTimerMode() {
     spawnRate = 55;
     comboCount = 0;
     totalComboSuccess = 0;
+    comboGemBonus = false;
 
     timerRunning = true;
     gameStarted = false;
@@ -2581,6 +2642,13 @@ function onGameClick(e) {
                 if (timerRunning) {
                     timerValue = Math.min(100, timerValue + 10);
                 }
+
+                const orbBonus = applyEquippedOrbBonus(t.orbId, gain);
+                gain = orbBonus.finalGain;
+
+                if (orbBonus.timerBonus > 0) {
+                    timerValue = Math.min(100, timerValue + orbBonus.timerBonus);
+                }
             }
 
             if (equippedOrb === "orb_black_risk") {
@@ -2590,6 +2658,10 @@ function onGameClick(e) {
                     } else {
                         score = Math.max(0, score - 1);
                     }
+                }
+
+                if (Math.random() < 0.05) {
+                    addGems(1);
                 }
             }
 
@@ -2689,6 +2761,22 @@ function onHitSuccess(cx, cy, gain) {
         comboCount = 0;
         totalComboSuccess++;
 
+        if (timerRunning && totalComboSuccess % 10 === 0) {
+            addGems(1);
+            comboGemBonus = true;
+            updateHUD();
+
+            if (comboGemBonusTimer) {
+                clearTimeout(comboGemBonusTimer);
+            }
+
+            comboGemBonusTimer = setTimeout(() => {
+                comboGemBonus = false;
+                comboGemBonusTimer = null;
+                updateHUD();
+            }, 1200);
+        }
+
         if (totalComboSuccess === 5 || totalComboSuccess === 10 || totalComboSuccess % 25 === 0) {
             showMascotteDialog("Incroyable !", "happy");
         }
@@ -2784,7 +2872,7 @@ function render() {
 
     if (!isGamePaused && isGameRunning && (gameStarted || timerRunning) && !inLevelTransition) {
         spawnTimerMs += deltaMs;
-        const spawnThresholdMs = (timerRunning ? spawnRate * 0.55 : spawnRate) * (1000 / 60);
+        const spawnThresholdMs = (timerRunning ? spawnRate * 0.55 : spawnRate) * getEquippedOrbSpawnMultiplier() * (1000 / 60);
         if (spawnTimerMs >= spawnThresholdMs) {
             spawnTimerMs = 0;
             spawnOrb();
@@ -2973,8 +3061,15 @@ function hideEventBanner() {
    🔄 RESET / FIN DE PARTIE
    ========================================================= */
 function resetGameValues() {
+    if (comboGemBonusTimer) {
+        clearTimeout(comboGemBonusTimer);
+        comboGemBonusTimer = null;
+    }
+
     score = 0;
     comboCount = 0;
+    totalComboSuccess = 0;
+    comboGemBonus = false;
     playerLevel = getLevelFromTotalPoints(playerTotalPoints);
     playerXP = 0;
     savePlayerProfile();

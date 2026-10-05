@@ -110,7 +110,7 @@ const COMPANIONS_DATA = {
             en: "A legendary dragon, guardian of mystical secrets. Can be equipped in the stable."
         },
         imagePath: "../assets/companions/dragonMystique/dragonMystique_idle.png",
-        modelPath: "../assets/companions/dragonMystique/dragonMystique.glb",
+        modelPath: "../assets/3d/dragon_mystique.glb",
         bonuses: [
             { icon: "🐉", text: "+20% Puissance mystique" },
             { icon: "✨", text: "+10% Vitesse d'écurie" },

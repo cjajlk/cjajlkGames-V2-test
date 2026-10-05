@@ -161,7 +161,7 @@ function addXP(amount) {
 
 // Debug : affichage du timer CJ restant (coin bas droit)
 const CONFIG = {
-     DEBUG_CJ_TIMER: true // Passe à false pour désactiver l'affichage debug
+     DEBUG_CJ_TIMER: false // Passe à false pour désactiver l'affichage debug
 };
 
 const DPR = window.devicePixelRatio || 1;
@@ -2195,9 +2195,24 @@ function gameLoop() {
     const deltaTime = lastFrameTime ? (now - lastFrameTime) / 1000 : 1 / targetFPS;
     const deltaFactor = Math.min(deltaTime, 0.05) * targetFPS;
     lastFrameTime = now;
-    updateBall(deltaFactor);
+    // Sous-pas physiques : évite que la balle traverse une brique lors d'une
+    // frame longue ou à grande vitesse, sans modifier sa vitesse réelle.
+    const maxBallTravel = Math.max(Math.abs(ball.dx), Math.abs(ball.dy)) * deltaFactor;
+    const collisionStep = Math.max(4, Math.min(ball.size * 0.5, brickH * 0.5));
+    const physicsSteps = Math.max(1, Math.min(12, Math.ceil(maxBallTravel / collisionStep)));
+    const physicsDeltaFactor = deltaFactor / physicsSteps;
+
+    for (let step = 0; step < physicsSteps; step++) {
+        updateBall(physicsDeltaFactor);
+        updateBrickCollision();
+    }
+    // La protection post-resize ne doit durer qu'une frame, même si CJEngine
+    // n'est pas chargé (jeu lancé seul, chargement lent ou environnement de test).
+    // Auparavant ce flag n'était levé que dans le bloc CJEngine : sans moteur CJ,
+    // toutes les collisions balle/briques restaient désactivées indéfiniment.
+    if (justResized) justResized = false;
+
     updatePaddle();
-    updateBrickCollision();
     updateBricks();
     updateOrbs(); // ← ICI ❤️
     updatePopups();
@@ -2208,8 +2223,6 @@ function gameLoop() {
     // Le CJ ne tourne que si la partie est active ET la balle lancée
     if (window.CJEngine && typeof window.CJEngine.tick === "function" && state.running) {
         const nowCJ = performance.now();
-        // Désactive la protection anti-spawn après la frame de resize
-        if (justResized) justResized = false;
         const deltaMs = lastCJFrameTime ? (nowCJ - lastCJFrameTime) : 0;
         lastCJFrameTime = nowCJ;
         sessionAcceptedMs += window.CJEngine.tick(deltaMs, "breaker") || 0;

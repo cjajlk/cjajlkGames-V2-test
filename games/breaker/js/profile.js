@@ -606,71 +606,7 @@ window.addEventListener("DOMContentLoaded", () => {
 // GLOBAL EXPORTS
 // ====================================
 
-// 🛠️ Fonction utilitaire pour diagnostiquer et réinitialiser les compagnons
-window.debugCompanions = function() {
-    const profile = getPlayerProfile();
-    console.log("🔍 DIAGNOSTIC DES COMPAGNONS");
-    console.log("================================");
-    console.log("Compagnons débloqués:", profile.unlockedCompanions);
-    console.log("Compagnon équipé:", profile.equippedCompanion);
-    console.log("Stats des compagnons:", profile.companions);
-    console.log("================================");
-    console.log("💡 Pour réinitialiser les compagnons à Aube seulement:");
-    console.log("   resetCompanionsToAube()");
-};
-
-window.resetCompanionsToAube = function() {
-    const profile = getPlayerProfile();
-    profile.unlockedCompanions = ["aube"];
-    profile.equippedCompanion = "aube";
-    savePlayerProfile(profile);
-    console.log("✅ Compagnons réinitialisés à Aube uniquement");
-    console.log("🔄 Rafraîchissez la page pour voir les changements");
-    return profile;
-};
-
-// ===================================
-// 🎮 DEVTOOLS - CONSOLE DE TEST
-// ===================================
-window.addGems = function(amount = 1000) {
-    const profile = getPlayerProfile();
-    const oldAmount = profile.diamants;
-    profile.diamants += amount;
-    savePlayerProfile(profile);
-    console.log(`💎 Gemmes ajoutées: ${oldAmount} → ${profile.diamants} (+${amount})`);
-    if (typeof renderProfile === 'function') {
-        renderProfile(profile);
-    }
-    return profile.diamants;
-};
-
-window.setGems = function(amount = 1000) {
-    const profile = getPlayerProfile();
-    profile.diamants = amount;
-    savePlayerProfile(profile);
-    console.log(`💎 Gemmes définies à: ${amount}`);
-    if (typeof renderProfile === 'function') {
-        renderProfile(profile);
-    }
-    return profile.diamants;
-};
-
-window.showDevTools = function() {
-    console.log("%c🎮 OUTILS DE DÉVELOPPEMENT ACTIVÉS 🎮", "color: #FFD700; font-size: 16px; font-weight: bold;");
-    console.log("%cCommandes disponibles:", "color: #00FF00; font-weight: bold;");
-    console.log("%caddGems(amount)  → Ajouter des gemmes (défaut: 1000)", "color: #00FF00;");
-    console.log("%csetGems(amount)  → Définir les gemmes à un montant spécifique", "color: #00FF00;");
-    console.log("Exemples:");
-    console.log("  addGems(500)  // Ajoute 500 gemmes");
-    console.log("  addGems()     // Ajoute 1000 gemmes par défaut");
-    console.log("  setGems(9999) // Définit à 9999 gemmes");
-};
-
-// Afficher les devtools au chargement en développement
-if (typeof window !== 'undefined') {
-    window.showDevTools();
-}
-
+// Exports publics nécessaires au fonctionnement du profil
 window.Profile = {
     player,
     saveProfile,

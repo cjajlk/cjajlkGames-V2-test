@@ -147,6 +147,9 @@ if (resetProfileBtn) {
       localStorage.removeItem("breaker_profile");
       localStorage.removeItem("breakerXP");
       localStorage.removeItem("breakerHighScore");
+      localStorage.removeItem("breaker_rank");
+      localStorage.removeItem("breaker_bestCombo");
+      localStorage.removeItem("selectedLevel");
       window.location.reload();
     };
 

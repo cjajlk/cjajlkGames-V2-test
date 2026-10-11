@@ -1,7 +1,8 @@
 // Helper pour attendre que l'API globale soit prête
 function onCjajlkAccountReady(cb) {
   if (window.CJajlkAccount && typeof window.CJajlkAccount.getPseudo === "function") {
-    cb();
+    const ready = window.CJajlkAccount.ready;
+    if (ready) ready.then(result => { if (result.ok) cb(); }); else cb();
   } else {
     setTimeout(() => onCjajlkAccountReady(cb), 30);
   }
@@ -36,38 +37,10 @@ function updateHeroBadge() {
   }
 }
 
-// === Gestion édition pseudo dans le hub ===
+// The existing shop points to the single identity editor in Hub V2.
 onCjajlkAccountReady(() => {
-  const playerNameEl = document.getElementById("playerName");
-  const editBtn = document.getElementById("editPseudoBtn");
-  const modal = document.getElementById("pseudoModal");
-  const input = document.getElementById("pseudoInput");
-  const saveBtn = document.getElementById("savePseudoBtn");
-  const cancelBtn = document.getElementById("cancelPseudoBtn");
-  if (!playerNameEl || !editBtn || !modal || !input || !saveBtn || !cancelBtn) return;
-
-  // Style premium sur bouton
-  editBtn.classList.add("premium-glow");
-
-  editBtn.addEventListener("click", () => {
-    modal.classList.remove("hidden");
-    input.value = "";
-    input.focus();
-  });
-
-  cancelBtn.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
-
-  saveBtn.addEventListener("click", () => {
-    const newPseudo = input.value.trim();
-    if (!newPseudo) return;
-    if (window.CJajlkAccount) {
-      window.CJajlkAccount.setPseudo(newPseudo);
-      modal.classList.add("hidden");
-      location.reload();
-    }
-  });
+  const editBtn = document.getElementById('editPseudoBtn');
+  if (editBtn) editBtn.addEventListener('click', () => { window.location.href = new URL('../v2/#profil', document.baseURI).href; });
 });
 
 // ===== BADGES PREMIUM (source unique) =====
@@ -226,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const badgeImg = document.getElementById("playerBadgeImg");
   if (!badgeImg) return;
   onCjajlkAccountReady(() => {
-    const data = window.CJajlkAccount.ensureDataStructure();
+    // Lecture seule : le compte commun est initialisé avant ce callback.
     const selected = window.CJajlkAccount.getSelectedBadge();
     if (selected && BADGES[selected]) {
       badgeImg.src = BADGES[selected].image;

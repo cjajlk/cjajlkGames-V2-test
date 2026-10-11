@@ -246,7 +246,7 @@ bestCombo = parseInt(localStorage.getItem("breaker_bestCombo")) || 0;
  */
 window.getGameState = function () {
     return {
-        running: state.running && ball.launched && !gameplayBlocked(),
+        running: window.CJajlkAccount?.isIdentityReady?.() !== false && state.running && ball.launched && !gameplayBlocked(),
         paused: gameplayBlocked()
     };
 };

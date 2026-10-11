@@ -1,13 +1,13 @@
 # Carte Joueur V2
 
-Le profil utilise `CJajlkAccount.getPlayer()` et `savePlayer()`. Aucune initialisation, migration ni écriture à la consultation. Seule une action explicite d’équipement sauvegarde le compte, relu au moment du clic. La sauvegarde est relue pour détecter les échecs masqués par l’API actuelle.
+Le module commun initialise le compte absent et complète uniquement les champs manquants, sous verrou. Aucun profil existant n’est réinitialisé. La carte consulte le compte sans écriture ; les actions explicites d’équipement et de changement du pseudo enregistrent leurs champs après relecture du profil courant.
 
 - `selectedBadge` reste le champ existant. Les identifiants et possessions ne changent pas.
 - `profileV2.avatar` et `profileV2.background` stockent uniquement les identifiants équipés (ou `null` pour le visuel par défaut).
 - Les six images de la boutique deviennent utilisables comme avatars uniquement si leur identifiant existe dans `unlockedImages`.
 - Les possessions dans `items.unlockedBadges`, `unlockedImages` et `items.unlockedCosmetics` ne sont jamais supprimées ni modifiées par ce profil.
-- Les CJ, le pseudo et les temps sont lus dans le compte. Un jeu est compté seulement si ses CJ gagnés ou son temps enregistré sont strictement positifs. Une activité sans trace dans ces données ne peut pas être déduite. Aucun niveau global.
-- Une valeur absente reste indisponible. Un compte manquant n’est pas créé par cette page.
+- Les CJ, le pseudo et les temps sont lus dans le compte. « Mes aventures » référence les sept jeux disponibles via `game-catalog.js`, même sans activité (mention explicite). Le compteur retient uniquement les CJ/temps positifs ou une trace locale reconnue : sauvegarde de ferme, partie NYR terminée, match/entraînement JetClash. Les XP et scores propres aux jeux ne deviennent jamais des CJ. Voir `GAME-ACTIVITY.md`. Aucun niveau global.
+- Une valeur absente reste indisponible. Un compte manquant est créé par le module commun, sous verrou, avec un identifiant local stable et le pseudo provisoire Joueur.
 
 ## Extension Collections
 

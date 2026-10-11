@@ -43,7 +43,7 @@ function applyMascottePosition() {
 }
 
 const bubbleLines = [
-    "Bienvenue, " + (window.playerName || "joueur") + "…",
+    "Bienvenue, " + (window.CJajlkAccount?.getDisplayPseudo?.(window.playerName || "joueur") || window.playerName || "joueur") + "…",
     "Je suis contente que tu sois revenu.",
     "Les orbes t’attendaient…",
     "Prêt à jouer ?",
@@ -55,6 +55,7 @@ function showMenuBubble() {
     const b = MENU_BUBBLE;
     if (!b) return;
 
+    bubbleLines[0] = "Bienvenue, " + (window.CJajlkAccount?.getDisplayPseudo?.(window.playerName || "joueur") || window.playerName || "joueur") + "…";
     const line = bubbleLines[Math.floor(Math.random() * bubbleLines.length)];
     b.textContent = line;
 

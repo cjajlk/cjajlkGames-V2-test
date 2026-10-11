@@ -1,7 +1,6 @@
 (() => {
   'use strict';
   const labels = { accueil: 'Accueil', profil: 'Profil', jeux: 'Jeux', boutique: 'Boutique', collections: 'Collections', apropos: 'À propos' };
-  const names = { attrape: 'Attrape-les-tous', breaker: 'Breaker Nocturne', shift: 'Nocturne Shift' };
   const formatNumber = value => value == null ? '—' : new Intl.NumberFormat('fr-FR').format(value);
   const formatTime = seconds => seconds == null ? '—' : `${Math.floor(seconds / 3600)} h ${Math.floor(seconds % 3600 / 60)} min`;
   function renderProfile() {
@@ -12,6 +11,8 @@
       status: profile.state === 'ready' ? 'Compte de ce navigateur' : profile.state === 'missing' ? 'Aucun profil lisible dans ce navigateur.' : 'Compte indisponible pour le moment.'
     };
     document.querySelectorAll('[data-profile]').forEach(el => { el.textContent = values[el.dataset.profile]; });
+    const nameInput = document.getElementById('universal-name');
+    if (nameInput && document.activeElement !== nameInput) nameInput.value = profile.pseudo || '';
     document.getElementById('personalize').disabled = profile.state !== 'ready';
     document.querySelectorAll('.avatar').forEach(el => {
       el.replaceChildren();
@@ -24,9 +25,13 @@
     stats.replaceChildren();
     for (const game of profile.games || []) {
       const card = document.createElement('article'); card.className = 'panel';
-      const title = document.createElement('h3'); title.textContent = names[game.id] || game.id;
-      const text = document.createElement('p'); text.textContent = `${formatNumber(game.cj)} CJ gagnés · ${formatTime(game.seconds)} de jeu`;
-      card.append(title, text); stats.append(card);
+      card.dataset.game = game.id; card.dataset.activity = game.recorded ? 'recorded' : 'empty';
+      const title = document.createElement('h3'); title.textContent = game.name || game.id;
+      const text = document.createElement('p');
+      text.textContent = game.recorded ? (game.cj !== null || game.seconds !== null ? `${formatNumber(game.cj)} CJ gagnés · ${formatTime(game.seconds)} de jeu` : game.detail) : 'Aucune activité enregistrée pour le moment.';
+      card.append(title, text);
+      if (game.detail && text.textContent !== game.detail) { const detail = document.createElement('p'); detail.className = 'subtle'; detail.textContent = game.detail; card.append(detail); }
+      stats.append(card);
     }
     if (!profile.games) stats.textContent = 'Les statistiques apparaîtront lorsqu’un profil sera disponible.';
     else if (!profile.games.length) stats.textContent = 'Aucune activité de jeu enregistrée pour le moment.';
@@ -72,6 +77,20 @@
   }
   document.getElementById('personalize').addEventListener('click', () => { document.getElementById('equipment-status').textContent = ''; renderChoices(); dialog.showModal(); });
   dialog.querySelector('.close-picker').addEventListener('click', () => dialog.close());
+  const nameForm = document.getElementById('universal-name-form');
+  nameForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = nameForm.querySelector('button'), status = document.getElementById('universal-name-status');
+    if (button.disabled) return;
+    button.disabled = true;
+    try {
+      const result = await window.CJajlkAccount?.updatePseudo?.(document.getElementById('universal-name').value);
+      const messages = { invalid: 'Choisis un pseudo de 2 à 24 caractères, sans caractères de contrôle ni chevrons.', busy: 'Le compte est utilisé dans un autre onglet. Reviens ici et réessaie.', unsupported: 'L’enregistrement nécessite HTTPS et un navigateur récent.' };
+      status.textContent = result?.ok ? 'Pseudo enregistré pour tous les jeux de ce navigateur.' : messages[result?.code] || 'Le pseudo n’a pas pu être enregistré. Tes données sont conservées.';
+      if (result?.ok) renderProfile();
+    } finally { button.disabled = false; }
+  });
+  window.addEventListener('cj-account-ready', renderProfile);
   window.addEventListener('cj-profile-catalog', renderProfile);
   window.addEventListener('cj-account-updated', renderProfile);
   function navigate(focus) {
@@ -87,7 +106,7 @@
     renderProfile();
   }
   window.addEventListener('hashchange', () => navigate(true));
-  window.addEventListener('storage', event => { if (event.key === 'cjPlayerData' || event.key === null) renderProfile(); });
+  window.addEventListener('storage', event => { if (event.key === 'cjPlayerData' || window.CJGameCatalog?.storageKeys.includes(event.key) || event.key === null) renderProfile(); });
   window.addEventListener('pageshow', renderProfile);
   window.addEventListener('focus', renderProfile);
   document.addEventListener('visibilitychange', () => { if (!document.hidden) renderProfile(); });

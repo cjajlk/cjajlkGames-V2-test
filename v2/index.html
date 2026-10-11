@@ -10,10 +10,11 @@
   <link rel="stylesheet" href="dashboard.css">
   <link rel="stylesheet" href="collections.css">
   <link rel="stylesheet" href="shop.css">
-  <script src="../core/cjAccount.js" data-readonly="true" defer></script>
+  <script src="../core/cjAccount.js" data-universal="true" defer></script>
   <script src="cosmetics.js" defer></script>
   <script src="collections-config.js" defer></script>
   <script src="account-transactions.js" defer></script>
+  <script src="game-catalog.js" defer></script>
   <script src="profile.js" defer></script>
   <script src="dashboard.js" defer></script>
   <script src="collections.js" defer></script>
@@ -63,6 +64,13 @@
         <div class="identity"><div class="avatar" aria-hidden="true">☾</div><div class="identity-text"><p class="eyebrow">CJAJLK GAMES · UNIVERS NOCTURNE</p><h2 data-profile="pseudo">Profil joueur</h2><p class="equipped-title" data-profile="selected">Aucun titre équipé</p><p data-profile="status" class="subtle"></p></div><button class="button" id="personalize" type="button">✧ Personnaliser</button></div>
         <div class="stat-grid"><div><strong data-profile="balance">—</strong><span>CJ Universels</span></div><div><strong data-profile="time">—</strong><span>Temps de jeu total</span></div><div><strong data-profile="played">—</strong><span>Jeux joués</span></div><div><strong data-profile="badges">—</strong><span>Badges débloqués</span></div></div>
       </article>
+      <form id="universal-name-form" class="panel universal-name-form">
+        <label for="universal-name">Mon pseudo commun</label>
+        <input id="universal-name" name="pseudo" type="text" maxlength="48" autocomplete="nickname" aria-describedby="universal-name-help" required>
+        <button class="button" type="submit">Enregistrer mon pseudo</button>
+        <p id="universal-name-help" class="subtle">2 à 24 caractères. Ce pseudo s’affiche dans tous les jeux de ce navigateur.</p>
+        <p id="universal-name-status" role="status" aria-live="polite"></p>
+      </form>
       <div class="section-heading"><h2>Mes aventures</h2><span class="subtle">Activité enregistrée</span></div><div id="game-stats" class="detail-grid"></div><h2>Mes badges</h2><div id="badge-list" class="badge-list"></div>
       <dialog id="customizer" aria-labelledby="customizer-title" aria-describedby="customizer-help"><div class="picker-header"><h2 id="customizer-title">Personnaliser ma carte</h2><button type="button" class="close-picker" aria-label="Fermer la personnalisation">✕</button></div><p id="customizer-help">Choisis un élément pour l’équiper. Tes éléments débloqués restent à toi, même lorsque tu en changes.</p><div id="owned-choices"></div><p id="equipment-status" role="status" aria-live="polite"></p></dialog>
     </section>
@@ -74,6 +82,7 @@
       <a class="game-card" href="https://cjajlk.github.io/Nocturne-Shift/" target="_blank" rel="noopener noreferrer"><img src="../assets/images/banner-nocturne-shift.png" alt=""><div><small>Mobile</small><h2>Nocturne Shift ↗</h2><p>Puzzle mobile nocturne où fragments astraux, combos et Éclipse transforment chaque ligne.</p><span class="text-link">Ouvrir le jeu · nouvel onglet →</span></div></a>
       <a class="game-card" href="https://cjajlk.github.io/NYR/" target="_blank" rel="noopener noreferrer"><img src="../assets/images/banner-nyr.png" alt="Dragon astral de NYR"><div><h2>NYR ↗</h2><p>CJ en cours de préparation</p><span class="text-link">Ouvrir le jeu · nouvel onglet →</span></div></a>
       <a class="game-card" href="https://cjajlk.github.io/jet-clash/" target="_blank" rel="noopener noreferrer"><img class="jetclash-card-image" src="../assets/images/banner-jet-clash.png" alt="JetClash : duel aérien dans une arène futuriste" loading="lazy"><div><h2>JetClash ↗</h2><p>Décolle. Frappe. Marque.</p><span class="text-link">Ouvrir le jeu · nouvel onglet →</span></div></a>
+      <article class="game-card game-card-coming" aria-labelledby="runner-title"><img class="runner-card-image" src="../assets/images/nocturne-runner.png" alt="Nocturne Runner : course dans une ville nocturne aux néons violets" loading="lazy"><div><span class="pill">Bientôt disponible</span><h2 id="runner-title">Nocturne Runner</h2><p>Une nouvelle aventure nocturne se prépare.</p></div></article>
     </div></section>
     <section data-page="boutique" aria-labelledby="shop-title" hidden><div class="shop-heading"><div><p class="eyebrow">PERSONNALISE TON UNIVERS</p><h1 id="shop-title">Boutique CJ</h1><p class="subtle">Des objets à garder, un profil à ton image.</p></div><div class="shop-wallet"><small>CJ Universels disponibles</small><strong id="shop-balance">—</strong> CJ</div></div><nav class="shop-categories" aria-label="Catégories boutique"><button type="button" data-shop-category="avatar" aria-pressed="true">Avatars</button><button type="button" data-shop-category="badge" aria-pressed="false">Badges / Titres</button><button type="button" data-shop-category="background" aria-pressed="false">Fonds de profil</button><button type="button" data-shop-category="collections" aria-pressed="false">Collections</button></nav><p id="shop-notice" class="subtle"></p><p id="shop-status" class="shop-status" role="status" aria-live="polite"></p><div id="shop-grid" class="shop-grid"></div></section>
     <section data-page="collections" aria-labelledby="collections-title" hidden>

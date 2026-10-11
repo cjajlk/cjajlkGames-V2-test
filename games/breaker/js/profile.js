@@ -334,7 +334,7 @@ function renderProfile(profile) {
     };
 
     // Identity Card
-    set("playerPseudo", profile.pseudo);
+    set("playerPseudo", window.CJajlkAccount?.getDisplayPseudo?.(profile.pseudo) || profile.pseudo);
     const defaultTitle = defaultProfile.titre;
     const lockedTitle = i18nT("profile.titleLocked");
     const titleValue = !profile.titre || profile.titre === defaultTitle ? lockedTitle : profile.titre;
@@ -403,68 +403,8 @@ function renderProfile(profile) {
 // ====================================
 
 function setupPseudoEdit() {
-    const pseudoValue = document.getElementById("playerPseudo");
-    
-    if (!pseudoValue) {
-        console.log("ℹ️ playerPseudo not found (not on profile page)");
-        return;
-    }
-    
-    // Remove any existing click handler to avoid duplicates
-    const newElement = pseudoValue.cloneNode(true);
-    pseudoValue.parentNode.replaceChild(newElement, pseudoValue);
-    
-    console.log("✅ Setting up pseudo edit click handler");
-    
-    newElement.style.cursor = "pointer";
-    
-    newElement.onclick = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        console.log("🖱️ Pseudo clicked!", e);
-        
-        if (!window.Popup) {
-            console.error("❌ window.Popup not found!");
-          alert(i18nT("profile.popupMissing"));
-            return;
-        }
-        
-        if (!window.Popup.input) {
-            console.error("❌ window.Popup.input not found!");
-          alert(i18nT("profile.popupInputMissing"));
-            return;
-        }
-        
-        console.log("✅ Opening popup with value:", newElement.textContent);
-        
-        Popup.input(i18nT("profile.pseudoPrompt"), newElement.textContent, (name) => {
-            console.log("📝 New name received:", name);
-            
-            const clean = name.trim().slice(0, 12);
-            
-            if (!clean) {
-                if (Toast && Toast.show) {
-                    Toast.show(i18nT("profile.pseudoInvalid"), "error");
-                }
-                return;
-            }
-
-            const profile = getPlayerProfile();
-            profile.pseudo = clean;
-            savePlayerProfile(profile);
-            
-            newElement.textContent = clean;
-            
-            if (Toast && Toast.show) {
-                Toast.show(i18nT("profile.pseudoUpdated"), "success");
-            }
-            
-            console.log("✅ Pseudo updated to:", clean);
-        });
-    };
-    
-    console.log("✅ Pseudo edit setup complete");
+    const element = document.getElementById("playerPseudo");
+    if (element) element.style.cursor = "default";
 }
 
 // ====================================
@@ -624,3 +564,6 @@ window.Profile = {
 
 
 
+
+for (const event of ['cj-account-ready','cj-account-updated','focus','pageshow']) window.addEventListener(event, () => renderProfile(getPlayerProfile()));
+window.addEventListener('storage', event => { if (event.key === 'cjPlayerData' || event.key === null) renderProfile(getPlayerProfile()); });

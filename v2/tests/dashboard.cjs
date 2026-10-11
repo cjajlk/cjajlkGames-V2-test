@@ -4,7 +4,7 @@ const path = require('node:path');
 const http = require('node:http');
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const root = path.resolve(__dirname, '../..');
-const output = path.join(__dirname, 'artifacts');
+const output = process.env.TEST_OUTPUT || path.join(__dirname, 'artifacts');
 fs.mkdirSync(output, { recursive: true });
 const server = http.createServer((req, res) => {
   const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
@@ -15,6 +15,11 @@ const server = http.createServer((req, res) => {
   fs.readFile(file, (error, data) => { res.writeHead(error ? 404 : 200, { 'Content-Type': type }); res.end(error ? 'Not found' : data); });
 });
 const checks = [];
+function completeAccount(player) {
+  return {schemaVersion:2,id:'synthetic-hub-test',createdAt:123,preferences:{language:'fr',volume:true},selectedBadge:null,...player,
+    stats:{...player.stats,byGame:{attrape:0,breaker:0,...player.stats?.byGame},playTime:{totalSeconds:0,...player.stats?.playTime,byGame:{attrape:0,breaker:0,...player.stats?.playTime?.byGame}}},
+    items:{unlockedBadges:{},unlockedCosmetics:{},...player.items}};
+}
 let browser;
 (async () => {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -32,10 +37,12 @@ let browser;
     }
   });
   await page.goto(`${base}/v2/`);
-  assert.equal(await page.evaluate(() => localStorage.length), 0);
-  assert.deepEqual(await page.evaluate(() => window.storageWrites), []);
-  checks.push('Fresh profile: no storage creation, migration, or write.');
-  const player = { pseudo: 'CJ Test <img src=x onerror=alert(1)>', stats: { totalCJ: 147, byGame: { attrape: 80, breaker: 90 }, playTime: { totalSeconds: 7260, byGame: { attrape: 3600, breaker: 3660 } } }, items: { unlockedBadges: { explorer: {}, fidele: {} } }, selectedBadge: 'explorer' };
+  await page.waitForFunction(() => window.CJajlkAccount?.isIdentityReady());
+  assert.equal(await page.evaluate(() => localStorage.length), 1);
+  assert.equal(await page.evaluate(() => window.storageWrites.length), 1);
+  assert.equal(await page.evaluate(() => CJajlkAccount.getPlayer().pseudo), 'Joueur');
+  checks.push('Fresh profile: one universal account created.');
+  const player = completeAccount({ pseudo: 'CJ Test <img src=x onerror=alert(1)>', stats: { totalCJ: 147, byGame: { attrape: 80, breaker: 90 }, playTime: { totalSeconds: 7260, byGame: { attrape: 3600, breaker: 3660 } } }, items: { unlockedBadges: { explorer: {}, fidele: {} } }, selectedBadge: 'explorer' });
   await page.evaluate(data => { localStorage.setItem('cjPlayerData', JSON.stringify(data)); localStorage.setItem('nocturnePlayerProfileV3', '{"gems":987}'); }, player);
   await page.reload();
   const before = await page.evaluate(() => JSON.stringify(localStorage));
@@ -90,13 +97,15 @@ let browser;
   checks.push('Cross-tab account refresh without dashboard writes.');
   await page.evaluate(() => localStorage.setItem('cjPlayerData', JSON.stringify({ pseudo: 'Ancien compte', stats: { totalCJ: 9 } })));
   await page.reload();
-  assert.equal(await page.locator('[data-profile=time]').first().textContent(), '—');
-  assert.deepEqual(await page.evaluate(() => window.storageWrites), []);
+  await page.waitForFunction(() => window.CJajlkAccount?.isIdentityReady());
+  assert.equal(await page.locator('[data-profile=time]').first().textContent(), '0 h 0 min');
+  assert.equal(await page.evaluate(() => window.storageWrites.length), 1);
+  assert.equal(await page.evaluate(() => CJajlkAccount.getPlayer().stats.totalCJ), 9);
   await page.evaluate(() => localStorage.setItem('cjPlayerData', '{broken'));
   await page.reload();
   assert.equal(await page.locator('[data-profile=balance]').first().textContent(), '—');
   assert.deepEqual(await page.evaluate(() => window.storageWrites), []);
-  checks.push('Legacy/incomplete and malformed profile handled without migration or fabricated data.');
+  checks.push('Legacy profile completed without lost CJ; malformed account preserved.');
   await page.route('**/core/cjAccount.js', route => route.abort());
   await page.reload();
   assert.match(await page.locator('[data-profile=status]').first().textContent(), /indisponible/);
@@ -106,8 +115,11 @@ let browser;
   await legacy.goto(`${base}/v2/`);
   await legacy.evaluate(() => localStorage.removeItem('cjPlayerData'));
   await legacy.goto(`${base}/index.html`);
-  await legacy.waitForFunction(() => JSON.parse(localStorage.getItem('cjPlayerData'))?.schemaVersion === 2);
-  checks.push('Classic page still automatically initializes the account (default preserved).');
+  await legacy.waitForURL('**/v2/');
+  await legacy.waitForFunction(() => !!window.CJDashboardProfile);
+  await legacy.waitForFunction(() => window.CJajlkAccount?.isIdentityReady());
+  assert.equal(await legacy.evaluate(() => CJajlkAccount.getPlayer().pseudo), 'Joueur');
+  checks.push('Root entry redirects to V2 and creates the missing universal account.');
   fs.writeFileSync(path.join(output, 'results.json'), JSON.stringify({ passed: true, checks, errors }, null, 2));
   console.log(JSON.stringify({ passed: true, checks }, null, 2));
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => { if (browser) await browser.close(); server.close(); });

@@ -254,9 +254,9 @@ body {
 
     <div id="pseudoPanel">
         <h2>Bienvenue 🌙</h2>
-        <p id="pseudoText">Entre ton pseudo pour entrer dans le Monde Nocturne.</p>
+        <p id="pseudoText">Ton pseudo commun t’accompagne dans le Monde Nocturne.</p>
 
-        <input id="pseudoInput" maxlength="20" placeholder="pseudo..." />
+        <p data-cj-pseudo>Joueur</p><a href="../../../v2/#profil">Modifier mon pseudo dans le Hub</a>
         <button id="continueBtn">go</button>
     </div>
 
@@ -271,6 +271,7 @@ body {
     <img src="../assets/images/feuille.png" alt="Feuille" class="leaf">
 </div>
 
+    <script src="../../../core/cjAccount.js" data-universal="true"></script>
     <script>
     
     const urlParams = new URLSearchParams(window.location.search);
@@ -330,16 +331,7 @@ body {
         }
     });
 
-    continueBtn.addEventListener("click", () => {
-        const name = pseudoInput.value.trim();
-        if (!name) return;
-
-        localStorage.setItem("playerName", name);
-
-        setTimeout(() => {
-            window.location.href = "../index.html";
-        }, 500);
-    });
+    continueBtn.addEventListener("click", () => { window.location.href = "../index.html"; });
 
    
 
@@ -367,16 +359,7 @@ function showEndIntroDialogue() {
     showDialog(dialogues);
 }
 
-function showPseudoPanel() {
-    pseudoPanel.classList.add("visible");
-    continueBtn.addEventListener("click", () => {
-        const name = pseudoInput.value.trim();
-        if (name) {
-            localStorage.setItem("playerName", name);
-            window.location.href = "../index.html";  // Redirige vers le menu principal
-        }
-    });
-}
+function showPseudoPanel() { pseudoPanel.classList.add("visible"); }
 
 // Fonction pour ajuster la taille du texte et des éléments en fonction de la taille de l'écran
 function adjustForScreenSize() {

@@ -10,14 +10,7 @@
  </head>
  <body> 
 
-   <script>
-    // 🔒 Blocage si le joueur n'a pas encore mis son pseudo
-    const name = localStorage.getItem("playerName");
 
-    if (!name || name.trim().length === 0) {
-        window.location.href = "./intro/intro.html";
-    }
- </script>
 
     <!-- 🌙 MENU PRINCIPAL -->
     <div id="mainMenu" class="menu-visible">
@@ -216,7 +209,7 @@
             <div class="profile-header">
                 <div class="profile-pseudo-container">
                     <div id="profilePseudo" class="profile-pseudo">Joueur</div>
-                    <button class="profile-edit-btn" onclick="editPseudo()">✏ Modifier</button>
+                    <button class="profile-edit-btn" onclick="editPseudo()">Modifier dans le Hub</button>
                 </div>
 
                 <div class="profile-title-equipped">
@@ -377,7 +370,7 @@
 
 <script src="js/loader.js"></script>
 <script src="js/engine/assetsmap.js"></script>
-<script src="../../core/cjAccount.js"></script>
+<script src="../../core/cjAccount.js" data-universal="true"></script>
 <script src="../../core/cjEngine.js"></script>
 <script src="js/eventManager.js"></script>
 <script src="js/feedbackPopup.js"></script>

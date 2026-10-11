@@ -375,7 +375,7 @@ function updateAllProfileUI() {
         document.getElementById("profileGemCount").textContent = gems;
 
     if (document.getElementById("profileName"))
-        document.getElementById("profileName").textContent = playerName;
+        document.getElementById("profileName").textContent = window.CJajlkAccount?.getDisplayPseudo?.(playerName) || playerName;
 
     if (document.getElementById("profileLevel"))
         document.getElementById("profileLevel").textContent = playerLevel;
@@ -893,7 +893,7 @@ let objectiveReached = false;  // Ajoute cette ligne au début du script
 
 window.getGameState = function () {
     return {
-        running: Game.running && isGameRunning && (gameStarted || timerRunning) && !inLevelTransition,
+        running: window.CJajlkAccount?.isIdentityReady?.() !== false && Game.running && isGameRunning && (gameStarted || timerRunning) && !inLevelTransition,
         paused: isGamePaused
     };
 };
@@ -1520,6 +1520,7 @@ function closeProfile() {
 
 // Mise à jour du profil dans l'interface
   function updateProfilePanel() {
+    if (typeof coins === "undefined") return; // Le compte commun peut être prêt avant le profil du jeu.
     const savedName = localStorage.getItem("playerName") || "Invité";
     const pseudoEl = document.getElementById("profilePseudo");
     const highScoreEl = document.getElementById("profileHighScore");
@@ -1537,7 +1538,7 @@ function closeProfile() {
     if (hudGems) hudGems.textContent = gems ?? 0;  // Met à jour les gemmes
 
     // METTRE À JOUR LES DONNÉES DU PROFIL
-    if (pseudoEl) pseudoEl.textContent = savedName;
+    if (pseudoEl) pseudoEl.textContent = window.CJajlkAccount?.getDisplayPseudo?.(savedName) || savedName;
     if (highScoreEl) highScoreEl.textContent = highScore ?? 0;
     if (totalPointsEl) totalPointsEl.textContent = playerTotalPoints ?? 0;
     if (playTimeEl) playTimeEl.textContent = formatPlayTime(totalPlayTime);
@@ -1615,27 +1616,7 @@ if (xpText) {
 
 
 // petites fonctions utilitaires
-function editPseudo() {
-  const modal = document.getElementById("pseudoModal");
-  const input = document.getElementById("pseudoInput");
-  const btn = document.getElementById("pseudoConfirm");
-
-  input.value = playerName || "";
-  modal.classList.remove("hidden");
-  input.focus();
-
-  btn.onclick = () => {
-    const newName = input.value.trim();
-    if (!newName) return;
-
-    playerName = newName.substring(0, 20);
-    savePlayerProfile();
-    updateProfilePanel();
-
-    modal.classList.add("hidden");
-  };
-}
-
+function editPseudo() { window.location.href = '../../v2/#profil'; }
 
 function formatPlayTime(seconds) {
     const h = Math.floor(seconds / 3600);
@@ -3219,7 +3200,7 @@ function updatePlayerBadge() {
         ? (PlayerTitles.find(t => t.id === equippedTitle)?.name ?? "Aucun titre")
         : "Aucun titre";
 
-    badge.textContent = `${playerName} - ${titleText}`;
+    badge.textContent = `${window.CJajlkAccount?.getDisplayPseudo?.(playerName) || playerName} - ${titleText}`;
     badge.style.removeProperty('display');
     badge.classList.remove("hidden");
     setTimeout(() => badge.classList.add("visible"), 10);
@@ -3227,3 +3208,6 @@ function updatePlayerBadge() {
 
 
 window.addEventListener('pageshow', () => updatePlayerBadge());
+
+for (const event of ['cj-account-ready','cj-account-updated','focus','pageshow']) window.addEventListener(event, () => { updateProfilePanel(); updatePlayerBadge(); });
+window.addEventListener('storage', event => { if (event.key === 'cjPlayerData' || event.key === null) { updateProfilePanel(); updatePlayerBadge(); } });

@@ -1,3 +1,48 @@
+/* Local identity V1: one existing wallet, additive compatibility, no server identity. */
+let cjIdentityReady = false;
+const cjRecord = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const cjNonnegative = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;
+function cjPrepare(raw) {
+    const player = JSON.parse(raw);
+    if (!cjRecord(player)) throw new Error('invalid-account');
+    const absent = (object, key, value) => { if (object[key] === undefined) object[key] = value; };
+    absent(player, 'schemaVersion', 2);
+    if (player.id === undefined) player.id = cjAccount.generateId();
+    if (typeof player.id !== 'string' || !player.id.trim()) throw new Error('invalid-id');
+    absent(player, 'pseudo', 'Joueur');
+    if (typeof player.pseudo !== 'string') throw new Error('invalid-pseudo');
+    absent(player, 'createdAt', Date.now());
+    absent(player, 'stats', {});
+    if (!cjRecord(player.stats)) throw new Error('invalid-stats');
+    absent(player.stats, 'totalCJ', 0);
+    absent(player.stats, 'byGame', {});
+    absent(player.stats, 'playTime', {});
+    if (!cjNonnegative(player.stats.totalCJ) || !cjRecord(player.stats.byGame) || !cjRecord(player.stats.playTime)) throw new Error('invalid-stats');
+    absent(player.stats.playTime, 'totalSeconds', 0);
+    absent(player.stats.playTime, 'byGame', {});
+    if (!cjNonnegative(player.stats.playTime.totalSeconds) || !cjRecord(player.stats.playTime.byGame)) throw new Error('invalid-time');
+    for (const map of [player.stats.byGame, player.stats.playTime.byGame]) {
+        if (!Object.values(map).every(cjNonnegative)) throw new Error('invalid-game-stats');
+        absent(map, 'attrape', 0); absent(map, 'breaker', 0);
+    }
+    absent(player, 'items', {});
+    if (!cjRecord(player.items)) throw new Error('invalid-items');
+    absent(player.items, 'unlockedBadges', {}); absent(player.items, 'unlockedCosmetics', {});
+    if (!cjRecord(player.items.unlockedBadges) || !cjRecord(player.items.unlockedCosmetics)) throw new Error('invalid-items');
+    absent(player, 'preferences', { language: 'fr', volume: true });
+    absent(player, 'selectedBadge', null);
+    return player;
+}
+async function cjLocked(change) {
+    if (typeof globalThis.navigator?.locks?.request !== 'function') return { ok: false, code: 'unsupported' };
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
+    try { return await navigator.locks.request('cjajlk-v2-account-write', { signal: controller.signal }, change); }
+    catch (error) { return { ok: false, code: error?.name === 'AbortError' ? 'busy' : 'storage' }; }
+    finally { clearTimeout(timeout); }
+}
+function cjAccountEvent(name) { window.dispatchEvent(new Event(name)); }
+
 const cjAccount = {
     /**
      * Retourne le pseudo du joueur
@@ -10,123 +55,77 @@ const cjAccount = {
     // 📊 INITIALISATION
     // ═══════════════════════════════════════════════════════════════════════════
     
-    init() {
-        console.log("✅ cjAccount initialisé (FUSION OFFICIELLE)");
-        this.ensureDataStructure();
+    init() { return this.initialize(); },
+
+    async initialize() {
+        cjIdentityReady = false;
+        try {
+            const original = localStorage.getItem('cjPlayerData');
+            if (original !== null) {
+                const prepared = cjPrepare(original);
+                if (JSON.stringify(prepared) === JSON.stringify(JSON.parse(original))) {
+                    cjIdentityReady = true;
+                    cjAccountEvent('cj-account-ready');
+                    return { ok: true, created: false, player: prepared };
+                }
+            }
+        } catch { cjIdentityReady = false; return { ok: false, code: 'invalid-or-unavailable' }; }
+        // Reread under the same lock as the engine and Hub transactions.
+        return cjLocked(() => {
+            try {
+                const original = localStorage.getItem('cjPlayerData');
+                const player = cjPrepare(original === null ? '{}' : original);
+                const serialized = JSON.stringify(player);
+                // Never overwrite an unreadable existing account or another writer.
+                if (localStorage.getItem('cjPlayerData') !== original) return { ok: false, code: 'conflict' };
+                if (original === null || serialized !== JSON.stringify(JSON.parse(original))) {
+                    localStorage.setItem('cjPlayerData', serialized);
+                    if (localStorage.getItem('cjPlayerData') !== serialized) return { ok: false, code: 'storage' };
+                }
+                cjIdentityReady = true;
+                cjAccountEvent('cj-account-ready');
+                cjAccountEvent('cj-account-updated');
+                return { ok: true, created: original === null, player };
+            } catch { return { ok: false, code: 'invalid-or-unavailable' }; }
+        });
     },
 
-    // ═══════════════════════════════════════════════════════════════════════════
-    // 🔍 DONNÉES JOUEUR
-    // ═══════════════════════════════════════════════════════════════════════════
+    ensureDataStructure() {
+        // Creation/migration is asynchronous and locked; legacy synchronous writers
+        // may only use a readable existing profile. Never erase damaged storage.
+        const raw = localStorage.getItem('cjPlayerData');
+        if (raw === null) throw new Error('account-not-ready');
+        return cjPrepare(raw);
+    },
 
-    /**
-     * Assure que la structure de données joueurn'est existait complète
-     */
-   ensureDataStructure() {
-    let playerData = this.getPlayer();
-    
-    if (!playerData) {
-        playerData = {
-            schemaVersion: 2,
-            id: this.generateId(),
-            pseudo: "Explorateur Nocturne",
-            createdAt: Date.now(),
-            stats: {
-                totalCJ: 0,
-                byGame: {
-                    attrape: 0,
-                    breaker: 0
-                },
-                playTime: {
-                    totalSeconds: 0,
-                    byGame: {
-                        attrape: 0,
-                        breaker: 0
-                    }
-                }
-            },
-            items: {
-                unlockedBadges: {},
-                unlockedCosmetics: {}
-            },
-            preferences: {
-                language: "fr",
-                volume: true
-            },
-            selectedBadge: null   // 👈 AJOUTER ICI DIRECTEMENT
-        };
+    isIdentityReady() { return cjIdentityReady; },
 
-        this.savePlayer(playerData);
-    }
+    getDisplayPseudo(fallback = 'Joueur') {
+        const player = this.getPlayer();
+        return typeof player?.pseudo === 'string' && player.pseudo.trim() ? player.pseudo : fallback;
+    },
 
-    let needsSave = false;
-
-    if (typeof playerData.schemaVersion !== "number") {
-        playerData.schemaVersion = 2;
-        needsSave = true;
-    }
-
-    if (!playerData.stats || typeof playerData.stats !== "object") {
-        playerData.stats = {};
-        needsSave = true;
-    }
-    if (typeof playerData.stats.totalCJ !== "number" || !isFinite(playerData.stats.totalCJ)) {
-        playerData.stats.totalCJ = 0;
-        needsSave = true;
-    }
-    if (!playerData.stats.byGame || typeof playerData.stats.byGame !== "object") {
-        playerData.stats.byGame = {};
-        needsSave = true;
-    }
-    if (typeof playerData.stats.byGame.attrape !== "number" || !isFinite(playerData.stats.byGame.attrape)) {
-        playerData.stats.byGame.attrape = 0;
-        needsSave = true;
-    }
-    if (typeof playerData.stats.byGame.breaker !== "number" || !isFinite(playerData.stats.byGame.breaker)) {
-        playerData.stats.byGame.breaker = 0;
-        needsSave = true;
-    }
-
-    if (!playerData.stats.playTime || typeof playerData.stats.playTime !== "object") {
-        playerData.stats.playTime = {
-            totalSeconds: 0,
-            byGame: {
-                attrape: 0,
-                breaker: 0
-            }
-        };
-        needsSave = true;
-    } else {
-        if (typeof playerData.stats.playTime.totalSeconds !== "number" || !isFinite(playerData.stats.playTime.totalSeconds)) {
-            playerData.stats.playTime.totalSeconds = 0;
-            needsSave = true;
-        }
-        if (!playerData.stats.playTime.byGame || typeof playerData.stats.playTime.byGame !== "object") {
-            playerData.stats.playTime.byGame = {};
-            needsSave = true;
-        }
-        if (typeof playerData.stats.playTime.byGame.attrape !== "number" || !isFinite(playerData.stats.playTime.byGame.attrape)) {
-            playerData.stats.playTime.byGame.attrape = 0;
-            needsSave = true;
-        }
-        if (typeof playerData.stats.playTime.byGame.breaker !== "number" || !isFinite(playerData.stats.playTime.byGame.breaker)) {
-            playerData.stats.playTime.byGame.breaker = 0;
-            needsSave = true;
-        }
-    }
-
-    // 👇 Important : pour les anciens comptes
-    if (playerData.selectedBadge === undefined) {
-        playerData.selectedBadge = null;
-        needsSave = true;
-    }
-
-    if (needsSave) {
-        this.savePlayer(playerData);
-    }
-
-    return playerData;
-},
+    async updatePseudo(value) {
+        if (typeof value !== 'string') return { ok: false, code: 'invalid' };
+        const pseudo = value.trim().replace(/\s+/g, ' ');
+        if ([...pseudo].length < 2 || [...pseudo].length > 24 || /[<>\p{C}]/u.test(pseudo)) return { ok: false, code: 'invalid' };
+        const ready = await this.initialize();
+        if (!ready.ok) return ready;
+        return cjLocked(() => {
+            try {
+                const original = localStorage.getItem('cjPlayerData');
+                if (original === null) return { ok: false, code: 'account' };
+                const player = cjPrepare(original);
+                player.pseudo = pseudo;
+                if (localStorage.getItem('cjPlayerData') !== original) return { ok: false, code: 'conflict' };
+                const serialized = JSON.stringify(player);
+                localStorage.setItem('cjPlayerData', serialized);
+                if (localStorage.getItem('cjPlayerData') !== serialized) return { ok: false, code: 'storage' };
+                cjAccountEvent('cj-account-updated');
+                return { ok: true, pseudo };
+            } catch { return { ok: false, code: 'storage' }; }
+        });
+    },
 
     /**
      * Sauvegarde les données du joueur
@@ -224,20 +223,8 @@ const cjAccount = {
         return this.spendCJ(amount);
     },
 
-    setPseudo(newPseudo) {
-    const playerData = this.ensureDataStructure();
-
-    if (!newPseudo || typeof newPseudo !== "string" || newPseudo.trim().length < 2) {
-        return false;
-    }
-
-    playerData.pseudo = newPseudo.trim();
-    this.savePlayer(playerData);
-    // DEBUG LOGS
-    console.log("Pseudo sauvegardé :", playerData.pseudo);
-    console.log("LocalStorage après save :", localStorage.getItem("cjPlayerData"));
-    return true;
-},
+    // Compatibility alias. Identity changes are presented only in the Hub V2.
+    setPseudo(newPseudo) { return this.updatePseudo(newPseudo); },
       
      setSelectedBadge(badgeId) {
     const playerData = this.ensureDataStructure();
@@ -306,7 +293,7 @@ const cjAccount = {
      * Retourne le temps de jeu global total (secondes)
      */
     getTotalPlayTime() {
-        const playerData = this.ensureDataStructure();
+        const playerData = this.getPlayer();
         return playerData?.stats?.playTime?.totalSeconds || 0;
     },
 
@@ -314,7 +301,7 @@ const cjAccount = {
      * Retourne le temps de jeu global d'un jeu (secondes)
      */
     getPlayTimeByGame(gameName) {
-        const playerData = this.ensureDataStructure();
+        const playerData = this.getPlayer();
         return playerData?.stats?.playTime?.byGame?.[gameName] || 0;
     },
 
@@ -359,6 +346,7 @@ const cjAccount = {
      * Génère un ID unique
      */
     generateId() {
+        if (typeof globalThis.crypto?.randomUUID === 'function') return globalThis.crypto.randomUUID();
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             const r = (Math.random() * 16) | 0;
             const v = c === 'x' ? r : (r & 0x3) | 0x8;
@@ -369,13 +357,8 @@ const cjAccount = {
     /**
      * Authentifie le joueur avec un pseudo
      */
-    authenticate(pseudo) {
-        const playerData = this.ensureDataStructure();
-        playerData.pseudo = pseudo;
-        this.savePlayer(playerData);
-        console.log(`[cjAccount] 👤 Pseudo défini: ${pseudo}`);
-        return true;
-    },
+    // Historical alias only: does not authenticate a local player.
+    authenticate(pseudo) { return this.updatePseudo(pseudo); },
 
     /**
      * Réinitialise complètement le compte (DEV ONLY)
@@ -429,14 +412,21 @@ window.CJajlkAccount = {
 // 🚀 INITIALISATION AUTOMATIQUE
 // ═══════════════════════════════════════════════════════════════════════════
 
-// V2 can load the existing API without creating or migrating player data.
-if (document.currentScript?.dataset.readonly !== "true") {
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () => cjAccount.init());
-    } else {
-        cjAccount.init();
-    }
+// Explicit universal mode, while preserving legacy read-only consumers/tests.
+const cjUniversalMode = document.currentScript?.dataset.universal === 'true';
+if (cjUniversalMode || document.currentScript?.dataset.readonly !== 'true') {
+    window.CJajlkAccount.ready = cjAccount.initialize();
 }
+function cjRenderIdentity() {
+    document.querySelectorAll?.('[data-cj-pseudo]')?.forEach(element => {
+        element.textContent = cjAccount.getDisplayPseudo(element.dataset.cjFallback || 'Joueur');
+    });
+}
+for (const event of ['cj-account-ready', 'cj-account-updated', 'focus', 'pageshow']) window.addEventListener(event, cjRenderIdentity);
+window.addEventListener('storage', event => { if (event.key === 'cjPlayerData' || event.key === null) cjRenderIdentity(); });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) cjRenderIdentity(); });
+document.addEventListener('DOMContentLoaded', cjRenderIdentity);
+cjRenderIdentity();
 console.log("✅ cjAccount.js chargé (SOURCE DE VÉRITÉ UNIQUE)");
 
 // Alias global cohérent partout

@@ -5,15 +5,25 @@
   const record = value => value && typeof value === 'object' && !Array.isArray(value) ? value : {};
   const owns = (map, id) => Object.hasOwn(record(map), id) && !!map[id];
   const available = player => window.CJProfileCatalog.entries.filter(item => owns(item.ownership === 'image' ? player.unlockedImages : player.items?.unlockedCosmetics, item.id));
+  function activity(stats = {}) {
+    const byGame = record(stats.byGame), times = record(stats.playTime?.byGame), catalog = window.CJGameCatalog;
+    const games = [...new Set([...(catalog?.entries || []).map(game => game.id), ...Object.keys(byGame), ...Object.keys(times)])].map(id => {
+      const local = catalog?.localActivity(id) || { recorded: false, detail: null };
+      const cj = number(byGame[id]), seconds = number(times[id]);
+      return { id, name: catalog?.entries.find(game => game.id === id)?.name || id, cj, seconds, detail: local.detail,
+        recorded: cj > 0 || seconds > 0 || local.recorded, known: !!catalog?.entries.some(game => game.id === id) };
+    });
+    return { games: games.filter(game => game.known || game.recorded),
+      played: stats.byGame || stats.playTime?.byGame || games.some(game => game.recorded) ? games.filter(game => game.recorded).length : null };
+  }
   window.CJDashboardProfile = Object.freeze({
     read() {
       try {
         const api = window.CJajlkAccount;
-        if (!api || typeof api.getPlayer !== 'function') return { state: 'unavailable' };
+        if (!api || typeof api.getPlayer !== 'function') return { state: 'unavailable', ...activity() };
         const player = api.getPlayer();
-        if (!player || typeof player !== 'object' || Array.isArray(player)) return { state: 'missing' };
-        const stats = record(player.stats), byGame = record(stats.byGame), times = record(stats.playTime?.byGame);
-        const games = [...new Set([...Object.keys(byGame), ...Object.keys(times)])].map(id => ({ id, cj: number(byGame[id]), seconds: number(times[id]) }));
+        if (!player || typeof player !== 'object' || Array.isArray(player)) return { state: 'missing', ...activity() };
+        const stats = record(player.stats);
         const badges = Object.keys(record(player.items?.unlockedBadges)).filter(id => owns(player.items.unlockedBadges, id));
         const cosmetics = available(player);
         return {
@@ -23,10 +33,9 @@
           selected: badges.includes(player.selectedBadge) ? player.selectedBadge : null,
           avatar: cosmetics.find(item => item.type === 'avatar' && item.id === player.profileV2?.avatar) || null,
           background: cosmetics.find(item => item.type === 'background' && item.id === player.profileV2?.background) || null,
-          cosmetics, games: games.filter(game => game.cj > 0 || game.seconds > 0),
-          played: stats.byGame || stats.playTime?.byGame ? games.filter(game => game.cj > 0 || game.seconds > 0).length : null
+          cosmetics, ...activity(stats)
         };
-      } catch { return { state: 'unavailable' }; }
+      } catch { return { state: 'unavailable', ...activity() }; }
     },
     async equip(type, id) {
       try {

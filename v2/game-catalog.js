@@ -9,9 +9,10 @@
     { id: 'shift', name: 'Nocturne Shift' },
     { id: 'nyr', name: 'NYR' },
     { id: 'jetclash', name: 'JetClash' },
-    { id: 'lumi', name: 'Lumi' }
+    { id: 'lumi', name: 'Lumi' },
+    { id: 'runner', name: 'Nocturne Runner' }
   ].map(Object.freeze);
-  const storageKeys = ['cjajlkFarmV1', 'nyrStatisticsV1', 'jetclash.etape2.profile.v1', 'lumi-best'];
+  const storageKeys = ['cjajlkFarmV1', 'nyrStatisticsV1', 'jetclash.etape2.profile.v1', 'lumi-best', 'nocturneRunnerProfileV1', 'nocturneRunnerBest'];
   const record = value => value && typeof value === 'object' && !Array.isArray(value);
   const count = value => Number.isSafeInteger(value) && value >= 0 ? value : null;
   function saved(key) {
@@ -37,6 +38,15 @@
         const training = count(data.challenges?.daily?.entries?.['d-training']?.progress) || 0;
         if (matches > 0 || training > 0) return { recorded: true, detail: matches > 0 ? `${matches} match${matches > 1 ? 's' : ''} terminé${matches > 1 ? 's' : ''} · ${data.xp} XP JetClash` : 'Entraînement enregistré' };
       }
+    }
+    if (id === 'runner') {
+      const distance = count(saved('nocturneRunnerProfileV1')?.stats?.distance);
+      if (distance > 0) return { recorded: true, detail: 'Distance cumulée : ' + distance + ' m' };
+      try {
+        const raw = localStorage.getItem('nocturneRunnerBest');
+        const best = raw && /^\d+$/.test(raw) ? count(Number(raw)) : null;
+        if (best > 0) return { recorded: true, detail: 'Meilleure distance : ' + best + ' m' };
+      } catch {}
     }
     if (id === 'lumi') {
       try {

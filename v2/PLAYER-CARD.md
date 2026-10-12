@@ -6,7 +6,7 @@ Le module commun initialise le compte absent et complète uniquement les champs 
 - `profileV2.avatar` et `profileV2.background` stockent uniquement les identifiants équipés (ou `null` pour le visuel par défaut).
 - Les six images de la boutique deviennent utilisables comme avatars uniquement si leur identifiant existe dans `unlockedImages`.
 - Les possessions dans `items.unlockedBadges`, `unlockedImages` et `items.unlockedCosmetics` ne sont jamais supprimées ni modifiées par ce profil.
-- Les CJ, le pseudo et les temps sont lus dans le compte. « Mes aventures » référence les huit jeux disponibles via `game-catalog.js`, même sans activité (mention explicite). Le compteur retient uniquement les CJ/temps positifs ou une trace locale reconnue : sauvegarde de ferme, partie NYR terminée, match/entraînement JetClash. Les XP et scores propres aux jeux ne deviennent jamais des CJ. Voir `GAME-ACTIVITY.md`. Aucun niveau global.
+- Les CJ, le pseudo et les temps sont lus dans le compte. « Mes aventures » référence les neuf jeux disponibles via `game-catalog.js`, même sans activité (mention explicite). Le compteur retient uniquement les CJ/temps positifs ou une trace locale reconnue : sauvegarde de ferme, partie NYR terminée, match/entraînement JetClash. Les XP et scores propres aux jeux ne deviennent jamais des CJ. Voir `GAME-ACTIVITY.md`. Aucun niveau global.
 - Une valeur absente reste indisponible. Un compte manquant est créé par le module commun, sous verrou, avec un identifiant local stable et le pseudo provisoire Joueur.
 
 ## Extension Collections

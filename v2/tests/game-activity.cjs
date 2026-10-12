@@ -33,7 +33,7 @@ let browser;
     }
   });
   await page.goto(`${base}/v2/#profil`);
-  const ids = ['attrape', 'breaker', 'farm', 'velocity', 'shift', 'nyr', 'jetclash', 'lumi'];
+  const ids = ['attrape', 'breaker', 'farm', 'velocity', 'shift', 'nyr', 'jetclash', 'lumi', 'runner'];
   assert.deepEqual(await page.locator('#game-stats article').evaluateAll(cards => cards.map(card => card.dataset.game)), ids);
   assert.equal(await page.locator('#game-stats [data-activity="recorded"]').count(), 0);
   await page.waitForFunction(() => window.CJajlkAccount?.isIdentityReady());
@@ -76,19 +76,19 @@ let browser;
   for (const width of [320, 390, 768, 1440]) {
     await page.setViewportSize({ width, height: width < 768 ? 844 : 1000 });
     await page.goto(`${base}/v2/#jeux`);
-    const runner = page.locator('.game-card-coming');
-    assert.equal(await runner.count(), 1);assert.match(await runner.textContent(), /Nocturne Runner/);assert.match(await runner.textContent(), /Bientôt disponible/);
-    assert.equal(await runner.locator('a,button').count(), 0);
-    assert.equal(await page.locator('[data-page="jeux"] a.game-card').count(), 8);
+    const runner = page.locator('[aria-labelledby="runner-title"]');
+    assert.equal(await runner.count(), 1);assert.match(await runner.textContent(), /Nocturne Runner/);assert.equal(await runner.getAttribute('href'), 'https://cjajlk.github.io/nocturne-runner/');
+    assert.equal(await runner.getAttribute('target'), '_blank');
+    assert.equal(await page.locator('[data-page="jeux"] a.game-card').count(), 9);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await runner.scrollIntoViewIfNeeded();
-    await page.waitForFunction(() => { const img = document.querySelector('.game-card-coming img'); return img.complete && img.naturalWidth > 0; });
+    await page.waitForFunction(() => { const img = document.querySelector('.runner-card-image'); return img.complete && img.naturalWidth > 0; });
     if (width === 390) await runner.screenshot({ path: path.join(output, 'Hub-Nocturne-Runner.png') });
     await page.goto(`${base}/v2/#profil`);
-    assert.equal(await page.locator('#game-stats article').count(), 8);
+    assert.equal(await page.locator('#game-stats article').count(), 9);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     if (width === 1440) await page.screenshot({ path: path.join(output, 'Hub-Mes-aventures.png'), fullPage: true });
   }
   assert.deepEqual(errors, []);
-  console.log('OK : 8 jeux référencés, activités globales/locales réelles, sauvegardes et CJ préservés, aucun crédit fictif, synchronisation entre onglets, carte Runner non jouable et responsive 320/390/768/1440.');
+  console.log('OK : 9 jeux référencés, activités globales/locales réelles, sauvegardes et CJ préservés, aucun crédit fictif, synchronisation entre onglets, carte Runner reliée au jeu et responsive 320/390/768/1440.');
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => { if (browser) await browser.close(); server.close(); });

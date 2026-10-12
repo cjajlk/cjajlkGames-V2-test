@@ -1,8 +1,8 @@
 # Jeux du hub et activités du profil
 
-`game-catalog.js` référence les huit jeux disponibles : Attrape-les-tous, Breaker
+`game-catalog.js` référence les neuf jeux disponibles : Attrape-les-tous, Breaker
 Nocturne, Ferme nocturne sous la pleine lune, Nocturne Velocity, Nocturne Shift,
-NYR, JetClash et Lumi. Ils figurent tous dans « Mes aventures ». Sans trace reconnue,
+NYR, JetClash, Lumi et Nocturne Runner. Ils figurent tous dans « Mes aventures ». Sans trace reconnue,
 l’entrée indique « Aucune activité enregistrée pour le moment » et ne fait pas
 augmenter le compteur des jeux joués.
 
@@ -10,12 +10,13 @@ Les statistiques par jeu du compte `cjPlayerData` restent lues sans modification
 Velocity et les jeux externes ont maintenant leur nom complet. Les éventuels jeux
 inconnus ayant des statistiques positives restent visibles sous leur identifiant.
 
-Quatre adaptateurs supplémentaires lisent les sauvegardes propres aux jeux :
+Cinq adaptateurs supplémentaires lisent les sauvegardes propres aux jeux :
 
 | Jeu | Trace existante lue | Affichage |
 | --- | --- | --- |
 | Ferme | `cjajlkFarmV1` : zones, niveau valide, date de sauvegarde positive | Sauvegarde disponible, niveau |
 | NYR | `nyrStatisticsV1` version 1 : parties terminées positives | Nombre de parties, meilleur score |
+| Nocturne Runner | `nocturneRunnerProfileV1.stats.distance` ou `nocturneRunnerBest` strictement positif | Distance cumulée ou meilleur record |
 | Lumi | `lumi-best` : record entier strictement positif | Meilleur score |
 | JetClash | `jetclash.etape2.profile.v1` : profil valide, matchs terminés ou défi d’entraînement | Matchs et XP JetClash, ou entraînement enregistré |
 
@@ -37,16 +38,16 @@ lancement depuis le hub ne crée pas artificiellement une activité ou du temps.
 
 ## Carte Nocturne Runner
 
-Une carte non jouable est ajoutée dans la vue Jeux : « Nocturne Runner » et
-« Bientôt disponible ». L’image fournie est copiée à l’identique dans
-`assets/images/nocturne-runner.png`, affichée entière. Aucun lien de lancement,
-bouton actif, crédit CJ ou entrée d’activité n’est créé pour ce jeu à venir.
+La carte « Nocturne Runner » ouvre maintenant https://cjajlk.github.io/nocturne-runner/
+dans un nouvel onglet. L’image fournie est conservée à l’identique dans
+`assets/images/nocturne-runner.png`, affichée entière. Son activité repose sur les
+temps/CJ communs ou une distance native strictement positive.
 
 ## Vérifications
 
-- `node v2/tests/game-activity.cjs` : sept jeux, statistiques communes et locales,
+- `node v2/tests/game-activity.cjs` : neuf jeux, statistiques communes et locales,
   données invalides et sauvegardes vides, compte absent, mises à jour entre onglets,
-  aucun écrit par le hub, solde et sauvegardes exacts, carte non jouable et rendu
+  lectures d'activité sans écriture, solde et sauvegardes exacts, carte reliée au jeu et rendu
   sans débordement à 320, 390, 768 et 1440 px. Captures inspectées.
 - `node v2/tests/player-card.cjs` : profil, possessions, équipement/déséquipement,
   sauvegarde, erreurs de stockage et affichage à six largeurs.

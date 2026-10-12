@@ -179,5 +179,6 @@ legend{font-weight:700;margin-bottom:12px;padding:0}
 .game-card img.runner-card-image{height:auto;aspect-ratio:1/1;object-fit:contain}
 .game-card-coming>div>.pill{margin-bottom:12px}
 .game-card-coming:hover{border-color:var(--border)}
+.game-card img.lumi-card-image{height:auto;aspect-ratio:3/2;object-fit:contain}
 
 .universal-name-form{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:20px 0}.universal-name-form input{min-width:0;flex:1 1 160px;padding:12px;border-radius:10px;border:1px solid var(--border);background:#101222;color:inherit;font:inherit}.universal-name-form p{flex-basis:100%;margin:0}.universal-name-form label{font-weight:600}

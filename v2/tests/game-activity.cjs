@@ -33,7 +33,7 @@ let browser;
     }
   });
   await page.goto(`${base}/v2/#profil`);
-  const ids = ['attrape', 'breaker', 'farm', 'velocity', 'shift', 'nyr', 'jetclash'];
+  const ids = ['attrape', 'breaker', 'farm', 'velocity', 'shift', 'nyr', 'jetclash', 'lumi'];
   assert.deepEqual(await page.locator('#game-stats article').evaluateAll(cards => cards.map(card => card.dataset.game)), ids);
   assert.equal(await page.locator('#game-stats [data-activity="recorded"]').count(), 0);
   await page.waitForFunction(() => window.CJajlkAccount?.isIdentityReady());
@@ -79,16 +79,16 @@ let browser;
     const runner = page.locator('.game-card-coming');
     assert.equal(await runner.count(), 1);assert.match(await runner.textContent(), /Nocturne Runner/);assert.match(await runner.textContent(), /Bientôt disponible/);
     assert.equal(await runner.locator('a,button').count(), 0);
-    assert.equal(await page.locator('[data-page="jeux"] a.game-card').count(), 7);
+    assert.equal(await page.locator('[data-page="jeux"] a.game-card').count(), 8);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     await runner.scrollIntoViewIfNeeded();
     await page.waitForFunction(() => { const img = document.querySelector('.game-card-coming img'); return img.complete && img.naturalWidth > 0; });
     if (width === 390) await runner.screenshot({ path: path.join(output, 'Hub-Nocturne-Runner.png') });
     await page.goto(`${base}/v2/#profil`);
-    assert.equal(await page.locator('#game-stats article').count(), 7);
+    assert.equal(await page.locator('#game-stats article').count(), 8);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
     if (width === 1440) await page.screenshot({ path: path.join(output, 'Hub-Mes-aventures.png'), fullPage: true });
   }
   assert.deepEqual(errors, []);
-  console.log('OK : 7 jeux référencés, activités globales/locales réelles, sauvegardes et CJ préservés, aucun crédit fictif, synchronisation entre onglets, carte Runner non jouable et responsive 320/390/768/1440.');
+  console.log('OK : 8 jeux référencés, activités globales/locales réelles, sauvegardes et CJ préservés, aucun crédit fictif, synchronisation entre onglets, carte Runner non jouable et responsive 320/390/768/1440.');
 })().catch(error => { console.error(error); process.exitCode = 1; }).finally(async () => { if (browser) await browser.close(); server.close(); });

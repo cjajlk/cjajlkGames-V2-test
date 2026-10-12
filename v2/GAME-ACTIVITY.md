@@ -1,8 +1,8 @@
 # Jeux du hub et activités du profil
 
-`game-catalog.js` référence les sept jeux disponibles : Attrape-les-tous, Breaker
+`game-catalog.js` référence les huit jeux disponibles : Attrape-les-tous, Breaker
 Nocturne, Ferme nocturne sous la pleine lune, Nocturne Velocity, Nocturne Shift,
-NYR et JetClash. Ils figurent tous dans « Mes aventures ». Sans trace reconnue,
+NYR, JetClash et Lumi. Ils figurent tous dans « Mes aventures ». Sans trace reconnue,
 l’entrée indique « Aucune activité enregistrée pour le moment » et ne fait pas
 augmenter le compteur des jeux joués.
 
@@ -10,12 +10,13 @@ Les statistiques par jeu du compte `cjPlayerData` restent lues sans modification
 Velocity et les jeux externes ont maintenant leur nom complet. Les éventuels jeux
 inconnus ayant des statistiques positives restent visibles sous leur identifiant.
 
-Trois adaptateurs supplémentaires lisent les sauvegardes propres aux jeux :
+Quatre adaptateurs supplémentaires lisent les sauvegardes propres aux jeux :
 
 | Jeu | Trace existante lue | Affichage |
 | --- | --- | --- |
 | Ferme | `cjajlkFarmV1` : zones, niveau valide, date de sauvegarde positive | Sauvegarde disponible, niveau |
 | NYR | `nyrStatisticsV1` version 1 : parties terminées positives | Nombre de parties, meilleur score |
+| Lumi | `lumi-best` : record entier strictement positif | Meilleur score |
 | JetClash | `jetclash.etape2.profile.v1` : profil valide, matchs terminés ou défi d’entraînement | Matchs et XP JetClash, ou entraînement enregistré |
 
 Les sauvegardes initiales vides de NYR/JetClash ne comptent pas comme une partie.

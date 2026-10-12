@@ -8,9 +8,10 @@
     { id: 'velocity', name: 'Nocturne Velocity' },
     { id: 'shift', name: 'Nocturne Shift' },
     { id: 'nyr', name: 'NYR' },
-    { id: 'jetclash', name: 'JetClash' }
+    { id: 'jetclash', name: 'JetClash' },
+    { id: 'lumi', name: 'Lumi' }
   ].map(Object.freeze);
-  const storageKeys = ['cjajlkFarmV1', 'nyrStatisticsV1', 'jetclash.etape2.profile.v1'];
+  const storageKeys = ['cjajlkFarmV1', 'nyrStatisticsV1', 'jetclash.etape2.profile.v1', 'lumi-best'];
   const record = value => value && typeof value === 'object' && !Array.isArray(value);
   const count = value => Number.isSafeInteger(value) && value >= 0 ? value : null;
   function saved(key) {
@@ -36,6 +37,13 @@
         const training = count(data.challenges?.daily?.entries?.['d-training']?.progress) || 0;
         if (matches > 0 || training > 0) return { recorded: true, detail: matches > 0 ? `${matches} match${matches > 1 ? 's' : ''} terminé${matches > 1 ? 's' : ''} · ${data.xp} XP JetClash` : 'Entraînement enregistré' };
       }
+    }
+    if (id === 'lumi') {
+      try {
+        const raw = localStorage.getItem('lumi-best');
+        const score = raw && /^\d+$/.test(raw) ? count(Number(raw)) : null;
+        if (score > 0) return { recorded: true, detail: 'Meilleur score : ' + score };
+      } catch {}
     }
     return { recorded: false, detail: null };
   }

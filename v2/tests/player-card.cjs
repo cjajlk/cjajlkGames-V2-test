@@ -163,8 +163,8 @@ let browser;
   for (const width of [320, 390, 760, 768, 1024, 1440]) {
     await page.setViewportSize({ width, height: 1000 });
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Picker overflow ${width}`);
-    assert(await page.evaluate(() => { const d = document.querySelector('dialog'); return d.scrollWidth <= d.clientWidth; }));
-    if ([390, 1440].includes(width)) { await page.locator('dialog').evaluate(d => d.scrollTop = 0); await page.screenshot({ path: path.join(output, `personnaliser-${width}.png`), fullPage: true }); }
+    assert(await page.evaluate(() => { const d = document.querySelector('#customizer'); return d.scrollWidth <= d.clientWidth; }));
+    if ([390, 1440].includes(width)) { await page.locator('#customizer').evaluate(d => d.scrollTop = 0); await page.screenshot({ path: path.join(output, `personnaliser-${width}.png`), fullPage: true }); }
   }
   await page.keyboard.press('Escape');
   assert.equal(await page.evaluate(() => document.activeElement.id), 'personalize');

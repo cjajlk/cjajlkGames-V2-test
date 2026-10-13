@@ -19,7 +19,8 @@
       if (profile.avatar) { const img = document.createElement('img'); img.src = profile.avatar.src; img.alt = ''; el.append(img); } else el.textContent = '☾';
     });
     document.querySelectorAll('.profile-detail, .player-card').forEach(el => {
-      el.style.backgroundImage = profile.background ? `linear-gradient(90deg,rgba(16,18,34,.92),rgba(16,18,34,.82)),url(${JSON.stringify(profile.background.src)})` : '';
+      const overlay = el.classList.contains('profile-detail') ? 'linear-gradient(90deg,rgba(10,14,26,.66),rgba(10,14,26,.18)),linear-gradient(0deg,rgba(10,14,26,.88),transparent 65%)' : 'linear-gradient(90deg,rgba(16,18,34,.92),rgba(16,18,34,.82))';
+      el.style.backgroundImage = profile.background ? `${overlay},url(${JSON.stringify(profile.background.src)})` : '';
     });
     const stats = document.getElementById('game-stats');
     stats.replaceChildren();
@@ -41,6 +42,7 @@
       const badge = document.createElement('span'); badge.className = 'pill'; badge.textContent = window.CJProfileCatalog.badge(id) + (id === profile.selected ? ' · Équipé' : ''); list.append(badge);
     }
     if (document.getElementById('customizer').open) renderChoices();
+    window.dispatchEvent(new Event('cj-profile-render'));
   }
   const dialog = document.getElementById('customizer');
   function renderChoices() {

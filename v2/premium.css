@@ -66,3 +66,10 @@
 #preview-equip[hidden]{display:none}
 @media(max-width:760px){#cosmetic-catalog.avatar-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.avatar-thumbnail{border-radius:10px}.avatar-detail .detail-portrait{width:min(100%,240px)}.avatar-detail .preview-card{min-height:140px;padding:14px}.avatar-detail .preview-card h3{font-size:1.25rem}}
 @media(max-width:350px){#cosmetic-catalog.avatar-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* Badge family colours are categories, not rarity. */
+#badge-catalog.badge-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px;align-items:start}
+#badge-catalog [data-family=discovery] .avatar-thumbnail{border-color:#7975d4}#badge-catalog [data-family=time] .avatar-thumbnail{border-color:#a169c9}#badge-catalog [data-family=loyalty] .avatar-thumbnail{border-color:#458fac}#badge-catalog [data-family=feats] .avatar-thumbnail{border-color:#aa854c}
+@media(max-width:760px){#badge-catalog.badge-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}#badge-catalog .cosmetic-tile:not(.avatar-tile){grid-column:1/-1}}
+@media(max-width:350px){#badge-catalog.badge-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.legacy-badge-icon{display:grid;place-items:center;height:100%;font-size:2rem}

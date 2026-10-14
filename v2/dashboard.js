@@ -19,7 +19,7 @@
       if (profile.avatar) { const img = document.createElement('img'); img.src = profile.avatar.src; img.alt = ''; el.append(img); } else el.textContent = '☾';
     });
     document.querySelectorAll('.profile-detail, .player-card').forEach(el => {
-      const overlay = el.classList.contains('profile-detail') ? 'linear-gradient(90deg,rgba(10,14,26,.66),rgba(10,14,26,.18)),linear-gradient(0deg,rgba(10,14,26,.88),transparent 65%)' : 'linear-gradient(90deg,rgba(16,18,34,.92),rgba(16,18,34,.82))';
+      const overlay = (el.classList.contains('profile-detail') || el.classList.contains('home-card-front')) ? 'linear-gradient(90deg,rgba(10,14,26,.66),rgba(10,14,26,.18)),linear-gradient(0deg,rgba(10,14,26,.88),transparent 65%)' : 'linear-gradient(90deg,rgba(16,18,34,.92),rgba(16,18,34,.82))';
       el.style.backgroundImage = profile.background ? `${overlay},url(${JSON.stringify(profile.background.src)})` : '';
     });
     const stats = document.getElementById('game-stats');

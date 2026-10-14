@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="collections.css">
   <link rel="stylesheet" href="shop.css">
   <link rel="stylesheet" href="premium.css">
+  <link rel="stylesheet" href="identity-card.css">
   <script src="../core/cjAccount.js" data-universal="true" defer></script>
   <script src="cosmetics.js" defer></script>
   <script src="collections-config.js" defer></script>
@@ -22,6 +23,7 @@
   <script src="shop-config.js" defer></script>
   <script src="shop.js" defer></script>
   <script src="premium.js" defer></script>
+  <script src="identity-card.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
@@ -43,9 +45,25 @@
   <main id="main" tabindex="-1">
     <section data-page="accueil" aria-labelledby="home-title">
       <div class="page-heading"><div><p class="eyebrow">BIENVENUE CHEZ TOI</p><h1 id="home-title">Un moment pour jouer.</h1><p>Retrouve tes jeux et laisse la nuit t’inspirer.</p></div><span class="pill">CJAJLK Games · V2</span></div>
-      <div class="home-grid">
-        <div class="hero"><span class="pill">L’UNIVERS NOCTURNE</span><h2>La nuit ouvre<br>de nouveaux horizons.</h2><p>Des jeux pour explorer, ressentir<br>et recommencer à ton rythme.</p><a class="button" href="#jeux">Explorer les jeux <span aria-hidden="true">↗</span></a></div>
-        <article class="panel player-card"><p class="eyebrow">TA CARTE JOUEUR</p><div class="avatar" aria-hidden="true">☾</div><h2 data-profile="pseudo">Profil joueur</h2><p class="subtle" data-profile="status">Lecture du compte…</p><div class="player-balance"><strong data-profile="balance">—</strong><span>CJ Universels</span></div><div class="mini-stats"><div><strong data-profile="time">—</strong><span>Temps de jeu</span></div><div><strong data-profile="badges">—</strong><span>Badges</span></div></div><a class="text-link" href="#profil">Voir mon profil →</a></article>
+      <div class="identity-home-grid">
+        <article class="identity-card" aria-label="Ma carte joueur recto verso">
+          <div class="identity-perspective"><div class="identity-rotator" id="identity-rotator">
+            <div class="identity-face home-card-front player-card" id="identity-front" role="group" aria-label="Recto : identité" aria-hidden="false">
+              <div class="identity-card-heading"><span class="eyebrow">CJAJLK GAMES · CARTE JOUEUR</span></div>
+              <div class="home-card-identity"><div class="avatar" aria-hidden="true">☾</div><div><p class="eyebrow">TON IDENTITÉ NOCTURNE</p><h2 data-profile="pseudo">Profil joueur</h2><p class="home-card-title" data-profile="selected">Aucun titre équipé</p><p class="subtle" data-profile="status">Lecture du compte…</p></div></div>
+              <div class="home-card-wallet"><div><strong data-profile="balance">—</strong><span>CJ Universels</span></div><div><strong data-profile="time">—</strong><span>Temps actif total</span></div></div>
+            </div>
+            <div class="identity-face home-card-back" id="identity-back" role="group" aria-label="Verso : parcours" aria-hidden="true" inert>
+              <p class="eyebrow">LE PARCOURS DERRIÈRE LE PSEUDO</p><h2>La trace de tes aventures.</h2>
+              <div class="career-statistics"><div><strong data-profile="time">—</strong><span>Temps actif</span></div><div><strong data-profile="played">—</strong><span>Jeux joués</span></div><div><strong data-profile="badges">—</strong><span>Badges acquis</span></div></div>
+              <div class="career-badges" id="home-card-badges" aria-label="Badges déjà acquis"></div>
+              <div id="home-card-activity" class="career-activity"></div>
+              <div class="prestige-reserved"><div><strong>Horizons de prestige</strong><small>Emplacements réservés · Récompenses à venir, non actives</small></div><div class="prestige-slots" aria-hidden="true"><span>✧</span><span>✧</span><span>✧</span></div></div>
+            </div>
+          </div><button class="card-flip" id="flip-identity-card" type="button" aria-label="Retourner la carte : voir mon parcours" title="Retourner la carte" aria-pressed="false" aria-controls="identity-rotator"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M20 7v5h-5M4 17v-5h5M5.5 8a7 7 0 0 1 12-2L20 9M4 15l2.5 3a7 7 0 0 0 12-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+          <div class="identity-card-actions"><a class="text-link" href="#profil">Gérer mon profil →</a></div><span id="card-side-status" class="card-side-status" role="status" aria-live="polite">Identité affichée</span>
+        </article>
+        <aside class="identity-welcome"><p class="eyebrow">UN UNIVERS, NEUF AVENTURES</p><h2>Ta prochaine<br>évasion t’attend.</h2><p>Un même pseudo, des histoires différentes. Retrouve tes jeux et personnalise ce qui te ressemble.</p><a class="button" href="#jeux">Explorer les jeux ↗</a><a class="text-link" href="#collections">Découvrir les fonds de carte →</a></aside>
       </div>
       <nav class="mobile-tiles" aria-label="Accès rapides mobile">
         <a href="#profil"><span aria-hidden="true">◉</span><strong>Profil</strong><small>Ton espace joueur</small><b aria-hidden="true">↗</b></a>
@@ -61,9 +79,9 @@
       </div><div class="discovery-links"><a class="panel" href="#boutique">◇ <strong>Boutique CJ</strong><span>Personnalise ton univers →</span></a><a class="panel" href="#collections">▦ <strong>Collections</strong><span>Quatre morceaux, un nouveau fond →</span></a><a class="panel" href="#apropos">◎ <strong>À propos</strong><span>Explore les univers CJAJLK →</span></a></div></div>
     </section>
     <section data-page="profil" aria-labelledby="profile-title" hidden>
-      <p class="eyebrow">TON ESPACE JOUEUR</p><h1 id="profile-title">Ma carte joueur</h1><p class="intro">Ton identité, tes aventures et les trésors qui t’accompagnent.</p>
-      <article class="panel profile-detail">
-        <div class="identity"><div class="avatar" aria-hidden="true">☾</div><div class="identity-text"><p class="eyebrow">CJAJLK GAMES · UNIVERS NOCTURNE</p><h2 data-profile="pseudo">Profil joueur</h2><button type="button" id="edit-common-pseudo" class="edit-common-pseudo" aria-controls="universal-name-form">Modifier mon pseudo</button><p class="equipped-title" data-profile="selected">Aucun titre équipé</p><p data-profile="status" class="subtle"></p></div><button class="button" id="personalize" type="button">✧ Personnaliser</button></div>
+      <p class="eyebrow">TON ESPACE JOUEUR</p><h1 id="profile-title">Mon espace joueur</h1><p class="intro">Gère ton identité, retrouve tes aventures et choisis ce qui t’accompagne.</p>
+      <article class="panel profile-detail profile-management">
+        <div class="identity"><div class="avatar" aria-hidden="true">☾</div><div class="identity-text"><p class="eyebrow">TON IDENTITÉ PARTAGÉE</p><h2 data-profile="pseudo">Profil joueur</h2><button type="button" id="edit-common-pseudo" class="edit-common-pseudo" aria-controls="universal-name-form">Modifier mon pseudo</button><p class="equipped-title" data-profile="selected">Aucun titre équipé</p><p data-profile="status" class="subtle"></p></div><button class="button" id="personalize" type="button">✧ Personnaliser</button></div>
         <div class="stat-grid"><div><strong data-profile="balance">—</strong><span>CJ Universels</span></div><div><strong data-profile="time">—</strong><span>Temps de jeu total</span></div><div><strong data-profile="played">—</strong><span>Jeux joués</span></div><div><strong data-profile="badges">—</strong><span>Badges débloqués</span></div></div>
       </article>
 

@@ -53,6 +53,7 @@
     return items.map(item => ({ ...item, equipped: item.type === 'badge' ? profile.selected === item.id : profile[item.type]?.id === item.id }));
   }
   function condition(item) {
+    if (item.availability === "pending") return "À débloquer prochainement";
     const shop = CJShopConfig.items.find(s => s.id === item.id && s.type === item.type);
     if (shop) return `${shop.priceCJ} CJ en boutique${shop.available ? '' : ' · Événement actuellement fermé'}`;
     const collection = CJCollectionsConfig.collections.find(c => c.backgroundId === item.id);
@@ -62,11 +63,21 @@
   function cosmeticTile(item) {
     const tile = node('article', `cosmetic-tile${item.owned ? ' is-owned' : ''}`);
     tile.dataset.cosmeticId = item.id; tile.dataset.cosmeticType = item.type;
+    if (item.type === 'avatar') {
+      tile.classList.add('avatar-tile');
+      const name = node('h3', 'avatar-name', item.label); tile.append(name);
+      const button = node('button', 'avatar-thumbnail'); button.type = 'button';
+      button.setAttribute('aria-label', item.label + (item.equipped ? ' · Équipé' : item.owned ? ' · Possédé' : ' · Verrouillé') + ' · Voir les détails');
+      const img = node('img'); img.src = item.src; img.alt = ''; img.loading = 'lazy'; button.append(img);
+      if (!item.owned || item.equipped) { const state = node('span', 'avatar-indicator', item.equipped ? '✓' : '🔒'); state.setAttribute('aria-hidden', 'true'); button.append(state); }
+      if (item.equipped) { tile.classList.add('is-equipped'); button.setAttribute('aria-current', 'true'); }
+      button.addEventListener('click', () => { previewReturn = { container: 'cosmetic-catalog', id: item.id, type: item.type }; showPreview(item); }); tile.append(button); return tile;
+    }
     if (item.src) { const img = node('img'); img.src = item.src; img.alt = ''; img.loading = 'lazy'; tile.append(img); } else tile.append(node('div', 'badge-symbol', item.label.split(' ')[0]));
-    tile.append(node('span', 'cosmetic-state', item.equipped ? 'Équipé' : item.owned ? 'Débloqué' : 'À découvrir'), node('h3', '', item.label), node('p', 'cosmetic-condition', condition(item)));
+    tile.append(node('span', 'cosmetic-state', item.equipped ? 'Équipé' : item.owned ? 'Débloqué' : item.availability === 'pending' ? 'Bientôt disponible' : 'À découvrir'), node('h3', '', item.label), node('p', 'cosmetic-condition', condition(item)));
     const button = node('button', 'preview-button', 'Voir l’aperçu'); button.type = 'button'; button.addEventListener('click', () => { previewReturn = { container: button.closest('#badge-catalog') ? 'badge-catalog' : 'cosmetic-catalog', id: item.id, type: item.type }; showPreview(item); }); tile.append(button); return tile;
   }
-  function renderCosmetics() { const container = document.getElementById('cosmetic-catalog'), focused = document.activeElement?.closest('.cosmetic-tile')?.querySelector('h3')?.textContent; container.replaceChildren(...cosmetics().filter(item => item.type === cosmeticFilter).map(cosmeticTile)); if (focused) [...container.children].find(c => c.querySelector('h3').textContent === focused)?.querySelector('button').focus(); }
+  function renderCosmetics() { const container = document.getElementById('cosmetic-catalog'); container.classList.toggle('avatar-grid', cosmeticFilter === 'avatar'); const focused = document.activeElement?.closest('.cosmetic-tile')?.querySelector('h3')?.textContent; container.replaceChildren(...cosmetics().filter(item => item.type === cosmeticFilter).map(cosmeticTile)); if (focused) [...container.children].find(c => c.querySelector('h3').textContent === focused)?.querySelector('button').focus(); }
   function renderBadges() {
     const container = document.getElementById('badge-catalog'); container.replaceChildren();
     for (const item of cosmetics().filter(item => item.type === 'badge')) { const card = cosmeticTile(item); card.insertBefore(node('span', 'badge-category', categories[item.id] || 'Historique'), card.querySelector('h3')); card.append(node('p', 'subtle', 'Effet : badge / titre visuel. Aucun avantage en jeu.')); container.append(card); }
@@ -89,14 +100,14 @@
   }
   const previewDialog = document.getElementById('cosmetic-preview');
   function showPreview(item) {
-    preview = item; const profile = CJDashboardProfile.read(), card = document.getElementById('preview-card'); card.replaceChildren();
+    preview = item; previewDialog.classList.toggle('avatar-detail', item.type === 'avatar'); previewDialog.querySelector('.detail-portrait')?.remove(); if (item.type === 'avatar') { const portrait = node('img', 'detail-portrait'); portrait.src = item.src; portrait.alt = item.label; document.getElementById('preview-card').before(portrait); } const profile = CJDashboardProfile.read(), card = document.getElementById('preview-card'); card.replaceChildren();
     const background = item.type === 'background' ? item : profile.background, avatar = item.type === 'avatar' ? item : profile.avatar;
     card.style.backgroundImage = background ? `linear-gradient(0deg,#090d1ede,transparent),url(${JSON.stringify(background.src)})` : '';
     const image = node('div', 'preview-avatar'); if (avatar) { const img = node('img'); img.src = avatar.src; img.alt = ''; image.append(img); } else image.textContent = '☾';
     card.append(image, node('span', 'eyebrow', 'APERÇU · NON ENREGISTRÉ'), node('h3', '', profile.pseudo || 'Profil joueur'), node('p', '', item.type === 'badge' ? item.label : profile.selected ? CJProfileCatalog.badge(profile.selected) : 'Aucun titre équipé'));
     document.getElementById('preview-heading').textContent = item.label;
-    document.getElementById('preview-description').textContent = condition(item);
-    const equip = document.getElementById('preview-equip'); equip.disabled = !item.owned || profile.state !== 'ready'; equip.textContent = item.owned ? 'Équiper cet élément' : 'Élément non débloqué';
+    document.getElementById('preview-description').textContent = (item.owned ? 'Possédé' : 'Non possédé') + ' · ' + condition(item);
+    const equip = document.getElementById('preview-equip'); equip.hidden = !item.owned; equip.disabled = !item.owned || profile.state !== 'ready'; equip.textContent = item.owned ? 'Équiper cet élément' : 'Élément non débloqué';
     document.getElementById('preview-status').textContent = '';
     if (!previewDialog.open) previewDialog.showModal();
   }

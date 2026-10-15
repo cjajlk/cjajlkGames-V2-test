@@ -73,3 +73,5 @@
 @media(max-width:760px){#badge-catalog.badge-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}#badge-catalog .cosmetic-tile:not(.avatar-tile){grid-column:1/-1}}
 @media(max-width:350px){#badge-catalog.badge-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .legacy-badge-icon{display:grid;place-items:center;height:100%;font-size:2rem}
+
+.badge-evidence{padding:14px;border:1px solid #76609666;border-radius:12px;background:#0b102266;margin:14px 0}.badge-evidence p{margin:0 0 12px;overflow-wrap:anywhere}.badge-evidence strong,.badge-evidence span,.badge-evidence small{display:block}.badge-evidence strong{font-size:.8rem}.badge-evidence span{font-size:.85rem;color:#d8c5fa}.badge-evidence small{font-size:.7rem;color:#bfb3cd}.badge-evidence .badge-complete{color:#b7edcf}

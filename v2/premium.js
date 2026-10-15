@@ -49,12 +49,13 @@
     const profile = CJDashboardProfile.read();
     const items = CJProfileCatalog.entries.map(item => ({ ...item, owned: (profile.cosmetics || []).some(c => c.id === item.id) }));
     for (const item of CJShopConfig.items.filter(item => item.type === 'badge')) items.push({ ...item, owned: (profile.badges || []).includes(item.id) });
-    for (const id of profile.badges || []) if (!items.some(item => item.type === 'badge' && item.id === id)) items.push({ id, type: 'badge', label: CJProfileCatalog.badge(id), owned: true });
-    items.push(...(window.CJNocturnalBadges || []));
+    for (const id of profile.badges || []) if (!items.some(item => item.type === 'badge' && item.id === id) && !(window.CJNocturnalBadges || []).some(item => item.id === id)) items.push({ id, type: 'badge', label: CJProfileCatalog.badge(id), owned: true });
+    const progress = window.CJBadgeProgress.read();
+    items.push(...(window.CJNocturnalBadges || []).map(item => ({ ...item, owned: progress.find(p => p.id === item.id)?.obtained || false })));
     return items.map(item => ({ ...item, equipped: item.type === 'badge' ? profile.selected === item.id : profile[item.type]?.id === item.id }));
   }
   function condition(item) {
-    if (item.family) return window.CJBadgeRules?.description(item.id, window.CJajlkAccount?.getPlayer()) || "Conditions à définir prochainement";
+    if (item.family) return window.CJBadgeProgress.read().find(p => p.id === item.id)?.condition || 'Suivi indisponible';
     if (item.availability === "pending") return "À débloquer prochainement";
     const shop = CJShopConfig.items.find(s => s.id === item.id && s.type === item.type);
     if (shop) return `${shop.priceCJ} CJ en boutique${shop.available ? '' : ' · Événement actuellement fermé'}`;
@@ -110,8 +111,22 @@
     const image = node('div', 'preview-avatar'); if (avatar) { const img = node('img'); img.src = avatar.src; img.alt = ''; image.append(img); } else image.textContent = '☾';
     card.append(image, node('span', 'eyebrow', 'APERÇU · NON ENREGISTRÉ'), node('h3', '', profile.pseudo || 'Profil joueur'), node('p', '', item.type === 'badge' ? item.label : profile.selected ? CJProfileCatalog.badge(profile.selected) : 'Aucun titre équipé'));
     document.getElementById('preview-heading').textContent = item.label;
-    document.getElementById('preview-description').textContent = (item.family ? item.category + ' · Verrouillé' : item.owned ? 'Possédé' : 'Non possédé') + ' · ' + condition(item);
-    const equip = document.getElementById('preview-equip'); equip.hidden = !item.owned; equip.disabled = !item.owned || profile.state !== 'ready'; equip.textContent = item.owned ? 'Équiper cet élément' : 'Élément non débloqué';
+    const badgeProgress = item.family ? window.CJBadgeProgress.read().find(p => p.id === item.id) : null;
+    document.getElementById('preview-description').textContent = (item.family ? item.category + ' · ' + badgeProgress.status : item.owned ? 'Possédé' : 'Non possédé') + ' · ' + condition(item);
+    previewDialog.querySelector('.badge-evidence')?.remove();
+    if (badgeProgress) {
+      const evidence = node('section', 'badge-evidence'); evidence.setAttribute('aria-label', 'Progression enregistrée');
+      for (const part of badgeProgress.parts) {
+        const row = node('p');
+        const value = part.value === null ? 'Suivi indisponible' : part.label.includes('(secondes)') ? `${time(part.value)} / ${time(part.target)}` : `${part.value} / ${part.target}`;
+        row.append(node('strong', '', part.label.replace(' (secondes)', '')), node('span', '', value));
+        if (part.reason) row.append(node('small', '', part.reason)); evidence.append(row);
+      }
+      if (badgeProgress.percent === 100) evidence.append(node('p', 'badge-complete', '100 % · Conditions vérifiées. Aucune nouvelle acquisition attribuée.'));
+      evidence.append(node('p', 'subtle', badgeProgress.note));
+      document.getElementById('preview-description').after(evidence);
+    }
+    const equip = document.getElementById('preview-equip'); equip.hidden = !!item.family || !item.owned; equip.disabled = !!item.family || !item.owned || profile.state !== 'ready'; equip.textContent = item.owned ? 'Équiper cet élément' : 'Élément non débloqué';
     document.getElementById('preview-status').textContent = '';
     if (!previewDialog.open) previewDialog.showModal();
   }
@@ -126,6 +141,8 @@
   function render() { const profile = CJDashboardProfile.read(); decorateAdventures(profile); renderBadges(); renderCosmetics(); renderStats(profile); selectPanel(profilePanel);
     let featured = document.getElementById('featured-badges'); if (!featured) { featured = node('div', 'featured-badges'); featured.id = 'featured-badges'; featured.setAttribute('aria-label', 'Badges acquis'); document.querySelector('.profile-detail').append(featured); }
     featured.replaceChildren(...(profile.badges || []).slice(0, 3).map(id => node('span', 'pill', CJProfileCatalog.badge(id))));
+    if (previewDialog.open && preview?.family) showPreview(cosmetics().find(item => item.id === preview.id) || preview);
   }
   window.addEventListener('cj-profile-render', render); render();
+  window.addEventListener('cj-badge-progress', render);
 })();

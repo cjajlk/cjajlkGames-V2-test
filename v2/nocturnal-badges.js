@@ -167,7 +167,7 @@ window.CJNocturnalBadges = Object.freeze([
   },
   {
     "id": "nocturne_badge_16",
-    "label": "Sans Faillir",
+    "label": "Maître de l'Ombre",
     "category": "Exploits",
     "family": "feats",
     "type": "badge",

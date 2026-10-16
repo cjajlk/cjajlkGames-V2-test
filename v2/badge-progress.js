@@ -79,14 +79,15 @@
       const acquisition = player?.items?.unlockedBadges;
       const obtained = own(acquisition, item.id) && !!acquisition[item.id] && (acquisition[item.id] === true || record(acquisition[item.id]));
       const unavailable = waiting || parts.some(p => p.value === null);
-      return { id: item.id, condition, parts, eligible, obtained, activation: false,
-        status: obtained ? 'Obtenu · acquisition enregistrée' : eligible === true ? 'Conditions remplies · attribution désactivée' : unavailable ? 'Suivi indisponible ou partiel' : 'Verrouillé · suivi disponible',
-        note: waiting ? index === 20 ? 'En conception · aucune acquisition.' : 'Suivi serveur en préparation : ancienneté et jours actifs indisponibles.' : 'Lecture seule · aucune attribution automatique. Une preuve effacée ne peut pas être reconstituée.',
+      const activation = !!window.CJBadgeAcquisitions?.enabled(item.id);
+      return { id: item.id, condition, parts, eligible, obtained, activation,
+        status: obtained ? 'Obtenu · acquisition enregistrée' : eligible === true ? activation ? 'Conditions remplies · enregistrement à confirmer' : 'Conditions remplies · attribution désactivée' : unavailable ? 'Suivi indisponible ou partiel' : 'Verrouillé · suivi disponible',
+        note: waiting ? index === 20 ? 'En conception · aucune acquisition.' : 'Suivi serveur en préparation : ancienneté et jours actifs indisponibles.' : activation ? window.CJBadgeAcquisitions.error || 'Acquisition automatique vérifiée · conservée dans ce navigateur, sans gain de CJ.' : 'Lecture seule · aucune attribution automatique. Une preuve effacée ne peut pas être reconstituée.',
         percent: eligible === true ? 100 : null };
     });
   }
-  function read() {
-    let player = null; try { player = window.CJajlkAccount?.getPlayer(); } catch {}
+  function read(account) {
+    let player = account || null; try { if (!account) player = window.CJajlkAccount?.getPlayer(); } catch {}
     const native = {}; for (const key of keys) try { const raw = localStorage.getItem(key); native[key] = raw === null ? null : JSON.parse(raw); } catch { native[key] = null; }
     return project(player, native, window.CJGameCatalog?.entries || []);
   }

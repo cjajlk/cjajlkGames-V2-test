@@ -111,7 +111,7 @@
   const badges = { explorer: ['🌙', 'Explorateur Nocturne'], fidele: ['⭐', 'Joueur Fidèle'], centre: ['🔮', 'Compagnon du Centre'], paques: ['🥚', 'Chasseur de Pâques'] };
   window.CJProfileCatalog = Object.freeze({
     get entries() { return entries.slice(); },
-    badge(id) { const info = badges[id.replace(/^badge_/, '')]; return info ? `${info[0]} ${info[1]}` : id; },
+    badge(id) { const info = badges[id.replace(/^badge_/, '')]; return info ? `${info[0]} ${info[1]}` : (window.CJNocturnalBadges || []).find(item => item.id === id)?.label || id; },
     register(item) {
       if (!item || !['avatar', 'background'].includes(item.type) || typeof item.id !== 'string' || !item.id || typeof item.label !== 'string' || typeof item.src !== 'string') throw new Error('Cosmétique invalide');
       const url = new URL(item.src, location.href);

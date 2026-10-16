@@ -75,3 +75,16 @@
 .legacy-badge-icon{display:grid;place-items:center;height:100%;font-size:2rem}
 
 .badge-evidence{padding:14px;border:1px solid #76609666;border-radius:12px;background:#0b102266;margin:14px 0}.badge-evidence p{margin:0 0 12px;overflow-wrap:anywhere}.badge-evidence strong,.badge-evidence span,.badge-evidence small{display:block}.badge-evidence strong{font-size:.8rem}.badge-evidence span{font-size:.85rem;color:#d8c5fa}.badge-evidence small{font-size:.7rem;color:#bfb3cd}.badge-evidence .badge-complete{color:#b7edcf}
+/* Compact badge sheet, within the visible viewport and phone safe areas. */
+#cosmetic-preview.badge-detail{box-sizing:border-box;width:min(560px,calc(100% - 24px));max-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px) - 24px);padding:0 18px;overflow-y:auto;scroll-padding:66px 0;}
+.badge-detail .picker-header{position:sticky;top:0;z-index:4;background:#191c30;padding:12px 0;margin:0;border-bottom:1px solid #67528050;gap:12px;}
+.badge-detail .picker-header h2{font-size:1.1rem;margin:0}.badge-detail .close-picker{min-width:44px;min-height:44px;flex:none}
+.badge-detail .detail-portrait{width:96px;height:96px;aspect-ratio:1;margin:10px auto;border-radius:12px}
+.badge-detail .preview-card{display:none}
+.badge-detail #preview-description{font-size:.78rem;line-height:1.45;margin:10px 0}
+.badge-detail .badge-evidence{padding:10px;margin:8px 0}.badge-detail .badge-evidence p{margin:0 0 7px}.badge-detail .badge-evidence strong{font-size:.72rem}.badge-detail .badge-evidence span{font-size:.77rem}.badge-detail .badge-evidence small{font-size:.64rem}.badge-detail .badge-evidence .subtle{font-size:.68rem;margin-bottom:0}
+.badge-detail .preview-actions{position:sticky;bottom:0;z-index:3;display:flex;gap:8px;padding:10px 0 max(10px,env(safe-area-inset-bottom,0px));margin:0;background:#191c30;border-top:1px solid #67528050}
+.badge-detail .preview-actions button{min-height:44px;font-size:.75rem;flex:1;padding:8px}.badge-detail #preview-status{font-size:.72rem;margin:0 0 8px}
+.equipped-badge-art{display:inline-block;vertical-align:middle;width:28px;height:28px;object-fit:contain;border-radius:5px;margin-right:6px}.career-badges .pill{display:inline-flex;align-items:center}
+@media(max-width:760px){#cosmetic-preview.badge-detail{padding:0 12px}.badge-detail .detail-portrait{width:76px;height:76px;margin:7px auto}.badge-detail .picker-header{padding:7px 0}.badge-detail .picker-header h2{font-size:1rem}}
+@media(max-height:450px){.badge-detail .detail-portrait{width:54px;height:54px}.badge-detail .picker-header{padding:4px 0}.badge-detail .preview-actions{padding-top:6px;padding-bottom:6px}}

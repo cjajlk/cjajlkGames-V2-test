@@ -106,6 +106,7 @@
   const previewDialog = document.getElementById('cosmetic-preview');
   function showPreview(item) {
     preview = item; previewDialog.classList.toggle('avatar-detail', item.type === 'avatar' || !!item.family); previewDialog.querySelector('.detail-portrait')?.remove(); if (item.type === 'avatar' || item.family) { const portrait = node('img', 'detail-portrait'); portrait.src = item.src; portrait.alt = item.label; document.getElementById('preview-card').before(portrait); } const profile = CJDashboardProfile.read(), card = document.getElementById('preview-card'); card.replaceChildren();
+    previewDialog.classList.toggle('badge-detail', !!item.family);
     const background = item.type === 'background' ? item : profile.background, avatar = item.type === 'avatar' ? item : profile.avatar;
     card.style.backgroundImage = background ? `linear-gradient(0deg,#090d1ede,transparent),url(${JSON.stringify(background.src)})` : '';
     const image = node('div', 'preview-avatar'); if (avatar) { const img = node('img'); img.src = avatar.src; img.alt = ''; image.append(img); } else image.textContent = '☾';
@@ -122,11 +123,11 @@
         row.append(node('strong', '', part.label.replace(' (secondes)', '')), node('span', '', value));
         if (part.reason) row.append(node('small', '', part.reason)); evidence.append(row);
       }
-      if (badgeProgress.percent === 100) evidence.append(node('p', 'badge-complete', '100 % · Conditions vérifiées. Aucune nouvelle acquisition attribuée.'));
+      if (badgeProgress.percent === 100) evidence.append(node('p', 'badge-complete', badgeProgress.obtained ? '100 % · Badge obtenu.' : '100 % · Conditions vérifiées ; sauvegarde à confirmer.'));
       evidence.append(node('p', 'subtle', badgeProgress.note));
       document.getElementById('preview-description').after(evidence);
     }
-    const equip = document.getElementById('preview-equip'); equip.hidden = !!item.family || !item.owned; equip.disabled = !!item.family || !item.owned || profile.state !== 'ready'; equip.textContent = item.owned ? 'Équiper cet élément' : 'Élément non débloqué';
+    const equip = document.getElementById('preview-equip'); equip.hidden = !item.owned; equip.disabled = !item.owned || profile.state !== 'ready'; equip.textContent = item.family && profile.selected === item.id ? 'Retirer ce badge' : item.owned ? 'Équiper cet élément' : 'Élément non débloqué';
     document.getElementById('preview-status').textContent = '';
     if (!previewDialog.open) previewDialog.showModal();
   }
@@ -134,7 +135,8 @@
   previewDialog.addEventListener('close', () => { const target = [...document.getElementById(previewReturn?.container || 'cosmetic-catalog').children].find(card => card.dataset.cosmeticId === previewReturn?.id && card.dataset.cosmeticType === previewReturn?.type); (target?.querySelector('button') || document.getElementById('personalize')).focus({ preventScroll: true }); });
   document.getElementById('preview-equip').addEventListener('click', async () => {
     if (!preview) return; const button = document.getElementById('preview-equip'); button.disabled = true;
-    const ok = await CJDashboardProfile.equip(preview.type, preview.id);
+    const id = preview.family && CJDashboardProfile.read().selected === preview.id ? null : preview.id;
+    const ok = await CJDashboardProfile.equip(preview.type, id);
     document.getElementById('preview-status').textContent = ok ? 'Équipement enregistré.' : 'Impossible d’enregistrer cet équipement. Tes données sont conservées.';
     window.dispatchEvent(new Event('cj-account-updated')); button.disabled = !ok;
   });
@@ -145,4 +147,5 @@
   }
   window.addEventListener('cj-profile-render', render); render();
   window.addEventListener('cj-badge-progress', render);
+  window.addEventListener('cj-badge-acquisition-result', render);
 })();

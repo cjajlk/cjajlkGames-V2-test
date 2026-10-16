@@ -16,7 +16,7 @@
     const profile = window.CJDashboardProfile.read(), badges = document.getElementById('home-card-badges'), activity = document.getElementById('home-card-activity'); badges.replaceChildren(); activity.replaceChildren();
     const acquired = profile.badges || []; if (!acquired.length) badges.append(node('span', profile.badges ? 'Tes premiers badges restent à découvrir.' : 'Badges non disponibles.'));
     const prominent = profile.selected ? [profile.selected, ...acquired.filter(id => id !== profile.selected)] : acquired;
-    for (const id of prominent.slice(0, 3)) { const badge = node('span', CJProfileCatalog.badge(id)); badge.className = 'pill'; badges.append(badge); }
+    for (const id of prominent.slice(0, 3)) { const badge = node('span', CJProfileCatalog.badge(id)); badge.className = 'pill'; const item = (window.CJNocturnalBadges || []).find(item => item.id === id); if (item) { const img = node('img'); img.src = item.src; img.alt = ''; img.className = 'equipped-badge-art'; badge.prepend(img); } badges.append(badge); }
     if (acquired.length > 3) badges.append(node('small', `+${acquired.length - 3} dans le Profil`));
     const games = (profile.games || []).filter(game => game.recorded);
     if (!games.length) activity.append(node('p', 'Chaque aventure commence par une première partie.'));

@@ -11,17 +11,23 @@
     document.getElementById('card-side-status').textContent = reversed ? 'Parcours affiché' : 'Identité affichée';
   });
   const node = (tag, text) => { const el = document.createElement(tag); if (text !== undefined) el.textContent = text; return el; };
-  const time = n => n == null ? 'Temps non enregistré' : n < 60 ? `${Math.floor(n)} s actives` : `${Math.floor(n / 3600)} h ${Math.floor(n % 3600 / 60)} min`;
   function render() {
-    const profile = window.CJDashboardProfile.read(), badges = document.getElementById('home-card-badges'), activity = document.getElementById('home-card-activity'); badges.replaceChildren(); activity.replaceChildren();
-    const acquired = profile.badges || []; if (!acquired.length) badges.append(node('span', profile.badges ? 'Tes premiers badges restent à découvrir.' : 'Badges non disponibles.'));
-    const prominent = profile.selected ? [profile.selected, ...acquired.filter(id => id !== profile.selected)] : acquired;
-    for (const id of prominent.slice(0, 3)) { const badge = node('span', CJProfileCatalog.badge(id)); badge.className = 'pill'; const item = (window.CJNocturnalBadges || []).find(item => item.id === id); if (item) { const img = node('img'); img.src = item.src; img.alt = ''; img.className = 'equipped-badge-art'; badge.prepend(img); } badges.append(badge); }
-    if (acquired.length > 3) badges.append(node('small', `+${acquired.length - 3} dans le Profil`));
-    const games = (profile.games || []).filter(game => game.recorded);
-    if (!games.length) activity.append(node('p', 'Chaque aventure commence par une première partie.'));
-    for (const game of games.slice(0, 4)) { const row = node('div'); row.append(node('strong', game.name), node('span', time(game.seconds))); if (game.detail) row.append(node('small', game.detail)); activity.append(row); }
-    if (games.length > 4) activity.append(node('small', `${games.length - 4} autres jeux à retrouver dans Aventures.`));
+    const profile = window.CJDashboardProfile.read(), badges = document.getElementById('home-card-badges'); badges.replaceChildren();
+    const acquired = profile.badges || [];
+    let receipts = {}; try { receipts = window.CJajlkAccount?.getPlayer()?.items?.unlockedBadges || {}; } catch {}
+    const date = id => { const value = receipts[id]?.unlockedAt; return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : 0; };
+    // Display order only; no receipt is written. Equal dates use reverse registration order.
+    const recent = acquired.map((id, index) => ({ id, index })).sort((a, b) => date(b.id) - date(a.id) || b.index - a.index).slice(0, 3);
+    if (!acquired.length) { const empty = node('p', profile.badges ? 'Tes premiers badges restent à découvrir.' : 'Badges non disponibles.'); empty.className = 'recent-badges-empty'; badges.append(empty); }
+    for (const { id } of recent) {
+      const badge = node('div'); badge.className = 'recent-badge';
+      const item = (window.CJNocturnalBadges || []).find(item => item.id === id);
+      const label = CJProfileCatalog.badge(id);
+      if (item) { const img = node('img'); img.src = item.src; img.alt = ''; badge.append(img); }
+      else if (label !== id && label.includes(' ')) { const icon = node('span', label.split(' ')[0]); icon.className = 'original-badge-icon'; icon.setAttribute('aria-hidden', 'true'); badge.append(icon); }
+      badge.append(node('span', item ? item.label : label !== id ? label.substring(label.indexOf(' ') + 1) : label)); badges.append(badge);
+    }
+    document.getElementById('home-card-more-badges').textContent = acquired.length > 3 ? `+${acquired.length - 3} autres` : '';
   }
   window.addEventListener('cj-profile-render', render); render();
 })();

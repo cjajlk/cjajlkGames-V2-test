@@ -24,7 +24,7 @@
       "img": "assets/evenements/halloween/pack_halloween.png",
       "description": "Quatre mascottes exclusives pour Halloween.",
       "costCoins": 0,
-      "costGems": 2000,
+      "costGems": 0,
       "limited": true,
       "premium": true,
       "items": {

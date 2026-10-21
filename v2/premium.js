@@ -6,11 +6,12 @@
   const time = n => n == null ? 'Non enregistré' : n < 60 ? `${Math.floor(n)} s` : `${Math.floor(n / 3600)} h ${Math.floor(n % 3600 / 60)} min`;
   const genres = [
     ['arcade', 'Arcade & Réflexes', 'Le plaisir de recommencer.', ['breaker', 'shift']],
+    ['arcade-survival', 'Arcade / Survie', 'Grandis, explore et survis à la nuit.', ['lueur']],
     ['action', 'Action & Vitesse', 'Entre envols et courses nocturnes.', ['velocity', 'jetclash', 'runner', 'nyr']],
     ['adventure', 'Aventure & Exploration', 'Un monde à découvrir, à ton rythme.', ['attrape', 'lumi']],
     ['relax', 'Détente & Gestion', 'Prends le temps de faire grandir ton univers.', ['farm']]
   ];
-  const match = card => { const href = card.getAttribute('href'); return href.includes('/attrape/') ? 'attrape' : href.includes('/breaker/') ? 'breaker' : href.includes('nocturne-farm') ? 'farm' : href.includes('nocturne-velocity') ? 'velocity' : href.includes('Nocturne-Shift') ? 'shift' : href.includes('/NYR/') ? 'nyr' : href.includes('jet-clash') ? 'jetclash' : href.includes('nocturne-runner') ? 'runner' : href.includes('neon-nomad') ? 'lumi' : null; };
+  const match = card => { const href = card.getAttribute('href'); return href.includes('/attrape/') ? 'attrape' : href.includes('/breaker/') ? 'breaker' : href.includes('nocturne-farm') ? 'farm' : href.includes('nocturne-velocity') ? 'velocity' : href.includes('Nocturne-Shift') ? 'shift' : href.includes('/NYR/') ? 'nyr' : href.includes('jet-clash') ? 'jetclash' : href.includes('nocturne-runner') ? 'runner' : href.includes('neon-nomad') ? 'lumi' : href.includes('lueur-nocturne') ? 'lueur' : null; };
   const cards = [...document.querySelectorAll('[data-page="jeux"] a.game-card')];
   const host = document.getElementById('game-sections'), filters = document.getElementById('game-filters');
   const all = node('button', '', 'Tous les jeux'); all.type = 'button'; all.dataset.genre = 'all'; all.setAttribute('aria-pressed', 'true'); filters.append(all);

@@ -10,9 +10,10 @@
     { id: 'nyr', name: 'NYR' },
     { id: 'jetclash', name: 'JetClash' },
     { id: 'lumi', name: 'Lumi' },
-    { id: 'runner', name: 'Nocturne Runner' }
+    { id: 'runner', name: 'Nocturne Runner' },
+    { id: 'lueur', name: 'Lueur Nocturne' }
   ].map(Object.freeze);
-  const storageKeys = ['cjajlkFarmV1', 'nyrStatisticsV1', 'jetclash.etape2.profile.v1', 'lumi-best', 'nocturneRunnerProfileV1', 'nocturneRunnerBest'];
+  const storageKeys = ['cjajlkFarmV1', 'nyrStatisticsV1', 'jetclash.etape2.profile.v1', 'lumi-best', 'nocturneRunnerProfileV1', 'nocturneRunnerBest', 'lueur-nocturne-v1'];
   const record = value => value && typeof value === 'object' && !Array.isArray(value);
   const count = value => Number.isSafeInteger(value) && value >= 0 ? value : null;
   function saved(key) {
@@ -20,6 +21,19 @@
     catch { return null; }
   }
   function localActivity(id) {
+    if (id === 'lueur') {
+      const data = saved('lueur-nocturne-v1'), stats = data?.version === 1 && record(data.stats) ? data.stats : null;
+      const fields = ['runs', 'wins', 'shrines', 'collected', 'absorbed', 'bestSurvival', 'bestLight'];
+      if (!stats || fields.some(key => stats[key] !== undefined && count(stats[key]) === null)) return { recorded: false, detail: null };
+      if (!fields.some(key => count(stats[key]) > 0)) return { recorded: false, detail: null };
+      const details = [];
+      if (count(stats.runs) !== null) details.push(`${stats.runs} expédition${stats.runs > 1 ? 's' : ''} enregistrée${stats.runs > 1 ? 's' : ''}`);
+      if (count(stats.wins) !== null) details.push(`${stats.wins} victoire${stats.wins > 1 ? 's' : ''}`);
+      if (count(stats.shrines) !== null) details.push(`${stats.shrines} sanctuaire${stats.shrines > 1 ? 's' : ''} rallumé${stats.shrines > 1 ? 's' : ''}`);
+      if (count(stats.bestLight) > 0) details.push(`Record de lumière : ${stats.bestLight}`);
+      if (count(stats.collected) > 0) details.push(`${stats.collected} lueurs récoltées`);
+      return { recorded: true, detail: details.join(' · ') || 'Activité de jeu enregistrée.' };
+    }
     if (id === 'farm') {
       const data = saved(storageKeys[0]);
       if (record(data?.zones) && count(data.level) >= 1 && typeof data.savedAt === 'number' && Number.isFinite(data.savedAt) && data.savedAt > 0) {

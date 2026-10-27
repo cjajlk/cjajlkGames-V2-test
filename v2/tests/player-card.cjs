@@ -117,7 +117,7 @@ let browser;
   await page.goto(`${base}/v2/#profil`);
   await page.reload();
   assert.equal(await page.locator('[data-page=profil] [data-profile=played]').textContent(), '1');
-  assert.equal(await page.locator('#game-stats article').count(), 9);
+  assert.equal(await page.locator('#game-stats article').count(), 10);
   assert.equal(await page.locator('#game-stats article[data-activity="recorded"]').count(), 1);
   assert.equal(await page.evaluate(() => CJDashboardProfile.equip('avatar', 'breaker_mascotte_2')), false);
   assert.equal(await page.evaluate(() => CJDashboardProfile.equip('badge', 'not_owned')), false);
